@@ -10,22 +10,36 @@ import UIKit
 
 class SCBeaconViewController: UIViewController {
     
-    var beaconSwitch:UISwitch {
-        get {
-            var newSwitch = UISwitch()
-            newSwitch.onTintColor = UIColor(red: 26.0/255.0, green: 23.0/255.0, blue: 24.0/255.0, alpha: 1.0)
-            newSwitch.backgroundColor = UIColor.blackColor()
-            newSwitch.layer.cornerRadius = 16.0;
-            newSwitch.tintColor = UIColor.blackColor()
-            newSwitch.addTarget(self, action: "toggleBeacon", forControlEvents: UIControlEvents.ValueChanged)
-            return newSwitch
-        }
-    }
-
+    var beaconSwitch:UISwitch!
     var beaconBarButtonItem:UIBarButtonItem {
         get {
-            return UIBarButtonItem(customView: self.beaconSwitch)
+            let padding:CGFloat = 25.0
+            var customView = UIView(frame: CGRectMake(0, 0, self.beaconSwitch.bounds.size.width, self.beaconSwitch.bounds.size.height + padding))
+            
+            if self.beaconSwitch.superview != nil {
+                self.beaconSwitch.removeFromSuperview()
+            }
+            customView.addSubview(self.beaconSwitch)
+            
+            self.beaconSwitch.frame = CGRectMake(0, customView.bounds.size.height - self.beaconSwitch.bounds.size.height, self.beaconSwitch.bounds.size.width, self.beaconSwitch.bounds.size.height)
+            
+            return UIBarButtonItem(customView: customView)
         }
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        self.beaconSwitch = UISwitch()
+        self.beaconSwitch.onTintColor = UIColor(red: 26.0/255.0, green: 23.0/255.0, blue: 24.0/255.0, alpha: 1.0)
+        self.beaconSwitch.backgroundColor = UIColor.blackColor()
+        self.beaconSwitch.layer.cornerRadius = 16.0;
+        self.beaconSwitch.tintColor = UIColor.blackColor()
+        self.beaconSwitch.addTarget(self, action: "toggleBeacon", forControlEvents: UIControlEvents.ValueChanged)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -49,17 +63,17 @@ class SCBeaconViewController: UIViewController {
     }
     
     func toggleBeacon() {
-        var on:Bool = SCBeacon().beaconIsOn()
-        self.beaconSwitch.setOn(on, animated: true)
+//        var on:Bool = SCBeacon().beaconIsOn()
+//        self.beaconSwitch.setOn(on, animated: true)
         
         self.updateSwitch()
         
-        SCUser.toggleBeacon { (responseObject, error) -> Void in
-            on = responseObject as Bool
-            if self.beaconSwitch.on != on {
-                self.beaconSwitch.setOn(on, animated: false)
-            }
-        }
+//        SCUser.toggleBeacon { (responseObject, error) -> Void in
+//            on = responseObject as Bool
+//            if self.beaconSwitch.on != on {
+//                self.beaconSwitch.setOn(on, animated: false)
+//            }
+//        }
     }
 
 }

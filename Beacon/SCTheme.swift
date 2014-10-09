@@ -17,7 +17,9 @@ class SCTheme: NSObject {
         get {
             let image = UIImage(named: "mainlogo")
             var imageView = UIImageView(image: image)
-            imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+            let heightPadding:CGFloat = 15.0
+            imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height + heightPadding)
+            imageView.contentMode = UIViewContentMode.Bottom
             return imageView
         }
     }
@@ -38,7 +40,7 @@ class SCTheme: NSObject {
         bar.shadowImage = UIImage()
         bar.translucent = true
         
-        let height:CGFloat = 85.0
+        let height:CGFloat = 75.0
         
         var frame = bar.frame
         frame.size.height = height

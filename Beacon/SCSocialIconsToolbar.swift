@@ -119,7 +119,7 @@ class SCSocialIconsToolbar: UIToolbar {
     var defaultSeparator:UIBarButtonItem! {
         get {
             var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-            barButton.width = 20;
+            barButton.width = 12.0;
             return barButton
         }
     }
@@ -137,9 +137,15 @@ class SCSocialIconsToolbar: UIToolbar {
 
         var barButtons = NSMutableArray()
         for button in self.socialButtons {
+        
+        }
+        for (var i = 0; i < self.socialButtons.count; i++) {
+            let button:AnyObject = self.socialButtons.objectAtIndex(i)
             
-            // Put a spacer in-between each button for customizability
-            barButtons.addObject(self.defaultSeparator)
+            if i != 0 {
+                // Put a spacer in-between each button for customizability
+                barButtons.addObject(self.defaultSeparator)
+            }
             
             let barButtonItem = UIBarButtonItem(customView: button as UIView)
             barButtons.addObject(barButtonItem)
