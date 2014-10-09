@@ -8,6 +8,48 @@
 
 import UIKit
 
+protocol SCDeleteCellDelegate {
+    func executeDeletion(indexPath:NSIndexPath!)
+}
+
+class SCDeleteCellButton:UIButton {
+    var cell:UITableViewCell!
+    var indexPath:NSIndexPath?
+    var delegate:SCDeleteCellDelegate?
+    
+    var deleteConfirmationButton:UIButton!
+    
+    init(cell:UITableViewCell!) {
+        self.cell = cell
+        
+        super.init(frame: CGRectZero)
+        
+        self.addTarget(self, action: "stageForDeletion", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.deleteConfirmationButton = UIButton(frame: CGRectMake(0, 0, 75, cell.bounds.size.height))
+        self.deleteConfirmationButton.setTitle("Delete", forState: UIControlState.Normal)
+        self.deleteConfirmationButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.deleteConfirmationButton.backgroundColor = UIColor.redColor()
+        self.deleteConfirmationButton.addTarget(self, action: "confirmDelete", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Actions
+    
+    func confirmDelete() {
+        if let delegate = self.delegate {
+            delegate.executeDeletion(self.indexPath)
+        }
+    }
+    
+    func stageForDeletion() {
+        self.cell.setEditing(!self.cell.editing, animated: true)
+    }
+}
+
 class SCInvisibleZoneButton:UIButton {
     var plusImageView:UIImageView!
     var myTitleLabel:UILabel!
@@ -58,13 +100,100 @@ class SCInvisibleZoneButton:UIButton {
     }
 }
 
+class SCTransitioningTableCell:UITableViewCell {
+    
+    var deleteButton:SCDeleteCellButton!
+    var titleLabel:UILabel!
+    var subtitleLabel:UILabel!
+    var indexPath:NSIndexPath?
+    var homeViewController:SCHomeViewController?
+    class var cellHeight:CGFloat {
+        get {
+            return 63.0
+        }
+    }
+    var myContentView:UIView?
+    var invisibleArea:SCInvisibleArea? {
+        didSet {
+            self.myContentView?.removeFromSuperview()
+            
+            self.myContentView = self.contentView(invisibleArea)
+            self.contentView.addSubview(self.myContentView!)
+        }
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func contentView(invisibleArea:SCInvisibleArea!) -> UIView {
+        var view = UIView(frame: CGRectMake(0, 0, self.bounds.size.width, SCTransitioningTableCell.cellHeight))
+        view.backgroundColor = UIColor.clearColor()
+        
+        let margin:CGFloat = 18.0
+        
+        var deleteImage = UIImage(named: "xblack")
+        let y:CGFloat = view.bounds.size.height / 2 - (deleteImage.size.height / 2)
+        self.deleteButton = SCDeleteCellButton(cell: self)
+        self.deleteButton.frame = CGRectMake(margin, y, deleteImage.size.width, deleteImage.size.height)
+        self.deleteButton.indexPath = self.indexPath
+        self.deleteButton.delegate = self
+        self.deleteButton.setImage(deleteImage, forState: UIControlState.Normal)
+        view.addSubview(self.deleteButton)
+        
+        var x = CGRectGetMaxX(deleteButton.frame) + 13.0
+        var frame = CGRectMake(x, 7.5, view.bounds.size.width - (x + margin), 30)
+        self.titleLabel = UILabel(frame: frame)
+        self.titleLabel.textColor = UIColor.whiteColor()
+        self.titleLabel.font = SCTheme.primaryFont(25)
+        self.titleLabel.text = invisibleArea.name
+        view.addSubview(self.titleLabel)
+        
+        frame = CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.bounds.size.width, 17)
+        self.subtitleLabel = UILabel(frame: frame)
+        let gray:CGFloat = 220.0/255.0
+        self.subtitleLabel.textColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
+        self.subtitleLabel.font = SCTheme.primaryFont(15)
+        self.subtitleLabel.text = invisibleArea.location
+        view.addSubview(self.subtitleLabel)
+        
+        return view
+    }
+    
+    override func willTransitionToState(state: UITableViewCellStateMask) {
+        super.willTransitionToState(state)
+        
+        if let view = self.myContentView {
+            var frame = view.frame
+            frame.origin.x = self.editing ? 0 : -75
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                view.frame = frame
+            })
+        }
+    }
+}
+
+extension SCTransitioningTableCell: SCDeleteCellDelegate {
+    
+    func executeDeletion(indexPath:NSIndexPath!) {
+        if let homeController = self.homeViewController {
+            homeViewController?.deleteInvisibleArea(indexPath)
+        }
+    }
+    
+}
+
 class SCHomeViewController: SCBeaconViewController {
     
     var tableView:UITableView!
     var socialToolbar:SCSocialIconsToolbar!
     var invisibleAreaButton:SCInvisibleZoneButton!
     var tableViewTag:Int = 10
-    var cellHeight:CGFloat = 63.0
     var invisibleAreas:NSArray?
     var tableViewSeparator:CALayer!
     var newInvisibleAreaView:SCNewInvisibleAreaView!
@@ -91,14 +220,15 @@ class SCHomeViewController: SCBeaconViewController {
         self.tableView.opaque = true
         self.tableView.contentInset = UIEdgeInsetsZero
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.allowsMultipleSelectionDuringEditing = false
         self.view.addSubview(self.tableView)
         
         self.tableViewSeparator = CALayer()
         self.tableViewSeparator.backgroundColor = UIColor.blackColor().CGColor
         self.tableView.layer.addSublayer(self.tableViewSeparator)
         
-        let className = NSStringFromClass(UITableViewCell)
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: className)
+        let className = NSStringFromClass(SCTransitioningTableCell)
+        self.tableView.registerClass(SCTransitioningTableCell.self, forCellReuseIdentifier: className)
         
         self.socialToolbar = SCSocialIconsToolbar(frame: CGRectMake(0, 0, 0, 70))
         self.socialToolbar.delegate = self
@@ -142,39 +272,6 @@ class SCHomeViewController: SCBeaconViewController {
         self.tableView.contentInset = UIEdgeInsetsZero
     }
     
-    // MARK: - Getters
-    
-    func contentView(cell:UITableViewCell!, invisibleArea:SCInvisibleArea!) -> UIView {
-        var view = UIView(frame: CGRectMake(0, 0, cell.bounds.size.width, self.cellHeight))
-        view.backgroundColor = UIColor.clearColor()
-        
-        let margin:CGFloat = 15.0
-        
-        var deleteImage = UIImage(named: "xblack")
-        var frame = CGRectMake(margin, margin, deleteImage.size.width, deleteImage.size.height)
-        var deleteButton = UIButton(frame: frame)
-        deleteButton.setImage(deleteImage, forState: UIControlState.Normal)
-        view.addSubview(deleteButton)
-        
-        var x = CGRectGetMaxX(deleteButton.frame) + margin
-        frame = CGRectMake(x, 7.5, view.bounds.size.width - (x + margin), 30)
-        var titleLabel = UILabel(frame: frame)
-        titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = SCTheme.primaryFont(25)
-        titleLabel.text = invisibleArea.name
-        view.addSubview(titleLabel)
-        
-        frame = CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.bounds.size.width, 17)
-        var subtitleLabel = UILabel(frame: frame)
-        let gray:CGFloat = 220.0/255.0
-        subtitleLabel.textColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
-        subtitleLabel.font = SCTheme.primaryFont(15)
-        subtitleLabel.text = invisibleArea.location
-        view.addSubview(subtitleLabel)
-        
-        return view
-    }
-    
     // MARK: - Actions
     
     func getInvisibleZones() {
@@ -197,7 +294,13 @@ class SCHomeViewController: SCBeaconViewController {
     }
     
     func deleteInvisibleArea(indexPath:NSIndexPath!) {
+        self.tableView.beginUpdates()
         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        if let mutableAreas:NSMutableArray = self.invisibleAreas?.mutableCopy() as? NSMutableArray {
+            mutableAreas.removeObjectAtIndex(indexPath.row)
+            self.invisibleAreas = mutableAreas as NSArray
+        }
+        self.tableView.endUpdates()
         
         if let user = SCUser.currentUser {
             if let invisibleArea = self.invisibleAreas?.objectAtIndex(indexPath.row) as? SCInvisibleArea {
@@ -291,32 +394,37 @@ extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.cellHeight
+        return SCTransitioningTableCell.cellHeight
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let className = NSStringFromClass(UITableViewCell)
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(className, forIndexPath: indexPath) as? UITableViewCell
+        let className = NSStringFromClass(SCTransitioningTableCell)
+        var cell:SCTransitioningTableCell? = tableView.dequeueReusableCellWithIdentifier(className, forIndexPath: indexPath) as? SCTransitioningTableCell
         if (cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: className)
+            cell = SCTransitioningTableCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: className)
         }
         
+        cell?.homeViewController = self
+        cell?.indexPath = indexPath
+        
         var invisibleArea:SCInvisibleArea? = self.invisibleAreas?.objectAtIndex(indexPath.row) as? SCInvisibleArea
-        let view = self.contentView(cell, invisibleArea:invisibleArea)
-        view.tag = self.tableViewTag
-        cell?.contentView.addSubview(view)
+        cell?.invisibleArea = invisibleArea
+        
+        cell?.myContentView!.tag = self.tableViewTag
         
         return cell!
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, willDisplayCell cell: SCTransitioningTableCell!, forRowAtIndexPath indexPath: NSIndexPath) {
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.layoutMargins = UIEdgeInsetsZero
+
         cell.layoutMargins = UIEdgeInsetsZero
-        
         cell.backgroundColor = UIColor.clearColor()
         cell.separatorInset = UIEdgeInsetsZero
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        cell.editingAccessoryView = cell.deleteButton.deleteConfirmationButton
     }
     
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -324,18 +432,19 @@ extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
             view.removeFromSuperview()
         }
     }
-
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            self.deleteInvisibleArea(indexPath)
+        }
     }
     
-    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String! {
-        return "Delete"
-    }
-    
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-        self.deleteInvisibleArea(indexPath)
-        return [NSObject()] // TODO: figure what to return here
+    func tableView(tableView:UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            if cell.editing == true {
+                cell.setEditing(false, animated: true)
+            }
+        }
+        
     }
 }
