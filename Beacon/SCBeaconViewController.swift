@@ -32,7 +32,7 @@ class SCBeaconViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = self.beaconBarButtonItem
     }
     
-    // MARK - Actions
+    // MARK: - Actions
     
     func toggleBeacon() {
         var on:Bool = SCBeacon().beaconIsOn()

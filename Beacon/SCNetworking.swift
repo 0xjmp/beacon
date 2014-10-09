@@ -21,11 +21,11 @@ class SCNetworking: NSObject {
     
     var baseUrl:NSString! {
         get {
-            #if DEBUG
-                return "localhost:3000/\(self.apiVersion)/"
-            #else
+#if DEBUG
+                return "http://localhost:3000/\(self.apiVersion)/"
+#else
                 return "http://api.sce.ne/\(self.apiVersion)/"
-            #endif
+#endif
         }
     }
     
@@ -38,21 +38,21 @@ class SCNetworking: NSObject {
     
     func request(method:Alamofire.Method, path:NSString!, params:[String: AnyObject], completionHandler:SCRequestResultsBlock) {
         let url = "\(self.baseUrl)\(path)"
-        Alamofire.request(method, url, parameters: params, encoding:ParameterEncoding.JSON)
+        Alamofire.request(method, url, parameters: params, encoding:ParameterEncoding.URL)
             .response { (request, response, data, error) in
                 println("(\(response?.statusCode)) \(request.URL.absoluteString)")
-//                var jsonError:NSErrorPointer
-                println(data)
-//                if (jsonError != nil) {
-//                    println("A JSON error occurred: \(error)")
-//                    completionHandler(responseObject: nil, error: jsonError.memory!)
-//                    return;
-//                }
-            
+                
                 if error != nil {
+                    println(error)
                     completionHandler(responseObject: nil, error: error!)
                 } else {
-                    completionHandler(responseObject: data, error: nil)
+                    var jsonError: NSError?
+                    if let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError) {
+                        completionHandler(responseObject: jsonObject, error: nil)
+                    } else {
+                        println(jsonError)
+                        completionHandler(responseObject: nil, error: jsonError)
+                    }
                 }
             }
     }

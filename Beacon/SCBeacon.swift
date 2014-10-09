@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SCBeacon: NSObject {
+class SCBeacon: SCObject {
     
     private var beaconKey:NSString {
         get {
