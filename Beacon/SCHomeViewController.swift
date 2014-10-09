@@ -240,6 +240,7 @@ class SCHomeViewController: SCBeaconViewController {
         self.view.addSubview(self.invisibleAreaButton)
         
         self.newInvisibleAreaView = SCNewInvisibleAreaView(frame: CGRectZero)
+        self.newInvisibleAreaView.actionDelegate = self
         
         self.getInvisibleZones()
     }
@@ -319,6 +320,25 @@ class SCHomeViewController: SCBeaconViewController {
         }
     }
     
+    func create(invisibleArea:SCInvisibleArea!) {
+        self.closeInvisibleArea()
+        
+        if let mutableAreas: NSMutableArray = self.invisibleAreas?.mutableCopy() as? NSMutableArray {
+            mutableAreas.addObject(invisibleArea)
+            self.invisibleAreas = mutableAreas
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
+        
+        SCUser.create(invisibleArea, completionHandler: { (responseObject, error) -> Void in
+            if error == nil {
+                if self.invisibleAreas?.count != SCUser.currentUser?.invisibleAreas?.count {
+                    self.invisibleAreas = SCUser.currentUser?.invisibleAreas
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+                }
+            }
+        })
+    }
+    
 }
 
 extension SCHomeViewController {
@@ -332,9 +352,9 @@ extension SCHomeViewController {
         self.newInvisibleAreaView.frame = self.tableView.frame
         self.view.addSubview(self.newInvisibleAreaView)
         
-        println(self.newInvisibleAreaView)
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.invisibleAreaButton.plusImageView.transform = CGAffineTransformMakeRotation(-45.0)
             self.newInvisibleAreaView.layer.opacity = 1.0
         })
     }
@@ -447,4 +467,12 @@ extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
+}
+
+extension SCHomeViewController: SCNewInvisibleAreaDelegate {
+    
+    func didCreateNew(invisibleArea:SCInvisibleArea!) {
+        self.create(invisibleArea)
+    }
+    
 }

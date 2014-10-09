@@ -8,15 +8,16 @@
 
 import UIKit
 
-class SCInvisibleArea: NSObject {
+class SCInvisibleArea: SCObject {
    
     var name:NSString?
     var location:NSString?
+    var user:SCUser?
     
-    init(json:NSDictionary) {
+    init(json:NSDictionary?) {
         super.init()
-        self.name = json.valueForKey("name") as NSString?
-        self.location = json.valueForKey("location") as NSString?
+        self.name = json?.valueForKey("name") as NSString?
+        self.location = json?.valueForKey("location") as NSString?
     }
     
 }

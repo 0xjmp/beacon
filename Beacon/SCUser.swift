@@ -97,5 +97,16 @@ class SCUser: SCObject {
             })
         }
     }
+    
+    class func create(invisibleArea:SCInvisibleArea!, completionHandler:SCRequestResultsBlock) {
+        SCNetworking.shared.request(.POST, path: "invisible_areas", params: ["invisible_area" : invisibleArea.json()], completionHandler: { (responseObject, error) -> Void in
+            if error != nil {
+                completionHandler(responseObject: nil, error: error)
+            } else {
+                let user = SCUser(json: responseObject)
+                completionHandler(responseObject: user, error: nil)
+            }
+        })
+    }
    
 }
