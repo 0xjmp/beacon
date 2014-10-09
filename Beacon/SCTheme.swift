@@ -35,16 +35,20 @@ class SCTheme: NSObject {
     }
     
     class func clearNavigation(bar:UINavigationBar) {
-        bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         bar.shadowImage = UIImage()
         bar.translucent = true
-    }
-    
-    class func socialToolBar(controller:SCSocialIconsViewController) -> UIToolbar {
-        var toolbar = UIToolbar(frame: CGRectMake(0, 0, 0, controller.view.bounds.size.height))
-        let barButtonItem = UIBarButtonItem(customView: controller.view)
-        toolbar.setItems([barButtonItem], animated: false)
-        return toolbar
+        
+        let height:CGFloat = 85.0
+        
+        var frame = bar.frame
+        frame.size.height = height
+        bar.frame = frame
+        
+        let imageView = UIImageView(image: UIImage())
+        let statusBarFrame = UIApplication.sharedApplication().statusBarFrame
+        imageView.frame = CGRectMake(0, 0, bar.bounds.size.width, height)
+        
+        bar.setBackgroundImage(imageView.image, forBarMetrics: UIBarMetrics.Default)
     }
     
     class var primaryTextColor:UIColor {
@@ -54,6 +58,6 @@ class SCTheme: NSObject {
     }
     
     class func primaryFont(size:CGFloat!) -> UIFont {
-        return UIFont(name: "MavenProLight-300", size: size)
+        return UIFont(name: "MavenProLight300-Regular", size: size)
     }
 }

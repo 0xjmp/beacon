@@ -20,7 +20,8 @@
 		D2081CE719E5345200ABD203 /* SCTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CE619E5345200ABD203 /* SCTheme.swift */; };
 		D2081CEB19E536D800ABD203 /* SCBeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CEA19E536D800ABD203 /* SCBeaconViewController.swift */; };
 		D2081CED19E5414300ABD203 /* SCBeacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CEC19E5414300ABD203 /* SCBeacon.swift */; };
-		D2081CEF19E5463500ABD203 /* SCSocialIconsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CEE19E5463500ABD203 /* SCSocialIconsView.swift */; };
+		D2081CEF19E5463500ABD203 /* SCSocialIconsToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CEE19E5463500ABD203 /* SCSocialIconsToolbar.swift */; };
+		D2081CF419E66F1500ABD203 /* SCNewInvisibleAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CF319E66F1500ABD203 /* SCNewInvisibleAreaView.swift */; };
 		D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */; };
 		D2E47AF419E5C0AC00665BC3 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2E47AAC19E5C0AC00665BC3 /* background.jpg */; };
 		D2E47AF519E5C0AC00665BC3 /* background@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2E47AAD19E5C0AC00665BC3 /* background@2x.jpg */; };
@@ -153,7 +154,8 @@
 		D2081CE619E5345200ABD203 /* SCTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCTheme.swift; sourceTree = "<group>"; };
 		D2081CEA19E536D800ABD203 /* SCBeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCBeaconViewController.swift; sourceTree = "<group>"; };
 		D2081CEC19E5414300ABD203 /* SCBeacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCBeacon.swift; sourceTree = "<group>"; };
-		D2081CEE19E5463500ABD203 /* SCSocialIconsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSocialIconsView.swift; sourceTree = "<group>"; };
+		D2081CEE19E5463500ABD203 /* SCSocialIconsToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSocialIconsToolbar.swift; sourceTree = "<group>"; };
+		D2081CF319E66F1500ABD203 /* SCNewInvisibleAreaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNewInvisibleAreaView.swift; sourceTree = "<group>"; };
 		D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenProLight-300.otf"; sourceTree = "<group>"; };
 		D2E47AAC19E5C0AC00665BC3 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		D2E47AAD19E5C0AC00665BC3 /* background@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background@2x.jpg"; sourceTree = "<group>"; };
@@ -292,8 +294,9 @@
 				D2081CE619E5345200ABD203 /* SCTheme.swift */,
 				D2081CEA19E536D800ABD203 /* SCBeaconViewController.swift */,
 				D2081CEC19E5414300ABD203 /* SCBeacon.swift */,
-				D2081CEE19E5463500ABD203 /* SCSocialIconsView.swift */,
+				D2081CEE19E5463500ABD203 /* SCSocialIconsToolbar.swift */,
 				D2E47B4519E5FA8200665BC3 /* SCObject.swift */,
+				D2081CF319E66F1500ABD203 /* SCNewInvisibleAreaView.swift */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				D2E47B2A19E5C0AC00665BC3 /* tumblroff.png in Resources */,
 				D2E47B1A19E5C0AC00665BC3 /* plusblack@3x.png in Resources */,
 				D2E47B2F19E5C0AC00665BC3 /* tumblron@3x.png in Resources */,
+				D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */,
 				D2E47B1C19E5C0AC00665BC3 /* pluswhite@2x.png in Resources */,
 				D2E47AF919E5C0AC00665BC3 /* facebookoff@3x.png in Resources */,
 				D2E47B0619E5C0AC00665BC3 /* linkedinon.png in Resources */,
@@ -574,7 +578,6 @@
 				D2E47B0D19E5C0AC00665BC3 /* locationoff@2x.png in Resources */,
 				D2E47AFB19E5C0AC00665BC3 /* facebookon@2x.png in Resources */,
 				D2E47B2219E5C0AC00665BC3 /* slidertrack@2x.png in Resources */,
-				D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */,
 				D2E47B1F19E5C0AC00665BC3 /* sliderball@2x.png in Resources */,
 				D2E47B0819E5C0AC00665BC3 /* linkedinon@3x.png in Resources */,
 				D2E47B0319E5C0AC00665BC3 /* linkedinoff.png in Resources */,
@@ -613,8 +616,9 @@
 				D2081CE719E5345200ABD203 /* SCTheme.swift in Sources */,
 				D2081CD819E2930500ABD203 /* SCConstants.swift in Sources */,
 				D2081CDA19E2930500ABD203 /* SCHomeViewController.swift in Sources */,
+				D2081CF419E66F1500ABD203 /* SCNewInvisibleAreaView.swift in Sources */,
 				D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */,
-				D2081CEF19E5463500ABD203 /* SCSocialIconsView.swift in Sources */,
+				D2081CEF19E5463500ABD203 /* SCSocialIconsToolbar.swift in Sources */,
 				D2081CD919E2930500ABD203 /* SCHandOffActivityManager.swift in Sources */,
 				D2081CDB19E2930500ABD203 /* SCNetworking.swift in Sources */,
 				D2081CDD19E2930500ABD203 /* SCUser.swift in Sources */,

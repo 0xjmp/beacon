@@ -13,11 +13,13 @@ class SCUser: SCObject {
     var id:Int!
     var profileUrl:NSString?
     var invisibleAreas:NSArray?
+    var defaultSocialType:NSString?
     
     init(json:AnyObject!) {
         self.id = json.valueForKey("id") as? Int
         self.profileUrl = json.valueForKey("url") as? NSString
         self.invisibleAreas = json.valueForKey("invisible_areas") as? NSArray
+        self.defaultSocialType = json.valueForKey("default_social_type") as? NSString
     }
     
     class var currentUser:SCUser? {
@@ -75,6 +77,22 @@ class SCUser: SCObject {
                     on = responseObject as Bool
                     SCBeacon().updateBeaconState(on)
                     completionHandler(responseObject: on, error: nil)
+                }
+            })
+        }
+    }
+    
+    class func changeDefaultSocial(type:SocialType, completionHandler:SCRequestResultsBlock) {
+        if let user = self.currentUser {
+            user.defaultSocialType = type.description()
+            
+            let path = "users/\(String(user.id))"
+            SCNetworking.shared.request(.PUT, path: path, params: ["user" : user.json()], completionHandler: { (responseObject, error) -> Void in
+                if error != nil {
+                    completionHandler(responseObject: nil, error: error)
+                } else {
+                    var user = SCUser(json: responseObject)
+                    completionHandler(responseObject: user, error: nil)
                 }
             })
         }

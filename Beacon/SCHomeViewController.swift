@@ -9,31 +9,28 @@
 import UIKit
 
 class SCInvisibleZoneButton:UIButton {
-    var plusImageView:UIImageView {
-        get {
-            let image = UIImage(named: "plusblack")
-            var imageView = UIImageView(image: image)
-            imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
-            imageView.userInteractionEnabled = false
-            return imageView
-        }
-    }
-    var myTitleLabel:UILabel {
-        get {
-            var label = UILabel()
-            label.font = SCTheme.primaryFont(17)
-            label.textColor = SCTheme.primaryTextColor
-            label.text = self.defaultTitleText
-            label.userInteractionEnabled = false
-            return label
-        }
-    }
+    var plusImageView:UIImageView!
+    var myTitleLabel:UILabel!
     var defaultTitleText = "New Invisible Area"
+    var active:Bool!
     
     override init(frame:CGRect) {
         super.init(frame: frame)
+        
+        let image = UIImage(named: "pluswhite")
+        self.plusImageView = UIImageView(image: image)
+        self.plusImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+        self.plusImageView.userInteractionEnabled = false
         self.addSubview(self.plusImageView)
+        
+        self.myTitleLabel = UILabel()
+        self.myTitleLabel.font = SCTheme.primaryFont(27)
+        self.myTitleLabel.textColor = SCTheme.primaryTextColor
+        self.myTitleLabel.text = self.defaultTitleText
+        self.myTitleLabel.userInteractionEnabled = false
         self.addSubview(self.myTitleLabel)
+        
+        self.active = false
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -41,28 +38,36 @@ class SCInvisibleZoneButton:UIButton {
     }
     
     override func layoutSubviews() {
-        let margin:CGFloat = 10
+        super.layoutSubviews()
         
-        var frame = self.plusImageView.frame
-        frame.origin.x = margin
-        self.plusImageView.frame = frame
+        let margin:CGFloat = 15
         
-        frame = self.myTitleLabel.frame
-        frame.origin.x = CGRectGetMaxX(self.plusImageView.frame) + margin
+        self.plusImageView.frame = CGRectMake(margin, 0, self.plusImageView.bounds.size.width, self.plusImageView.bounds.size.height)
+        var center = self.plusImageView.center
+        center.y = self.bounds.size.height / 2
+        self.plusImageView.center = center
+        
+        var frame = self.myTitleLabel.frame
+        frame.origin.x = CGRectGetMaxX(self.plusImageView.frame) + 10
         frame.size.width = self.bounds.size.width - CGRectGetMinX(frame)
         frame.size.height = self.plusImageView.bounds.size.height
         self.myTitleLabel.frame = frame
+        center = self.myTitleLabel.center
+        center.y = self.bounds.size.height / 2
+        self.myTitleLabel.center = center
     }
 }
 
 class SCHomeViewController: SCBeaconViewController {
     
     var tableView:UITableView!
-    var socialToolbar:UIToolbar!
+    var socialToolbar:SCSocialIconsToolbar!
     var invisibleAreaButton:SCInvisibleZoneButton!
     var tableViewTag:Int = 10
-    var cellHeight:CGFloat = 65.0
+    var cellHeight:CGFloat = 63.0
     var invisibleAreas:NSArray?
+    var tableViewSeparator:CALayer!
+    var newInvisibleAreaView:SCNewInvisibleAreaView!
     
     override func loadView() {
         super.loadView()
@@ -76,24 +81,35 @@ class SCHomeViewController: SCBeaconViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Grouped)
+        self.tableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
         self.tableView.dataSource = self
         self.tableView.separatorInset = UIEdgeInsetsZero
-        self.tableView.separatorColor = UIColor.darkGrayColor()
+        self.tableView.separatorColor = UIColor.blackColor()
         self.tableView.delegate = self
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.backgroundView = nil
+        self.tableView.opaque = true
+        self.tableView.contentInset = UIEdgeInsetsZero
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
         self.view.addSubview(self.tableView)
+        
+        self.tableViewSeparator = CALayer()
+        self.tableViewSeparator.backgroundColor = UIColor.blackColor().CGColor
+        self.tableView.layer.addSublayer(self.tableViewSeparator)
         
         let className = NSStringFromClass(UITableViewCell)
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: className)
         
-        var socialIconsController = SCSocialIconsViewController()
-        socialIconsController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, socialIconsController.view.bounds.size.height)
-        self.socialToolbar = SCTheme.socialToolBar(socialIconsController)
+        self.socialToolbar = SCSocialIconsToolbar(frame: CGRectMake(0, 0, 0, 70))
         self.socialToolbar.delegate = self
+        self.socialToolbar.actionDelegate = self
         self.view.addSubview(self.socialToolbar)
         
         self.invisibleAreaButton = SCInvisibleZoneButton(frame: CGRectZero)
+        self.invisibleAreaButton.addTarget(self, action: "toggleInvisibleArea", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.invisibleAreaButton)
+        
+        self.newInvisibleAreaView = SCNewInvisibleAreaView(frame: CGRectZero)
         
         self.getInvisibleZones()
     }
@@ -104,16 +120,59 @@ class SCHomeViewController: SCBeaconViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: SCTheme.logoImageView)
         
         if let navigationBar = self.navigationController?.navigationBar {
+            SCTheme.clearNavigation(navigationBar)
+            
             self.socialToolbar.frame = CGRectMake(0, CGRectGetMaxY(navigationBar.frame), self.view.bounds.size.width, self.socialToolbar.bounds.size.height)
         }
         
-        self.invisibleAreaButton.frame = CGRectMake(0, CGRectGetMaxY(self.socialToolbar.frame), self.view.bounds.size.width, self.invisibleAreaButton.bounds.size.height)
+        self.invisibleAreaButton.frame = CGRectMake(0, CGRectGetMaxY(self.socialToolbar.frame), self.view.bounds.size.width, 70)
         
         var frame = CGRectZero
         frame.origin.y = CGRectGetMaxY(self.invisibleAreaButton.frame)
         frame.size.width = self.view.bounds.size.width
         frame.size.height = self.view.bounds.size.height - CGRectGetMinY(frame)
         self.tableView.frame = frame
+        
+        self.tableViewSeparator.frame = CGRectMake(0, 0, self.tableView.bounds.size.width, 0.50)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.tableView.contentInset = UIEdgeInsetsZero
+    }
+    
+    // MARK: - Getters
+    
+    func contentView(cell:UITableViewCell!, invisibleArea:SCInvisibleArea!) -> UIView {
+        var view = UIView(frame: CGRectMake(0, 0, cell.bounds.size.width, self.cellHeight))
+        view.backgroundColor = UIColor.clearColor()
+        
+        let margin:CGFloat = 15.0
+        
+        var deleteImage = UIImage(named: "xblack")
+        var frame = CGRectMake(margin, margin, deleteImage.size.width, deleteImage.size.height)
+        var deleteButton = UIButton(frame: frame)
+        deleteButton.setImage(deleteImage, forState: UIControlState.Normal)
+        view.addSubview(deleteButton)
+        
+        var x = CGRectGetMaxX(deleteButton.frame) + margin
+        frame = CGRectMake(x, 7.5, view.bounds.size.width - (x + margin), 30)
+        var titleLabel = UILabel(frame: frame)
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = SCTheme.primaryFont(25)
+        titleLabel.text = invisibleArea.name
+        view.addSubview(titleLabel)
+        
+        frame = CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.bounds.size.width, 17)
+        var subtitleLabel = UILabel(frame: frame)
+        let gray:CGFloat = 220.0/255.0
+        subtitleLabel.textColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
+        subtitleLabel.font = SCTheme.primaryFont(15)
+        subtitleLabel.text = invisibleArea.location
+        view.addSubview(subtitleLabel)
+        
+        return view
     }
     
     // MARK: - Actions
@@ -159,6 +218,60 @@ class SCHomeViewController: SCBeaconViewController {
     
 }
 
+extension SCHomeViewController {
+    
+    func openInvisibleArea() {
+        if let superview = self.newInvisibleAreaView.superview {
+            self.newInvisibleAreaView.removeFromSuperview()
+        }
+        
+        self.newInvisibleAreaView.layer.opacity = 0.0
+        self.newInvisibleAreaView.frame = self.tableView.frame
+        self.view.addSubview(self.newInvisibleAreaView)
+        
+        println(self.newInvisibleAreaView)
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.newInvisibleAreaView.layer.opacity = 1.0
+        })
+    }
+    
+    func closeInvisibleArea() {
+        if self.newInvisibleAreaView.superview == nil {
+            return
+        }
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.newInvisibleAreaView.layer.opacity = 0.0
+        }, completion:{ (success) -> Void in
+            self.newInvisibleAreaView.removeFromSuperview()
+        })
+    }
+    
+    func toggleInvisibleArea() {
+        if self.invisibleAreaButton.active == true {
+            self.closeInvisibleArea()
+        } else {
+            self.openInvisibleArea()
+        }
+        self.invisibleAreaButton.active = !self.invisibleAreaButton.active
+    }
+    
+}
+
+extension SCHomeViewController: SCSocialDelegate {
+    
+    func buttonWasPressed(type:SocialType) {
+        // TODO: We'll probably be putting a modal here
+        SCUser.changeDefaultSocial(type, completionHandler: { (responseObject, error) -> Void in
+            if error == nil {
+                
+            }
+        })
+    }
+    
+}
+
 extension SCHomeViewController: UIToolbarDelegate {
     
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
@@ -185,57 +298,33 @@ extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
         let className = NSStringFromClass(UITableViewCell)
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(className, forIndexPath: indexPath) as? UITableViewCell
         if (cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: className)
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: className)
         }
         
-        if let invisibleArea = self.invisibleAreas?.objectAtIndex(indexPath.row) as? SCInvisibleArea {
-            cell!.textLabel?.text = invisibleArea.name
-            cell!.detailTextLabel?.text = invisibleArea.location
-        }
+        var invisibleArea:SCInvisibleArea? = self.invisibleAreas?.objectAtIndex(indexPath.row) as? SCInvisibleArea
+        let view = self.contentView(cell, invisibleArea:invisibleArea)
+        view.tag = self.tableViewTag
+        cell?.contentView.addSubview(view)
         
         return cell!
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.layoutMargins = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
+        
         cell.backgroundColor = UIColor.clearColor()
         cell.separatorInset = UIEdgeInsetsZero
-        
-        cell.textLabel?.font = SCTheme.primaryFont(14.0)
-        cell.textLabel?.textColor = SCTheme.primaryTextColor
-        cell.textLabel?.numberOfLines = 0
-        
-        cell.detailTextLabel?.font = SCTheme.primaryFont(12.0)
-        cell.detailTextLabel?.textColor = SCTheme.primaryTextColor
-        cell.detailTextLabel?.numberOfLines = 0
-        
-        // Setup the close button
-        let margin:CGFloat = 10.0
-        let image = UIImage(named: "xblack")
-        var button = UIButton()
-        button.tag = self.tableViewTag
-        button.setImage(image, forState: UIControlState.Normal)
-        button.frame = CGRectMake(margin, margin, image.size.width, image.size.height)
-        button.addTarget(self, action: "stageForDeletion", forControlEvents: UIControlEvents.TouchUpInside)
-        cell.contentView.addSubview(button)
-        
-        // Adjust the cell labels to the close button
-        var textLabelFrame = cell.textLabel?.frame
-        textLabelFrame?.origin.x = CGRectGetMaxX(button.frame) + margin
-        cell.textLabel?.frame = textLabelFrame!
-        
-        var detailLabelFrame = cell.detailTextLabel?.frame
-        detailLabelFrame?.origin.x = textLabelFrame!.origin.x
-        cell.detailTextLabel?.frame = detailLabelFrame!
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let view = cell.contentView.viewWithTag(self.tableViewTag) {
             view.removeFromSuperview()
         }
-        
-        cell.textLabel!.text = ""
-        cell.detailTextLabel!.text = ""
     }
+
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return UITableViewCellEditingStyle.Delete

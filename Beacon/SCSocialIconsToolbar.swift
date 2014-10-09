@@ -62,13 +62,19 @@ class SCSwitchButton:UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func pressed() {
+    func press() {
         self.on = !self.on
     }
     
 }
 
-class SCSocialIconsView: UIView {
+protocol SCSocialDelegate {
+    func buttonWasPressed(type:SocialType)
+}
+
+class SCSocialIconsToolbar: UIToolbar {
+    
+    var actionDelegate:SCSocialDelegate?
     
     var facebookButton:SCSwitchButton! {
         get {
@@ -110,50 +116,39 @@ class SCSocialIconsView: UIView {
         }
     }
     
+    var defaultSeparator:UIBarButtonItem! {
+        get {
+            var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+            barButton.width = 20;
+            return barButton
+        }
+    }
+    
     var socialButtons:NSArray {
         get {
             return [facebookButton, twitterButton, instagramButton, linkedinButton, tumblrButton]
         }
     }
     
-    override init() {
-        super.init(nibName: nil, bundle: nil)
+    override init(frame:CGRect) {
+        super.init(frame: frame)
         
-        self.view.frame = CGRectMake(0, 0, 0, 50)
+        self.setBackgroundImage(UIImage(), forToolbarPosition: UIBarPosition.TopAttached, barMetrics: UIBarMetrics.Default)
+
+        var barButtons = NSMutableArray()
+        for button in self.socialButtons {
+            
+            // Put a spacer in-between each button for customizability
+            barButtons.addObject(self.defaultSeparator)
+            
+            let barButtonItem = UIBarButtonItem(customView: button as UIView)
+            barButtons.addObject(barButtonItem)
+        }
+        self.setItems(barButtons, animated: false)
     }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        for button in self.socialButtons {
-            if let actionButton = button as? SCSwitchButton {
-                actionButton.addTarget(self, action: "pressWithButton:", forControlEvents: UIControlEvents.TouchUpInside)
-                self.view.addSubview(actionButton)
-            }
-        }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // We're assuming that each icon is an equal shape
-        
-        if let buttonRef = self.socialButtons.firstObject as? SCSwitchButton {
-            self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.bounds.size.width, buttonRef.bounds.size.height)
-        }
-        
-        
-        for (var i = 0; i < self.socialButtons.count; i++) {
-            if let actionButton = self.socialButtons[i] as? SCSwitchButton {
-                let margin:CGFloat = 10.0
-                let x:CGFloat = ((self.view.bounds.size.width - (CGFloat(self.socialButtons.count) * (actionButton.bounds.size.width + margin) - margin)) / CGFloat(2)) + (CGFloat(i) * actionButton.bounds.size.width + margin)
-                actionButton.frame = CGRectMake(x, margin, actionButton.bounds.size.width, actionButton.bounds.size.height)
-            }
-        }
     }
     
     // MARK: Actions
@@ -166,22 +161,23 @@ class SCSocialIconsView: UIView {
         }
     }
     
-    func updateButton(index:Int) {
-        // Call networking functions (or others similar) that 
-        // represent this button.
+    func updateButton(type:SocialType) {
+        if let delegate = self.actionDelegate {
+            delegate.buttonWasPressed(type)
+        }
     }
     
     func press(button:SCSwitchButton!) {
         if button.on == true {
-            button.pressed()
+            button.press()
         } else {
             self.clearButtons()
-            button.pressed()
+            button.press()
         }
         
         let index = self.socialButtons.indexOfObject(button)
         assert(index != NSNotFound, "Serious error with index")
-        self.updateButton(index)
+        self.updateButton(button.socialType)
     }
 
 }
