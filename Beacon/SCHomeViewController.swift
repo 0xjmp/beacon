@@ -53,6 +53,7 @@ class SCDeleteCellButton:UIButton {
 class SCInvisibleAreaButton:UIButton {
     var plusImageView:UIImageView!
     var myTitleLabel:UILabel!
+    var closeLabel:UILabel!
     var defaultTitleText = "New Invisible Area"
     var active:Bool!
     
@@ -63,6 +64,7 @@ class SCInvisibleAreaButton:UIButton {
         self.plusImageView = UIImageView(image: image)
         self.plusImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
         self.plusImageView.userInteractionEnabled = false
+        self.plusImageView.contentMode = UIViewContentMode.Center
         self.addSubview(self.plusImageView)
         
         self.myTitleLabel = UILabel()
@@ -71,6 +73,14 @@ class SCInvisibleAreaButton:UIButton {
         self.myTitleLabel.text = self.defaultTitleText
         self.myTitleLabel.userInteractionEnabled = false
         self.addSubview(self.myTitleLabel)
+        
+        self.closeLabel = UILabel()
+        self.closeLabel.font = SCTheme.primaryFont(27)
+        self.closeLabel.textColor = SCTheme.primaryTextColor
+        self.closeLabel.text = "Cancel"
+        self.closeLabel.userInteractionEnabled = false
+        self.closeLabel.layer.opacity = 0.0
+        self.addSubview(self.closeLabel)
         
         self.active = false
     }
@@ -82,7 +92,7 @@ class SCInvisibleAreaButton:UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let margin:CGFloat = 15
+        let margin:CGFloat = 16
         
         self.plusImageView.frame = CGRectMake(margin, 0, self.plusImageView.bounds.size.width, self.plusImageView.bounds.size.height)
         var center = self.plusImageView.center
@@ -97,6 +107,8 @@ class SCInvisibleAreaButton:UIButton {
         center = self.myTitleLabel.center
         center.y = self.bounds.size.height / 2
         self.myTitleLabel.center = center
+        
+        self.closeLabel.frame = self.myTitleLabel.frame
     }
 }
 
@@ -134,7 +146,7 @@ class SCTransitioningTableCell:UITableViewCell {
         var view = UIView(frame: CGRectMake(0, 0, self.bounds.size.width, SCTransitioningTableCell.cellHeight))
         view.backgroundColor = UIColor.clearColor()
         
-        let margin:CGFloat = 18.0
+        let margin:CGFloat = 20.0
         
         var deleteImage = UIImage(named: "xblack")
         let y:CGFloat = view.bounds.size.height / 2 - (deleteImage.size.height / 2)
@@ -205,6 +217,8 @@ class SCHomeViewController: SCBeaconViewController {
         let imageView = UIImageView(image: image)
         imageView.userInteractionEnabled = true
         self.view = imageView
+        
+        self.view = SCBackgroundView()
     }
     
     override func viewDidLoad() {
@@ -256,7 +270,7 @@ class SCHomeViewController: SCBeaconViewController {
             self.socialToolbar.frame = CGRectMake(0, CGRectGetMaxY(navigationBar.frame), self.view.bounds.size.width, self.socialToolbar.bounds.size.height)
         }
         
-        self.invisibleAreaButton.frame = CGRectMake(0, CGRectGetMaxY(self.socialToolbar.frame), self.view.bounds.size.width, 70)
+        self.invisibleAreaButton.frame = CGRectMake(0, CGRectGetMaxY(self.socialToolbar.frame) + 10, self.view.bounds.size.width, 70)
         
         var frame = CGRectZero
         frame.origin.y = CGRectGetMaxY(self.invisibleAreaButton.frame)
@@ -353,8 +367,12 @@ extension SCHomeViewController {
         self.view.addSubview(self.newInvisibleAreaView)
         
         UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.invisibleAreaButton.plusImageView.transform = CGAffineTransformMakeRotation(-0.8)
             self.newInvisibleAreaView.layer.opacity = 1.0
+            self.invisibleAreaButton.myTitleLabel.layer.opacity = 0.0
+            self.invisibleAreaButton.closeLabel.layer.opacity = 1.0
         })
+        
     }
     
     func closeInvisibleArea() {
@@ -363,7 +381,10 @@ extension SCHomeViewController {
         }
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.invisibleAreaButton.plusImageView.transform = CGAffineTransformMakeRotation(0)
             self.newInvisibleAreaView.layer.opacity = 0.0
+            self.invisibleAreaButton.myTitleLabel.layer.opacity = 1.0
+            self.invisibleAreaButton.closeLabel.layer.opacity = 0.0
         }, completion:{ (success) -> Void in
             self.newInvisibleAreaView.removeFromSuperview()
         })

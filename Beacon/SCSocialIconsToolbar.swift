@@ -133,6 +133,7 @@ class SCSocialIconsToolbar: UIToolbar {
         super.init(frame: frame)
         
         self.setBackgroundImage(UIImage(), forToolbarPosition: UIBarPosition.TopAttached, barMetrics: UIBarMetrics.Default)
+        self.clipsToBounds = true
 
         var barButtons = NSMutableArray()
         for (var i = 0; i < self.socialButtons.count; i++) {

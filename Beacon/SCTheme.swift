@@ -40,7 +40,7 @@ class SCTheme: NSObject {
         bar.shadowImage = UIImage()
         bar.translucent = true
         
-        let height:CGFloat = 75.0
+        let height:CGFloat = 80.0
         
         var frame = bar.frame
         frame.size.height = height
