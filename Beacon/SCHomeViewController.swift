@@ -50,7 +50,7 @@ class SCDeleteCellButton:UIButton {
     }
 }
 
-class SCInvisibleZoneButton:UIButton {
+class SCInvisibleAreaButton:UIButton {
     var plusImageView:UIImageView!
     var myTitleLabel:UILabel!
     var defaultTitleText = "New Invisible Area"
@@ -145,7 +145,7 @@ class SCTransitioningTableCell:UITableViewCell {
         self.deleteButton.setImage(deleteImage, forState: UIControlState.Normal)
         view.addSubview(self.deleteButton)
         
-        var x = CGRectGetMaxX(deleteButton.frame) + 13.0
+        var x = CGRectGetMaxX(deleteButton.frame) + 15
         var frame = CGRectMake(x, 7.5, view.bounds.size.width - (x + margin), 30)
         self.titleLabel = UILabel(frame: frame)
         self.titleLabel.textColor = UIColor.whiteColor()
@@ -192,7 +192,7 @@ class SCHomeViewController: SCBeaconViewController {
     
     var tableView:UITableView!
     var socialToolbar:SCSocialIconsToolbar!
-    var invisibleAreaButton:SCInvisibleZoneButton!
+    var invisibleAreaButton:SCInvisibleAreaButton!
     var tableViewTag:Int = 10
     var invisibleAreas:NSArray?
     var tableViewSeparator:CALayer!
@@ -235,7 +235,7 @@ class SCHomeViewController: SCBeaconViewController {
         self.socialToolbar.actionDelegate = self
         self.view.addSubview(self.socialToolbar)
         
-        self.invisibleAreaButton = SCInvisibleZoneButton(frame: CGRectZero)
+        self.invisibleAreaButton = SCInvisibleAreaButton(frame: CGRectZero)
         self.invisibleAreaButton.addTarget(self, action: "toggleInvisibleArea", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.invisibleAreaButton)
         
@@ -352,9 +352,7 @@ extension SCHomeViewController {
         self.newInvisibleAreaView.frame = self.tableView.frame
         self.view.addSubview(self.newInvisibleAreaView)
         
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.invisibleAreaButton.plusImageView.transform = CGAffineTransformMakeRotation(-45.0)
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.newInvisibleAreaView.layer.opacity = 1.0
         })
     }
@@ -385,12 +383,16 @@ extension SCHomeViewController {
 extension SCHomeViewController: SCSocialDelegate {
     
     func buttonWasPressed(type:SocialType) {
-        // TODO: We'll probably be putting a modal here
-        SCUser.changeDefaultSocial(type, completionHandler: { (responseObject, error) -> Void in
-            if error == nil {
-                
-            }
-        })
+        if SCSocialAccountSetupViewController.setup(type) == false {
+            let viewController = SCSocialAccountSetupViewController()
+            self.presentViewController(viewController, animated: true, completion: nil)
+        } else {
+            SCUser.changeDefaultSocial(type, completionHandler: { (responseObject, error) -> Void in
+                if error == nil {
+                    
+                }
+            })
+        }
     }
     
 }

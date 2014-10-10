@@ -54,7 +54,6 @@ class SCSwitchButton:UIButton {
         
         image = self.on ? self.clickedImage : self.defaultImage
         
-        self.addTarget(self, action: "pressed", forControlEvents: UIControlEvents.TouchUpInside)
         self.setImage(image, forState: UIControlState.Normal)
     }
 
@@ -62,7 +61,7 @@ class SCSwitchButton:UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func press() {
+    func pressed() {
         self.on = !self.on
     }
     
@@ -136,11 +135,9 @@ class SCSocialIconsToolbar: UIToolbar {
         self.setBackgroundImage(UIImage(), forToolbarPosition: UIBarPosition.TopAttached, barMetrics: UIBarMetrics.Default)
 
         var barButtons = NSMutableArray()
-        for button in self.socialButtons {
-        
-        }
         for (var i = 0; i < self.socialButtons.count; i++) {
             let button:AnyObject = self.socialButtons.objectAtIndex(i)
+            button.addTarget(self, action: "press:", forControlEvents: UIControlEvents.TouchUpInside)
             
             if i != 0 {
                 // Put a spacer in-between each button for customizability
@@ -174,16 +171,13 @@ class SCSocialIconsToolbar: UIToolbar {
     }
     
     func press(button:SCSwitchButton!) {
-        if button.on == true {
-            button.press()
-        } else {
+        if button.on != true {
             self.clearButtons()
-            button.press()
         }
         
-        let index = self.socialButtons.indexOfObject(button)
-        assert(index != NSNotFound, "Serious error with index")
-        self.updateButton(button.socialType)
+        button.pressed()
+        
+        self.actionDelegate?.buttonWasPressed(button.socialType)
     }
 
 }

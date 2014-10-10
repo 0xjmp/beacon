@@ -36,6 +36,7 @@ class SCBeaconViewController: UIViewController {
         self.beaconSwitch.layer.cornerRadius = 16.0;
         self.beaconSwitch.tintColor = UIColor.blackColor()
         self.beaconSwitch.addTarget(self, action: "toggleBeacon", forControlEvents: UIControlEvents.ValueChanged)
+        self.beaconSwitch.thumbTintColor = UIColor.whiteColor()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -52,13 +53,7 @@ class SCBeaconViewController: UIViewController {
     
     // MARK: - Actions
     
-    func updateSwitch() {
-        if self.beaconSwitch.on == true {
-            self.beaconSwitch.thumbTintColor = UIColor.whiteColor()
-        } else {
-            self.beaconSwitch.thumbTintColor = UIColor(red: 81.0/255.0, green: 47.0/255.0, blue: 82.0/255.0, alpha: 1.0)
-        }
-        
+    func updateSwitch() {        
         self.beaconSwitch.setNeedsDisplay()
     }
     

@@ -14,6 +14,7 @@ class SCUser: SCObject {
     var profileUrl:NSString?
     var invisibleAreas:NSArray?
     var defaultSocialType:NSString?
+    var socialUrls:NSArray?
     
     init(json:AnyObject!) {
         self.id = json.valueForKey("id") as? Int
