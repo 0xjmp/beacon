@@ -116,6 +116,7 @@
 		D2AA9AB719E9ED4D00255FC2 /* SCFacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */; };
 		D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */; };
 		D2AA9AC019EE702800255FC2 /* SCEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */; };
+		D2AA9AC419EE7DD500255FC2 /* SCLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */; };
 		D2BB153E19E7ADA60052D117 /* SCBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */; };
 		D2BB154219E7ADFC0052D117 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BB154119E7ADFC0052D117 /* CoreGraphics.framework */; };
 		D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */; };
@@ -277,6 +278,7 @@
 		D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCFacebookManager.swift; sourceTree = "<group>"; };
 		D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCViewController.swift; sourceTree = "<group>"; };
 		D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEmailViewController.swift; sourceTree = "<group>"; };
+		D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLoginViewController.swift; sourceTree = "<group>"; };
 		D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCBackgroundView.swift; sourceTree = "<group>"; };
 		D2BB154119E7ADFC0052D117 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenProLight-300.otf"; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */,
 				D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */,
 				D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */,
+				D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -778,6 +781,7 @@
 				D2081CF419E66F1500ABD203 /* SCNewInvisibleAreaView.swift in Sources */,
 				D2AA9AC019EE702800255FC2 /* SCEmailViewController.swift in Sources */,
 				D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */,
+				D2AA9AC419EE7DD500255FC2 /* SCLoginViewController.swift in Sources */,
 				D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */,
 				D2108EDC19E753ED0012E664 /* SCOAuthViewController.swift in Sources */,
 				D2081CEF19E5463500ABD203 /* SCSocialIconsToolbar.swift in Sources */,

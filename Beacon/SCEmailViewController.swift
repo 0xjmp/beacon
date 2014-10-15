@@ -66,6 +66,10 @@ class SCEmailViewController: UIViewController {
         let buttonMargin:CGFloat = 15.0
         self.continueButton.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.emailField.frame) + buttonMargin, self.view.bounds.size.width - (buttonMargin * 2), 45)
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.emailField.becomeFirstResponder()
+    }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -81,10 +85,12 @@ class SCEmailViewController: UIViewController {
                 var state:NSNumber = responseObject as NSNumber
                 if error == nil {
                     if state.boolValue {
-                        let viewController = UIViewController() // Progress forward to password entry
+                        // Progress forward to password entry
+                        let viewController = SCLoginViewController(email: self.emailField.text)
                         self.navigationController?.pushViewController(viewController, animated: true)
                     } else {
-                        let viewController = UIViewController() // Progress to sign up flow
+                        // Progress to sign/tutorial up flow
+                        let viewController = UIViewController()
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }
                 }
