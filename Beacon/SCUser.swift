@@ -172,4 +172,16 @@ class SCUser: SCObject {
             }
         }
     }
+    
+    class func getUserState(email:NSString, completionHandler:SCRequestResultsBlock) {
+        SCNetworking.shared.request(.GET, path: "email/new", params: ["email" : email]) { (responseObject, error) -> Void in
+            if error != nil {
+                completionHandler(responseObject: nil, error: error)
+            } else {
+                var response = responseObject as NSDictionary
+                var state:NSNumber = response.objectForKey("state") as NSNumber
+                completionHandler(responseObject: state, error: nil)
+            }
+        }
+    }
 }

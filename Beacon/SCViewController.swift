@@ -39,11 +39,10 @@ extension SCViewController {
     }
     
     func presentLoginScreen() {
-        // TODO: present SCTutorialViewController
-        println("User isn't logged in")
-        SCUser.login("jsksma2@gmail.com", password: "Test Password") { (responseObject, error) -> Void in
-            
-        }
+        var viewController = SCEmailViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        self.navigationController?.popToRootViewControllerAnimated(false)
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
 }
