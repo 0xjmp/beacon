@@ -14,7 +14,7 @@ class SCBackgroundView: UIView {
     override func drawRect(rect: CGRect) {
         
         let context : CGContextRef = UIGraphicsGetCurrentContext()
-        let locations :[CGFloat] = [ 0.0, 0.25, 0.5, 0.75 ]
+        let locations :[CGFloat] = [ 0.0, 0.35, 0.6, 0.75 ]
         let lightPurple = UIColor(red: 127.0/255.0, green: 58.0/255.0, blue: 94.0/255.0, alpha: 1.0).CGColor
         let darkPurple = UIColor(red: 25.0/255.0, green: 25.0/255.0, blue: 65.0/255.0, alpha: 1.0).CGColor
         let colors:CFArray = [lightPurple, darkPurple]
@@ -24,5 +24,7 @@ class SCBackgroundView: UIView {
         let endPoint : CGPoint = CGPointMake(750, 1400)
         CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0)
     }
+    
+    
 
 }

@@ -246,7 +246,6 @@ class SCHomeViewController: SCBeaconViewController {
         
         self.socialToolbar = SCSocialIconsToolbar(frame: CGRectMake(0, 0, 0, 70))
         self.socialToolbar.delegate = self
-        self.socialToolbar.actionDelegate = self
         self.view.addSubview(self.socialToolbar)
         
         self.invisibleAreaButton = SCInvisibleAreaButton(frame: CGRectZero)
@@ -397,23 +396,6 @@ extension SCHomeViewController {
             self.openInvisibleArea()
         }
         self.invisibleAreaButton.active = !self.invisibleAreaButton.active
-    }
-    
-}
-
-extension SCHomeViewController: SCSocialDelegate {
-    
-    func buttonWasPressed(type:SocialType) {
-        if SCSocialAccountSetupViewController.setup(type) == false {
-            let viewController = SCSocialAccountSetupViewController()
-            self.presentViewController(viewController, animated: true, completion: nil)
-        } else {
-            SCUser.changeDefaultSocial(type, completionHandler: { (responseObject, error) -> Void in
-                if error == nil {
-                    
-                }
-            })
-        }
     }
     
 }

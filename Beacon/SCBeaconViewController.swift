@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SCBeaconViewController: UIViewController {
+class SCBeaconViewController: SCViewController {
     
     var beaconSwitch:UISwitch!
     var beaconBarButtonItem:UIBarButtonItem {

@@ -112,12 +112,15 @@
 		D2108ED819E7291C0012E664 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC619E7291C0012E664 /* Icon.png */; };
 		D2108ED919E7291C0012E664 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC719E7291C0012E664 /* Icon@2x.png */; };
 		D2108EDA19E7291C0012E664 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */; };
-		D2108EDC19E753ED0012E664 /* SCSocialAccountSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2108EDB19E753ED0012E664 /* SCSocialAccountSetupViewController.swift */; };
+		D2108EDC19E753ED0012E664 /* SCOAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2108EDB19E753ED0012E664 /* SCOAuthViewController.swift */; };
+		D2AA9AB719E9ED4D00255FC2 /* SCFacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */; };
+		D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */; };
 		D2BB153E19E7ADA60052D117 /* SCBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */; };
 		D2BB154219E7ADFC0052D117 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BB154119E7ADFC0052D117 /* CoreGraphics.framework */; };
 		D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */; };
 		D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */; };
 		D2E47B4619E5FA8200665BC3 /* SCObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4519E5FA8200665BC3 /* SCObject.swift */; };
+		E9AF78F255CC420AB70E12F0 /* libPods-Beacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 553BC5C30D2B404F9DB26340 /* libPods-Beacon.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +162,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		553BC5C30D2B404F9DB26340 /* libPods-Beacon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Beacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C4B19DA7C8100ABD203 /* Beacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C6519DA7C8100ABD203 /* BeaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
@@ -267,12 +271,16 @@
 		D2108EC619E7291C0012E664 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D2108EC719E7291C0012E664 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
-		D2108EDB19E753ED0012E664 /* SCSocialAccountSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSocialAccountSetupViewController.swift; sourceTree = "<group>"; };
+		D2108EDB19E753ED0012E664 /* SCOAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOAuthViewController.swift; sourceTree = "<group>"; };
+		D2AA9AB219E9E7C200255FC2 /* Beacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Beacon-Bridging-Header.h"; sourceTree = "<group>"; };
+		D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCFacebookManager.swift; sourceTree = "<group>"; };
+		D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCViewController.swift; sourceTree = "<group>"; };
 		D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCBackgroundView.swift; sourceTree = "<group>"; };
 		D2BB154119E7ADFC0052D117 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenProLight-300.otf"; sourceTree = "<group>"; };
 		D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCInvisibleArea.swift; sourceTree = "<group>"; };
 		D2E47B4519E5FA8200665BC3 /* SCObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCObject.swift; sourceTree = "<group>"; };
+		F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Beacon.xcconfig"; path = "Pods/Pods-Beacon.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +290,7 @@
 			files = (
 				D2BB154219E7ADFC0052D117 /* CoreGraphics.framework in Frameworks */,
 				D2081C8719DA8B0300ABD203 /* Alamofire.framework in Frameworks */,
+				E9AF78F255CC420AB70E12F0 /* libPods-Beacon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,11 +308,12 @@
 			isa = PBXGroup;
 			children = (
 				D2081CC819E2930500ABD203 /* Beacon */,
-				D2081CE319E2935700ABD203 /* Supporting Files */,
 				D2BB154319E7AE030052D117 /* Vendor */,
 				D2081CDE19E2930D00ABD203 /* BeaconTests */,
 				D2081C4C19DA7C8100ABD203 /* Products */,
 				D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */,
+				F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */,
+				D31DF787417A46C88F1508F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -328,6 +338,7 @@
 		D2081CC819E2930500ABD203 /* Beacon */ = {
 			isa = PBXGroup;
 			children = (
+				D2081CE319E2935700ABD203 /* Supporting Files */,
 				D2081CC919E2930500ABD203 /* AppDelegate.swift */,
 				D2081CCE19E2930500ABD203 /* SCConstants.swift */,
 				D2081CCF19E2930500ABD203 /* SCHandOffActivityManager.swift */,
@@ -341,8 +352,10 @@
 				D2081CEE19E5463500ABD203 /* SCSocialIconsToolbar.swift */,
 				D2E47B4519E5FA8200665BC3 /* SCObject.swift */,
 				D2081CF319E66F1500ABD203 /* SCNewInvisibleAreaView.swift */,
-				D2108EDB19E753ED0012E664 /* SCSocialAccountSetupViewController.swift */,
+				D2108EDB19E753ED0012E664 /* SCOAuthViewController.swift */,
 				D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */,
+				D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */,
+				D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -362,9 +375,9 @@
 				D2081CCA19E2930500ABD203 /* Beacon.xcdatamodeld */,
 				D2108EB419E725220012E664 /* Images.xcassets */,
 				D2081CCD19E2930500ABD203 /* Info.plist */,
+				D2AA9AB219E9E7C200255FC2 /* Beacon-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
-			path = Beacon;
 			sourceTree = "<group>";
 		};
 		D2108E1719E71A3D0012E664 /* Images */ = {
@@ -497,6 +510,14 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		D31DF787417A46C88F1508F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				553BC5C30D2B404F9DB26340 /* libPods-Beacon.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -504,10 +525,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2081C6F19DA7C8100ABD203 /* Build configuration list for PBXNativeTarget "Beacon" */;
 			buildPhases = (
+				0EDA4B678A0B4C0AB9ECE2B6 /* Check Pods Manifest.lock */,
 				D2081C4719DA7C8100ABD203 /* Sources */,
 				D2081C4819DA7C8100ABD203 /* Frameworks */,
 				D2081C4919DA7C8100ABD203 /* Resources */,
 				D2081C8819DA8B0D00ABD203 /* Copy Frameworks */,
+				B21026C359EE4A34853AF7B5 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -706,6 +729,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0EDA4B678A0B4C0AB9ECE2B6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B21026C359EE4A34853AF7B5 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-Beacon-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D2081C4719DA7C8100ABD203 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -717,14 +773,16 @@
 				D2081CD819E2930500ABD203 /* SCConstants.swift in Sources */,
 				D2081CDA19E2930500ABD203 /* SCHomeViewController.swift in Sources */,
 				D2081CF419E66F1500ABD203 /* SCNewInvisibleAreaView.swift in Sources */,
+				D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */,
 				D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */,
-				D2108EDC19E753ED0012E664 /* SCSocialAccountSetupViewController.swift in Sources */,
+				D2108EDC19E753ED0012E664 /* SCOAuthViewController.swift in Sources */,
 				D2081CEF19E5463500ABD203 /* SCSocialIconsToolbar.swift in Sources */,
 				D2081CD919E2930500ABD203 /* SCHandOffActivityManager.swift in Sources */,
 				D2081CDB19E2930500ABD203 /* SCNetworking.swift in Sources */,
 				D2081CDD19E2930500ABD203 /* SCUser.swift in Sources */,
 				D2081CEB19E536D800ABD203 /* SCBeaconViewController.swift in Sources */,
 				D2E47B4619E5FA8200665BC3 /* SCObject.swift in Sources */,
+				D2AA9AB719E9ED4D00255FC2 /* SCFacebookManager.swift in Sources */,
 				D2081CD419E2930500ABD203 /* AppDelegate.swift in Sources */,
 				D2081CD519E2930500ABD203 /* Beacon.xcdatamodeld in Sources */,
 			);
@@ -829,6 +887,7 @@
 		};
 		D2081C7019DA7C8100ABD203 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -838,12 +897,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = Beacon;
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		D2081C7119DA7C8100ABD203 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -852,6 +913,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = Beacon;
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -38,9 +38,20 @@ class SCNetworking: NSObject {
     
     func request(method:Alamofire.Method, path:NSString!, params:[String: AnyObject], completionHandler:SCRequestResultsBlock) {
         let url = "\(self.baseUrl)\(path)"
-        Alamofire.request(method, url, parameters: params, encoding:ParameterEncoding.URL)
+        let encoding = method.toRaw() == "GET" ? ParameterEncoding.URL : ParameterEncoding.JSON
+        Alamofire.request(method, url, parameters: params, encoding:encoding)
             .response { (request, response, data, error) in
-                println("(\(response?.statusCode)) \(request.URL.absoluteString)")
+                let code:Int! = response?.statusCode
+                let url:NSString! = request.URL.absoluteString
+                println("(\(code)) \(url)")
+                
+                if code == 401 {
+                    println("User is not logged in.")
+                    NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
+                    let error = NSError(domain: "You need to sign in or sign up before continuing.", code: code, userInfo: nil)
+                    completionHandler(responseObject: nil, error: error)
+                    return // TODO: mend the relationship between server and 401
+                }
                 
                 if error != nil {
                     println(error)

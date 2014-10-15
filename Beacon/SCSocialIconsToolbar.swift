@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum SocialType {
+enum SCSocialType {
     case Facebook
     case Twitter
     case Instagram
@@ -33,7 +33,7 @@ enum SocialType {
 
 class SCSwitchButton:UIButton {
     
-    var socialType:SocialType!
+    var socialType:SCSocialType!
     var defaultImage:UIImage!
     var clickedImage:UIImage!
     var on:Bool {
@@ -43,7 +43,7 @@ class SCSwitchButton:UIButton {
         }
     }
     
-    required init(on: Bool, defaultImage:UIImage!, clickedImage:UIImage!, type:SocialType!) {
+    required init(on: Bool, defaultImage:UIImage!, clickedImage:UIImage!, type:SCSocialType!) {
         self.defaultImage = defaultImage
         self.clickedImage = clickedImage
         self.on = on
@@ -67,19 +67,13 @@ class SCSwitchButton:UIButton {
     
 }
 
-protocol SCSocialDelegate {
-    func buttonWasPressed(type:SocialType)
-}
-
 class SCSocialIconsToolbar: UIToolbar {
-    
-    var actionDelegate:SCSocialDelegate?
     
     var facebookButton:SCSwitchButton! {
         get {
             let facebookImage = UIImage(named: "facebookoff")
             let facebookClickedImage = UIImage(named: "facebookon")
-            return SCSwitchButton(on: false, defaultImage: facebookImage, clickedImage: facebookClickedImage, type:SocialType.Facebook)
+            return SCSwitchButton(on: false, defaultImage: facebookImage, clickedImage: facebookClickedImage, type:SCSocialType.Facebook)
         }
     }
     
@@ -87,7 +81,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let twitterImage = UIImage(named: "twitteroff")
             let twitterClickedImage = UIImage(named: "twitteron")
-            return SCSwitchButton(on: false, defaultImage: twitterImage, clickedImage: twitterClickedImage, type:SocialType.Twitter)
+            return SCSwitchButton(on: false, defaultImage: twitterImage, clickedImage: twitterClickedImage, type:SCSocialType.Twitter)
         }
     }
     
@@ -95,7 +89,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let instagramImage = UIImage(named: "instagramoff")
             let instagramClickedImage = UIImage(named: "instagramon")
-            return SCSwitchButton(on: false, defaultImage: instagramImage, clickedImage: instagramClickedImage, type:SocialType.Instagram)
+            return SCSwitchButton(on: false, defaultImage: instagramImage, clickedImage: instagramClickedImage, type:SCSocialType.Instagram)
         }
     }
     
@@ -103,7 +97,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let linkedInImage = UIImage(named: "linkedinoff")
             let linkedInClickedImage = UIImage(named: "linkedinon")
-            return SCSwitchButton(on: false, defaultImage: linkedInImage, clickedImage: linkedInClickedImage, type:SocialType.LinkedIn)
+            return SCSwitchButton(on: false, defaultImage: linkedInImage, clickedImage: linkedInClickedImage, type:SCSocialType.LinkedIn)
         }
     }
     
@@ -111,7 +105,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let tumblrImage = UIImage(named: "tumblroff")
             let tumblrClickedImage = UIImage(named: "tumblron")
-            return SCSwitchButton(on: false, defaultImage: tumblrImage, clickedImage: tumblrClickedImage, type:SocialType.Tumblr)
+            return SCSwitchButton(on: false, defaultImage: tumblrImage, clickedImage: tumblrClickedImage, type:SCSocialType.Tumblr)
         }
     }
     
@@ -165,20 +159,23 @@ class SCSocialIconsToolbar: UIToolbar {
         }
     }
     
-    func updateButton(type:SocialType) {
-        if let delegate = self.actionDelegate {
-            delegate.buttonWasPressed(type)
-        }
-    }
-    
     func press(button:SCSwitchButton!) {
-        if button.on != true {
-            self.clearButtons()
+        var block:(Void -> Void) = {
+            if button.on != true {
+                self.clearButtons()
+            }
+            
+            button.pressed()
         }
         
-        button.pressed()
-        
-        self.actionDelegate?.buttonWasPressed(button.socialType)
+        if SCOAuthController.isSetup(button.socialType) {
+            block()
+        } else {
+            var controller = SCOAuthController()
+            controller.attemptOAuth(button.socialType, completion: { () -> Void in
+                block()
+            })
+        }
     }
 
 }

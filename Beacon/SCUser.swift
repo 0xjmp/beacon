@@ -8,29 +8,45 @@
 
 import UIKit
 
+var SCUserLoggedOutNotification = "SCUserLoggedOutNotification"
+var SCCurrentUserKey = "com.beacon.current_user"
+
 class SCUser: SCObject {
     
     var id:Int!
     var profileUrl:NSString?
     var invisibleAreas:NSArray?
-    var defaultSocialType:NSString?
+    var defaultSCSocialType:NSString?
     var socialUrls:NSArray?
     
     init(json:AnyObject!) {
+        if json == nil {
+            fatalError("Serious error in object serialization")
+        }
+        
         self.id = json.valueForKey("id") as? Int
         self.profileUrl = json.valueForKey("url") as? NSString
         self.invisibleAreas = json.valueForKey("invisible_areas") as? NSArray
-        self.defaultSocialType = json.valueForKey("default_social_type") as? NSString
+        self.defaultSCSocialType = json.valueForKey("default_social_type") as? NSString
     }
     
     class var currentUser:SCUser? {
-        get {
-            var invisibleAreas = NSMutableArray()
-            for (var i = 1; i < 4; i++) {
-                let invisibleArea = SCInvisibleArea(json: ["id" : Int(i), "name" : "My House", "location" : "Westwood, CA"])
-                invisibleAreas.addObject(invisibleArea)
+        set {
+            if newValue?.isKindOfClass(SCUser) != nil {
+                NSUserDefaults.standardUserDefaults().setObject(newValue?.json(SCUser), forKey: SCCurrentUserKey)
+            } else {
+                NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: SCCurrentUserKey)
             }
-            return SCUser(json: ["id" : 1, "url" : "http://www.google.com", "invisible_areas" : invisibleAreas]) // TODO:
+        }
+        get {
+            var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
+            if userInfo != nil {
+                return SCUser(json: userInfo)
+            } else {
+                NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
+            }
+            
+            return nil
         }
     }
     
@@ -40,7 +56,8 @@ class SCUser: SCObject {
             if error != nil {
                 completionHandler(responseObject: nil, error: error)
             } else {
-                let user = SCUser(json: responseObject)
+                var response = responseObject as NSDictionary
+                var user = SCUser(json: response["user"])
                 completionHandler(responseObject: user, error: nil)
             }
         })
@@ -55,11 +72,12 @@ class SCUser: SCObject {
             }
             
             let path = "users/\(String(user.id))/"
-            SCNetworking.shared.request(.DELETE, path: path, params: ["user" : user.json()], completionHandler: { (responseObject, error) -> Void in
+            SCNetworking.shared.request(.DELETE, path: path, params: ["user" : user.json(SCUser)], completionHandler: { (responseObject, error) -> Void in
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {
-                    let user = SCUser(json: responseObject)
+                    var response = responseObject as NSDictionary
+                    var user = SCUser(json: response["user"])
                     completionHandler(responseObject: user, error: nil)
                 }
             })
@@ -75,7 +93,8 @@ class SCUser: SCObject {
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {
-                    on = responseObject as Bool
+                    var response = responseObject as NSDictionary
+                    on = response["on"] as Bool
                     SCBeacon().updateBeaconState(on)
                     completionHandler(responseObject: on, error: nil)
                 }
@@ -83,16 +102,21 @@ class SCUser: SCObject {
         }
     }
     
-    class func changeDefaultSocial(type:SocialType, completionHandler:SCRequestResultsBlock) {
+    class func changeDefaultSocial(type:SCSocialType, completionHandler:SCRequestResultsBlock) {
         if let user = self.currentUser {
-            user.defaultSocialType = type.description()
+            user.defaultSCSocialType = type.description()
             
             let path = "users/\(String(user.id))"
-            SCNetworking.shared.request(.PUT, path: path, params: ["user" : user.json()], completionHandler: { (responseObject, error) -> Void in
+            SCNetworking.shared.request(.PUT, path: path, params: ["user" : user.json(SCUser)], completionHandler: { (responseObject, error) -> Void in
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {
-                    var user = SCUser(json: responseObject)
+                    var response = responseObject as NSDictionary
+                    var user:SCUser? = SCUser(json: response["user"])
+                    if user != nil {
+                        self.currentUser = user
+                    }
+                    
                     completionHandler(responseObject: user, error: nil)
                 }
             })
@@ -100,14 +124,52 @@ class SCUser: SCObject {
     }
     
     class func create(invisibleArea:SCInvisibleArea!, completionHandler:SCRequestResultsBlock) {
-        SCNetworking.shared.request(.POST, path: "invisible_areas", params: ["invisible_area" : invisibleArea.json()], completionHandler: { (responseObject, error) -> Void in
+        SCNetworking.shared.request(.POST, path: "invisible_areas", params: ["invisible_area" : invisibleArea.json(SCUser)], completionHandler: { (responseObject, error) -> Void in
             if error != nil {
                 completionHandler(responseObject: nil, error: error)
             } else {
-                let user = SCUser(json: responseObject)
+                var response = responseObject as NSDictionary
+                var user:SCUser? = SCUser(json: response["user"])
+                if user != nil {
+                    self.currentUser = user
+                }
+                
                 completionHandler(responseObject: user, error: nil)
             }
         })
     }
+    
+    class func update(type:SCSocialType!, link:NSString!, completionHandler:SCRequestResultsBlock) {
+        if let user = SCUser.currentUser {
+            SCNetworking.shared.request(.PUT, path: "users/\(user.id)/social", params: ["type" : type.description(), "link" : link]) { (responseObject, error) -> Void in
+                if error != nil {
+                    completionHandler(responseObject: nil, error: error)
+                } else {
+                    var response = responseObject as NSDictionary
+                    var user:SCUser? = SCUser(json: response["user"])
+                    if user != nil {
+                        self.currentUser = user
+                    }
+                    
+                    completionHandler(responseObject: user, error: nil)
+                }
+            }
+        }
+    }
    
+    class func login(email:NSString, password:NSString, completionHandler:SCRequestResultsBlock) {
+        SCNetworking.shared.request(.POST, path: "sessions", params: ["email" : email, "password" : password]) { (responseObject, error) -> Void in
+            if error != nil {
+                completionHandler(responseObject: nil, error: error)
+            } else {
+                var response = responseObject as NSDictionary
+                var user:SCUser? = SCUser(json: response["user"])
+                if user != nil {
+                    self.currentUser = user
+                }
+                
+                completionHandler(responseObject: user, error: nil)
+            }
+        }
+    }
 }
