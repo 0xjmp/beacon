@@ -43,30 +43,49 @@ class SCNetworking: NSObject {
             .response { (request, response, data, error) in
                 let url:NSString! = request.URL.absoluteString
                 
-                if let code:Int! = response?.statusCode {
+                if let code:Int = response?.statusCode {
                     println("(\(code)) \(url)")
-
-                    if code == 401 {
+                    
+                    switch code {
+                    case 401:
                         println("User is not logged in.")
                         NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
                         let error = NSError(domain: "You need to sign in or sign up before continuing.", code: code, userInfo: nil)
                         completionHandler(responseObject: nil, error: error)
-                        return // TODO: mend the relationship between server and 401
+                        return
+                    
+                    case 500:
+                        UIAlertView(title: "We're having some technical difficulties.", message: "We'll be back in a sec!", delegate: nil, cancelButtonTitle: "Close").show()
+                        return
+
+                    default:
+                        break
                     }
                 } else {
                     println(url)
                 }
                 
                 if error != nil {
+                    if let info:NSDictionary = error?.userInfo! {
+                        let code = info["_kCFStreamErrorDomainKey"] as NSNumber
+                        switch code.integerValue {
+                            case 1:
+                                UIAlertView(title: "Beacon requires you to be connected to the internet.", message: nil, delegate: nil, cancelButtonTitle: "OK").show()
+                                break
+                                
+                            default:
+                                break
+                        }
+                    }
                     println(error)
                     completionHandler(responseObject: nil, error: error!)
                 } else {
                     var jsonError: NSError?
-                    if let jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError) {
-                        completionHandler(responseObject: jsonObject, error: nil)
+                    var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError)
+                    if jsonError != nil {
+                        println("Error parsing response to JSON: \(jsonError)")
                     } else {
-                        println(jsonError)
-                        completionHandler(responseObject: nil, error: jsonError)
+                        completionHandler(responseObject: jsonObject, error: nil)
                     }
                 }
             }

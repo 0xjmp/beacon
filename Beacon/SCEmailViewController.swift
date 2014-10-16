@@ -82,17 +82,23 @@ class SCEmailViewController: UIViewController {
             UIAlertView(title: "You must provide an email", message: nil, delegate: nil, cancelButtonTitle: "OK").show()
         } else {
             SCUser.getUserState(self.emailField.text, completionHandler: { (responseObject, error) -> Void in
-                var state:NSNumber = responseObject as NSNumber
-                if error == nil {
-                    if state.boolValue {
-                        // Progress forward to password entry
-                        let viewController = SCLoginViewController(email: self.emailField.text)
-                        self.navigationController?.pushViewController(viewController, animated: true)
-                    } else {
-                        // Progress to sign/tutorial up flow
-                        let viewController = SCSignUpViewController(email: self.emailField.text)
-                        self.navigationController?.pushViewController(viewController, animated: true)
+                if let response = responseObject as? NSDictionary {
+                    if let state = response.objectForKey("state") as? NSNumber {
+                        if state.boolValue {
+                            if state.boolValue {
+                                // Progress forward to password entry
+                                let viewController = SCLoginViewController(email: self.emailField.text)
+                                self.navigationController?.pushViewController(viewController, animated: true)
+                            } else {
+                                // Progress to sign/tutorial up flow
+                                let viewController = SCSignUpViewController(email: self.emailField.text)
+                                self.navigationController?.pushViewController(viewController, animated: true)
+                            }
+                        }
                     }
+                } else if error != nil {
+                    println(error)
+                    println()   
                 }
             })
         }
