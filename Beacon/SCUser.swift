@@ -19,7 +19,7 @@ class SCUser: SCObject {
     var defaultSCSocialType:NSString?
     var socialUrls:NSArray?
     
-    init(json:NSDictionary!) {
+    init(json:AnyObject) {
         if json.allKeys.count == 0 {
             fatalError("Serious error in object serialization")
         }
@@ -34,16 +34,12 @@ class SCUser: SCObject {
     
     class var currentUser:SCUser? {
         set {
-            if newValue?.isKindOfClass(SCUser) != nil {
-                NSUserDefaults.standardUserDefaults().setObject(newValue?.json(SCUser), forKey: SCCurrentUserKey)
-            } else {
-                NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: SCCurrentUserKey)
-            }
+            NSUserDefaults.standardUserDefaults().setObject(newValue!.json(SCUser), forKey: SCCurrentUserKey)
         }
         get {
             var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
             if userInfo?.allKeys.count > 0 {
-                return SCUser(json: userInfo)
+                return SCUser(json: userInfo!)
             } else {
                 NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
             }
@@ -184,11 +180,14 @@ class SCUser: SCObject {
                 completionHandler(responseObject: nil, error: error)
             } else {
                 var user:SCUser? = nil
-                if let response = responseObject as? NSDictionary {
-                    user = SCUser(json: response["user"] as NSDictionary)
-                    if user != nil {
-                        self.currentUser = user
+                if let response:NSDictionary = responseObject as? NSDictionary {
+                    if let userInfo = response["user"] as? NSDictionary {
+                        user = SCUser(json: userInfo)
                     }
+                }
+                
+                if user != nil {
+                    self.currentUser = user
                 }
                 
                 completionHandler(responseObject: user, error: nil)
@@ -216,14 +215,6 @@ class SCUser: SCObject {
     }
     
     class func getUserState(email:NSString, completionHandler:SCRequestResultsBlock) {
-        SCNetworking.shared.request(.GET, path: "email/new", params: ["email" : email]) { (responseObject, error) -> Void in
-            if error != nil {
-                completionHandler(responseObject: nil, error: error)
-            } else {
-                var response = responseObject as NSDictionary
-                var state:NSNumber = response.objectForKey("state") as NSNumber
-                completionHandler(responseObject: state, error: nil)
-            }
-        }
+        SCNetworking.shared.request(.GET, path: "email/new", params: ["email" : email], completionHandler: completionHandler)
     }
 }

@@ -79,15 +79,25 @@ class SCNetworking: NSObject {
                                 break
                         }
                     }
-                    println(error)
                     completionHandler(responseObject: nil, error: error!)
                 } else {
                     var jsonError: NSError?
                     var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError)
                     if jsonError != nil {
                         println("Error parsing response to JSON: \(jsonError)")
+                        SCNetworking.presentUserError(SCLocale.ServerFailure)
                     } else {
-                        completionHandler(responseObject: jsonObject, error: nil)
+                        var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError)
+                        if response?.statusCode == 200 || response?.statusCode == 204 {
+                            completionHandler(responseObject: jsonObject, error: nil)
+                        } else {
+                            var serverErrorString = jsonObject?.objectForKey("error") as NSString
+                            UIAlertView(title: serverErrorString, message: nil, delegate: nil, cancelButtonTitle: "Ok").show()
+                            
+                            var code = response!.statusCode as Int
+                            var serverError = NSError(domain: serverErrorString, code: code, userInfo: nil)
+                            completionHandler(responseObject: nil, error: serverError)
+                        }
                     }
                 }
             }

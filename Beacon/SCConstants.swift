@@ -23,6 +23,7 @@ enum SCLocale {
     case NoInternet
     case ServerFailure
     case InvalidUser
+    case InvalidPassword
     
     func description() -> (NSString, NSString?) {
         switch self {
@@ -34,6 +35,9 @@ enum SCLocale {
             
         case .InvalidUser:
             return ("You must sign in or sign up before continuing.", nil)
+            
+        case .InvalidPassword:
+            return ("You must fill out the password field", nil)
         }
     }
     

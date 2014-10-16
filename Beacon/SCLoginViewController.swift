@@ -83,12 +83,10 @@ class SCLoginViewController: UIViewController {
     
     func continuePressed() {
         if self.passwordField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
-            UIAlertView(title: "You must fill out the password field", message: nil, delegate: nil, cancelButtonTitle: "OK").show()
+            SCNetworking.presentUserError(SCLocale.InvalidPassword)
         } else {
             SCUser.login(self.email, password: self.passwordField.text, completionHandler: { (responseObject, error) -> Void in
-                if error != nil {
-                    UIAlertView(title: "An error occurred.", message: error!.domain, delegate: nil, cancelButtonTitle: "OK").show()
-                } else {
+                if error == nil {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             })
