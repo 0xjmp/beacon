@@ -48,14 +48,16 @@ class SCNetworking: NSObject {
                     
                     switch code {
                     case 401:
-                        println("User is not logged in.")
                         NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
-                        let error = NSError(domain: "You need to sign in or sign up before continuing.", code: code, userInfo: nil)
+                        let locale = SCLocale.InvalidUser
+                        SCNetworking.presentUserError(locale)
+                        let (title, message) = locale.description()
+                        let error = NSError(domain: title, code: code, userInfo: nil)
                         completionHandler(responseObject: nil, error: error)
                         return
                     
                     case 500:
-                        UIAlertView(title: "We're having some technical difficulties.", message: "We'll be back in a sec!", delegate: nil, cancelButtonTitle: "Close").show()
+                        SCNetworking.presentUserError(SCLocale.ServerFailure)
                         return
 
                     default:
@@ -70,7 +72,7 @@ class SCNetworking: NSObject {
                         let code = info["_kCFStreamErrorDomainKey"] as NSNumber
                         switch code.integerValue {
                             case 1:
-                                UIAlertView(title: "Beacon requires you to be connected to the internet.", message: nil, delegate: nil, cancelButtonTitle: "OK").show()
+                                SCNetworking.presentUserError(SCLocale.NoInternet)
                                 break
                                 
                             default:
@@ -92,4 +94,13 @@ class SCNetworking: NSObject {
     }
    
 
+}
+
+extension SCNetworking {
+    
+    class func presentUserError(locale:SCLocale) {
+        let (title, message) = locale.description()
+        UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK").show()
+    }
+    
 }
