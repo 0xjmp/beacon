@@ -32,7 +32,6 @@ class SCFacebookManager: NSObject {
                 println("Facebook returned an error: \(error)")
                 completion(nil)
             } else if session.isOpen {
-                println(session)
                 FBRequestConnection.startWithGraphPath("me", completionHandler: { (connection, userInfo, error) -> Void in
                     if error != nil {
                         println("Facebook returned an error: \(error)")

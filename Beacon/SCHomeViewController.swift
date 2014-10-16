@@ -294,7 +294,7 @@ class SCHomeViewController: SCBeaconViewController {
             self.invisibleAreaButton.plusImageView.hidden = true
             self.invisibleAreaButton.userInteractionEnabled = false
             
-            SCUser.getUserProfile(user.id, completionHandler: { (responseObject, error) -> Void in
+            SCUser.getUserProfile(user.objectId, completionHandler: { (responseObject, error) -> Void in
                 if error == nil {
                     self.invisibleAreas = SCUser.currentUser?.invisibleAreas
                     self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)

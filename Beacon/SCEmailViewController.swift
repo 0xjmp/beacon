@@ -90,7 +90,7 @@ class SCEmailViewController: UIViewController {
                         self.navigationController?.pushViewController(viewController, animated: true)
                     } else {
                         // Progress to sign/tutorial up flow
-                        let viewController = UIViewController()
+                        let viewController = SCSignUpViewController(email: self.emailField.text)
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }
                 }

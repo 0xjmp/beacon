@@ -1,5 +1,5 @@
 //
-//  SCLoginViewController.swift
+//  SCSignUpViewController.swift
 //  Beacon
 //
 //  Created by Jake Peterson on 10/15/14.
@@ -8,14 +8,15 @@
 
 import UIKit
 
-class SCLoginViewController: UIViewController {
+class SCSignUpViewController: UIViewController {
 
     var logoImageView:UIImageView
     var passwordField:UITextField
+    var confirmPasswordField:UITextField
     var continueButton:UIButton
-    var email:NSString!
+    var email:NSString
     
-    required init(email:NSString!) {
+    required init(email:NSString) {
         self.email = email
         
         let logo = UIImage(named: "loadinglogo")
@@ -24,18 +25,29 @@ class SCLoginViewController: UIViewController {
         
         self.passwordField = UITextField()
         self.passwordField.secureTextEntry = true
-        self.passwordField.returnKeyType = UIReturnKeyType.Go
+        self.passwordField.returnKeyType = UIReturnKeyType.Next
         self.passwordField.textColor = UIColor.blackColor()
         var gray:CGFloat = 200.0/255.0
         self.passwordField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
-        self.passwordField.attributedPlaceholder = NSAttributedString(string: "Password goes here...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
+        self.passwordField.attributedPlaceholder = NSAttributedString(string: "Choose a new password...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
         self.passwordField.font = SCTheme.primaryFont(18)
         self.passwordField.leftViewMode = UITextFieldViewMode.Always
-        let leftView = UIView(frame: CGRectMake(0, 0, 15, 0))
+        var leftView = UIView(frame: CGRectMake(0, 0, 15, 0))
         self.passwordField.leftView = leftView
         
+        self.confirmPasswordField = UITextField()
+        self.confirmPasswordField.secureTextEntry = true
+        self.confirmPasswordField.returnKeyType = UIReturnKeyType.Go
+        self.confirmPasswordField.textColor = UIColor.blackColor()
+        self.confirmPasswordField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
+        self.confirmPasswordField.attributedPlaceholder = NSAttributedString(string: "Confirm your password...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
+        self.confirmPasswordField.font = SCTheme.primaryFont(18)
+        self.confirmPasswordField.leftViewMode = UITextFieldViewMode.Always
+        leftView = UIView(frame: CGRectMake(0, 0, 15, 0))
+        self.confirmPasswordField.leftView = leftView
+        
         self.continueButton = UIButton()
-        self.continueButton.setTitle("Get Started", forState: UIControlState.Normal)
+        self.continueButton.setTitle("Continue", forState: UIControlState.Normal)
         self.continueButton.setBackgroundImage(UIImage(named: "overlaybutton"), forState: UIControlState.Normal)
         self.continueButton.titleLabel?.font = SCTheme.primaryFont(25)
         
@@ -43,9 +55,11 @@ class SCLoginViewController: UIViewController {
         
         self.view.addSubview(self.logoImageView)
         self.view.addSubview(self.passwordField)
+        self.view.addSubview(self.confirmPasswordField)
         self.view.addSubview(self.continueButton)
         
         self.passwordField.delegate = self
+        self.confirmPasswordField.delegate = self
         
         self.continueButton.addTarget(self, action: "continuePressed", forControlEvents: UIControlEvents.TouchUpInside)
     }
@@ -70,9 +84,11 @@ class SCLoginViewController: UIViewController {
         
         self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
         self.passwordField.frame = CGRectMake(0, CGRectGetMaxY(self.logoImageView.frame) + 100, self.view.bounds.size.width, 45)
-        
+
         let buttonMargin:CGFloat = 15.0
-        self.continueButton.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.passwordField.frame) + buttonMargin, self.view.bounds.size.width - (buttonMargin * 2), 45)
+        self.confirmPasswordField.frame = CGRectMake(0, CGRectGetMaxY(self.passwordField.frame) + buttonMargin, self.view.bounds.size.width, self.passwordField.bounds.size.height)
+        
+        self.continueButton.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.confirmPasswordField.frame) + buttonMargin, self.view.bounds.size.width - (buttonMargin * 2), 45)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -82,25 +98,31 @@ class SCLoginViewController: UIViewController {
     // MARK: - Actions
     
     func continuePressed() {
-        if self.passwordField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
-            UIAlertView(title: "You must fill out the password field", message: nil, delegate: nil, cancelButtonTitle: "OK").show()
+        if self.passwordField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 || self.confirmPasswordField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
+            UIAlertView(title: "You must fill out the required fields", message: nil, delegate: nil, cancelButtonTitle: "OK").show()
         } else {
-            SCUser.login(self.email, password: self.passwordField.text, completionHandler: { (responseObject, error) -> Void in
+            SCUser.signUp(self.email, password: self.passwordField.text, passwordConfirmation:self.confirmPasswordField.text, completionHandler: { (responseObject, error) -> Void in
                 if error != nil {
                     UIAlertView(title: "An error occurred.", message: error!.domain, delegate: nil, cancelButtonTitle: "OK").show()
                 } else {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    let viewController = SCTutorialViewController()
+                    self.navigationController?.pushViewController(viewController, animated: true)
                 }
             })
         }
     }
-
+    
 }
 
-extension SCLoginViewController: UITextFieldDelegate {
+extension SCSignUpViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.continuePressed()
+        if textField == self.passwordField {
+            self.confirmPasswordField.becomeFirstResponder()
+        } else if textField == self.confirmPasswordField {
+            self.continuePressed()
+        }
+        
         return true
     }
     
