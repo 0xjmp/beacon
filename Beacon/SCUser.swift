@@ -13,28 +13,26 @@ var SCCurrentUserKey = "com.beacon.current_user"
 
 class SCUser: SCObject {
     
-    var objectId:Int!
+    var objectId:NSNumber!
     var profileUrl:NSString?
     var invisibleAreas:NSArray?
-    var defaultSCSocialType:NSString?
+    var defaultSocialType:NSString?
     var socialUrls:NSArray?
     
-    init(json:AnyObject) {
-        if json.allKeys.count == 0 {
-            fatalError("Serious error in object serialization")
-        }
-        
-        self.objectId = json.valueForKey("id") as? Int
-        self.profileUrl = json.valueForKey("url") as? NSString
-        self.invisibleAreas = json.valueForKey("invisible_areas") as? NSArray
-        self.defaultSCSocialType = json.valueForKey("default_social_type") as? NSString
-        
-        super.init()
+    override class func jsonMapping() -> NSDictionary {
+        return [
+            "id" : "objectId",
+            "default_social_type" : "defaultSocialType",
+            "social_urls" : "socialUrls"
+        ]
     }
     
     class var currentUser:SCUser? {
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue!.json(SCUser), forKey: SCCurrentUserKey)
+            NSUserDefaults.standardUserDefaults().setObject(newValue!.toJSON(), forKey: SCCurrentUserKey)
+            var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
+            println(userInfo)
+            println()
         }
         get {
             var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
@@ -56,7 +54,7 @@ class SCUser: SCObject {
             } else {
                 var user:SCUser? = nil
                 if let response = responseObject as? NSDictionary {
-                    user = SCUser(json: response["user"] as NSDictionary)
+                    user = SCUser(json: response["user"] as? NSDictionary)
                     if user != nil {
                         self.currentUser = user
                     }
@@ -75,14 +73,14 @@ class SCUser: SCObject {
                 fatalError("Serious error")
             }
             
-            let path = "users/\(String(user.objectId))/"
-            SCNetworking.shared.request(.DELETE, path: path, params: ["user" : user.json(SCUser)], completionHandler: { (responseObject, error) -> Void in
+            let path = "users/\(user.objectId.stringValue)/"
+            SCNetworking.shared.request(.DELETE, path: path, params: ["user" : user.toJSON()], completionHandler: { (responseObject, error) -> Void in
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {
                     var user:SCUser? = nil
                     if let response = responseObject as? NSDictionary {
-                        user = SCUser(json: response["user"] as NSDictionary)
+                        user = SCUser(json: response["user"] as? NSDictionary)
                         if user != nil {
                             self.currentUser = user
                         }
@@ -95,16 +93,16 @@ class SCUser: SCObject {
     }
     
     class func toggleBeacon(completionHandler:SCRequestResultsBlock) {
-        var on:Bool = SCBeacon().beaconIsOn()
+        var on:Bool = SCBeacon(json: nil).beaconIsOn()
         if let user = self.currentUser {
-            let path = "users/\(String(user.objectId))"
+            let path = "users/\(user.objectId.stringValue)"
             SCNetworking.shared.request(.PUT, path: path, params: ["user" : ["beacon" : on]], completionHandler: { (responseObject, error) -> Void in
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {
                     if let response = responseObject as? NSDictionary {
                         on = response["on"] as Bool
-                        SCBeacon().updateBeaconState(on)
+                        SCBeacon(json: nil).updateBeaconState(on)
                     }
                     
                     completionHandler(responseObject: on, error: nil)
@@ -115,16 +113,16 @@ class SCUser: SCObject {
     
     class func changeDefaultSocial(type:SCSocialType, completionHandler:SCRequestResultsBlock) {
         if let user = self.currentUser {
-            user.defaultSCSocialType = type.description()
+            user.defaultSocialType = type.description()
             
-            let path = "users/\(String(user.objectId))"
-            SCNetworking.shared.request(.PUT, path: path, params: ["user" : user.json(SCUser)], completionHandler: { (responseObject, error) -> Void in
+            let path = "users/\(user.objectId.stringValue)"
+            SCNetworking.shared.request(.PUT, path: path, params: ["user" : user.toJSON()], completionHandler: { (responseObject, error) -> Void in
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {
                     var user:SCUser? = nil
                     if let response = responseObject as? NSDictionary {
-                        user = SCUser(json: response["user"] as NSDictionary)
+                        user = SCUser(json: response["user"] as? NSDictionary)
                         if user != nil {
                             self.currentUser = user
                         }
@@ -137,13 +135,13 @@ class SCUser: SCObject {
     }
     
     class func create(invisibleArea:SCInvisibleArea!, completionHandler:SCRequestResultsBlock) {
-        SCNetworking.shared.request(.POST, path: "invisible_areas", params: ["invisible_area" : invisibleArea.json(SCUser)], completionHandler: { (responseObject, error) -> Void in
+        SCNetworking.shared.request(.POST, path: "invisible_areas", params: ["invisible_area" : invisibleArea.toJSON()], completionHandler: { (responseObject, error) -> Void in
             if error != nil {
                 completionHandler(responseObject: nil, error: error)
             } else {
                 var user:SCUser? = nil
                 if let response = responseObject as? NSDictionary {
-                    user = SCUser(json: response["user"] as NSDictionary)
+                    user = SCUser(json: response["user"] as? NSDictionary)
                     if user != nil {
                         self.currentUser = user
                     }
@@ -162,7 +160,7 @@ class SCUser: SCObject {
                 } else {
                     var user:SCUser? = nil
                     if let response = responseObject as? NSDictionary {
-                        user = SCUser(json: response["user"] as NSDictionary)
+                        user = SCUser(json: response["user"] as? NSDictionary)
                         if user != nil {
                             self.currentUser = user
                         }
@@ -203,7 +201,7 @@ class SCUser: SCObject {
             } else {
                 var user:SCUser? = nil
                 if let response = responseObject as? NSDictionary {
-                    user = SCUser(json: response["user"] as NSDictionary)
+                    user = SCUser(json: response["user"] as? NSDictionary)
                     if user != nil {
                         self.currentUser = user
                     }

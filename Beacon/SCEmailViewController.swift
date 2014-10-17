@@ -11,6 +11,7 @@ import UIKit
 class SCEmailViewController: UIViewController {
     
     var logoImageView:UIImageView
+    var emailLabel:UILabel
     var emailField:UITextField
     var continueButton:UIButton
     
@@ -18,6 +19,13 @@ class SCEmailViewController: UIViewController {
         let logo = UIImage(named: "loadinglogo")
         self.logoImageView = UIImageView(image: logo)
         self.logoImageView.frame = CGRectMake(0, 0, logo.size.width, logo.size.height)
+        
+        self.emailLabel = UILabel()
+        self.emailLabel.textColor = UIColor.whiteColor()
+        self.emailLabel.text = "Enter your email to get started";
+        self.emailLabel.numberOfLines = 0
+        self.emailLabel.textAlignment = NSTextAlignment.Center
+        self.emailLabel.font = SCTheme.primaryFont(18)
         
         self.emailField = UITextField()
         self.emailField.returnKeyType = UIReturnKeyType.Go
@@ -38,6 +46,7 @@ class SCEmailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.view.addSubview(self.logoImageView)
+        self.view.addSubview(self.emailLabel)
         self.view.addSubview(self.emailField)
         self.view.addSubview(self.continueButton)
         
@@ -60,10 +69,11 @@ class SCEmailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
-        self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
-        self.emailField.frame = CGRectMake(0, CGRectGetMaxY(self.logoImageView.frame) + 100, self.view.bounds.size.width, 45)
-        
         let buttonMargin:CGFloat = 15.0
+        
+        self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
+        self.emailLabel.frame = CGRectMake(0, CGRectGetMaxY(self.logoImageView.frame) + 85, self.view.bounds.size.width, 20)
+        self.emailField.frame = CGRectMake(0, CGRectGetMaxY(self.emailLabel.frame) + 10, self.view.bounds.size.width, 45)
         self.continueButton.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.emailField.frame) + buttonMargin, self.view.bounds.size.width - (buttonMargin * 2), 45)
     }
     

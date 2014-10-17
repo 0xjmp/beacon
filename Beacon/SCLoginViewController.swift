@@ -66,7 +66,7 @@ class SCLoginViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
         self.passwordField.frame = CGRectMake(0, CGRectGetMaxY(self.logoImageView.frame) + 100, self.view.bounds.size.width, 45)
@@ -77,6 +77,10 @@ class SCLoginViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         self.passwordField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     // MARK: - Actions

@@ -14,10 +14,4 @@ class SCInvisibleArea: SCObject {
     var location:NSString?
     var user:SCUser?
     
-    init(json:NSDictionary?) {
-        super.init()
-        self.name = json?.valueForKey("name") as NSString?
-        self.location = json?.valueForKey("location") as NSString?
-    }
-    
 }

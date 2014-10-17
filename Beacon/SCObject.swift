@@ -10,21 +10,31 @@ import UIKit
 
 class SCObject: NSObject {
    
-    func json(myClass:AnyClass) -> NSDictionary {
-        var dict = NSMutableDictionary()
-        
-        var count:UInt32 = 0
-        var properties:UnsafeMutablePointer<objc_property_t> = class_copyPropertyList(myClass, &count)
-        for (var i = 0; i < Int(count); i++) {
-            var key = NSString.stringWithUTF8String(property_getName(properties[i]))
-            if let value:AnyObject = self.valueForKey(key) {
-                dict.setObject(value, forKey: key)
+    func toJSON() -> NSString {
+        var error:NSError?
+        let jsonData = NSJSONSerialization.dataWithJSONObject(self.toDictionary(), options: NSJSONWritingOptions.allZeros, error: &error)
+        if error != nil { fatalError("Serious error") }
+        return NSString(data: jsonData!, encoding: NSUTF8StringEncoding)
+    }
+    
+    func toDictionary() -> NSDictionary {
+        return self.dictionaryWithValuesForKeys(self.dynamicType.jsonMapping().allKeys)
+    }
+    
+    class func jsonMapping() -> NSDictionary {
+        fatalError("Unimplemented -jsonMapping")
+        return NSDictionary()
+    }
+    
+    init(json:NSDictionary?) {
+        super.init()
+        self.dynamicType.jsonMapping().enumerateKeysAndObjectsUsingBlock { (key, value, stop) -> Void in
+            if value != nil {
+                if let jsonValue:AnyObject = json?.valueForKey(key as String) {
+                    self.setValue(jsonValue, forKey: value as String)
+                }
             }
         }
-        
-        free(properties)
-        
-        return NSDictionary(dictionary: dict)
     }
     
 }
