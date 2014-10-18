@@ -17,7 +17,7 @@ class SCUser: SCObject {
     var profileUrl:NSString?
     var invisibleAreas:NSArray?
     var defaultSocialType:NSString?
-    var socialUrls:NSArray?
+    var socialUrls:NSDictionary?
     var email:NSString?
     
     override class func jsonMapping() -> NSDictionary {
@@ -32,11 +32,13 @@ class SCUser: SCObject {
     class var currentUser:SCUser? {
         set {
             NSUserDefaults.standardUserDefaults().setObject(newValue!.toDictionary(), forKey: SCCurrentUserKey)
+            println("Setting new currentUser: \(newValue!.toDictionary())")
         }
         get {
             var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
             if userInfo?.allKeys.count > 0 {
                 var user:SCUser = SCUser(json: userInfo!)
+                println("Current user: \(user)")
                 if user.objectId == nil {
                     NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
                 } else {
@@ -44,6 +46,7 @@ class SCUser: SCObject {
                 }
             } else {
                 NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
+                println("User isn't logged in. Logging out...")
             }
             
             return nil

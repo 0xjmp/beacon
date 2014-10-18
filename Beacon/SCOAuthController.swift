@@ -22,19 +22,11 @@ class SCOAuthController: NSObject {
     // MARK: - Getters
 
     class func isSetup(type:SCSocialType) -> Bool {
-        var isSetup = false
-        
-        if let user = SCUser.currentUser {
-            for (var i = 0; i < user.socialUrls?.count; i++) {
-                let url: NSString? = user.socialUrls?.objectAtIndex(i) as? NSString
-                if (url?.isEqualToString(type.description()) != nil) {
-                    isSetup = true
-                    i = user.socialUrls!.count
-                }
-            }
+        if let socialUrls = SCUser.currentUser?.socialUrls {
+            return socialUrls.objectForKey(type.description()) != nil
         }
         
-        return isSetup
+        return false
     }
     
     // MARK: - Actions
@@ -113,6 +105,9 @@ class SCOAuthController: NSObject {
     }
     
     func presentError(type:SCSocialType) {
-        UIAlertView(title: "\(type.description().capitalizedString) didn't respond.", message: "Please try again in a few minutes", delegate:nil, cancelButtonTitle: "OK").show()
+        UIAlertView(title: "\(type.description().capitalizedString) didn't respond.",
+            message: "Please try again in a few minutes",
+            delegate:nil,
+            cancelButtonTitle: "OK").show()
     }
 }

@@ -12,14 +12,9 @@ class SCInstagramManager: NSObject {
    
     var clientId = "3e9dcad4b66a469e9ba7bbe019919d7d"
     var clientSecret = "58dd170fded5461a9178cde7f2630a87"
+    var clientRedirect = "beacon://"
     
     func startSession(completion:(NSString? -> Void)) {
-        if let viewController = SCViewController.getTopViewController() {
-            let instaController = InstagramSimpleOAuthViewController(clientID: self.clientId, clientSecret: self.clientSecret, callbackURL: NSURL(string: "beacon://"), completion: { (response, error) -> Void in
-                println("done: \(response) \(error)")
-            })
-            let navController = UINavigationController(rootViewController: instaController)
-            viewController.presentViewController(navController, animated: true, completion: nil)
-        }
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://api.instagram.com/oauth/authorize/?client_id=\(self.clientId)&client=touch&redirect_uri=\(self.clientRedirect)&response_type=code"))
     }
 }
