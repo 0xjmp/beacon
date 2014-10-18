@@ -18,7 +18,18 @@ class SCObject: NSObject {
     }
     
     func toDictionary() -> NSDictionary {
-        return self.dictionaryWithValuesForKeys(self.dynamicType.jsonMapping().allKeys)
+        let map = self.dynamicType.jsonMapping()
+        var dict = self.dictionaryWithValuesForKeys(map.allValues) as NSDictionary
+        var mutableDict = NSMutableDictionary()
+        map.enumerateKeysAndObjectsUsingBlock { (key, value, stop) -> Void in
+            if let dVal: AnyObject = dict.valueForKey(value as NSString) {
+                if !dVal.isKindOfClass(NSNull) {
+                    mutableDict.setValue(dVal, forKey: key as NSString)
+                }
+            }
+        }
+        
+        return mutableDict
     }
     
     class func jsonMapping() -> NSDictionary {

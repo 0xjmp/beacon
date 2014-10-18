@@ -171,8 +171,7 @@ class SCSocialIconsToolbar: UIToolbar {
         if SCOAuthController.isSetup(button.socialType) {
             block()
         } else {
-            var controller = SCOAuthController()
-            controller.attemptOAuth(button.socialType, completion: { () -> Void in
+            SCOAuthController().attemptOAuth(button.socialType, completion: { () -> Void in
                 block()
             })
         }

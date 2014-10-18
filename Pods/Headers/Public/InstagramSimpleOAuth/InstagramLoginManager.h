@@ -1,0 +1,1 @@
+../../../InstagramSimpleOAuth/InstagramSimpleOAuth/Source/InstagramLoginManager.h

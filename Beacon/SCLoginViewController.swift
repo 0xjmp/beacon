@@ -28,6 +28,7 @@ class SCLoginViewController: UIViewController {
         self.passwordField.textColor = UIColor.blackColor()
         var gray:CGFloat = 200.0/255.0
         self.passwordField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
+        self.passwordField.layer.cornerRadius = 5
         self.passwordField.attributedPlaceholder = NSAttributedString(string: "Password goes here...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
         self.passwordField.font = SCTheme.primaryFont(18)
         self.passwordField.leftViewMode = UITextFieldViewMode.Always
@@ -68,11 +69,12 @@ class SCLoginViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
-        self.passwordField.frame = CGRectMake(0, CGRectGetMaxY(self.logoImageView.frame) + 100, self.view.bounds.size.width, 45)
-        
         let buttonMargin:CGFloat = 15.0
-        self.continueButton.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.passwordField.frame) + buttonMargin, self.view.bounds.size.width - (buttonMargin * 2), 45)
+        
+        self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
+        self.passwordField.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.logoImageView.frame) + 100, self.view.bounds.size.width - (buttonMargin * 2), 45)
+        
+        self.continueButton.frame = CGRectMake(self.passwordField.frame.origin.x, CGRectGetMaxY(self.passwordField.frame) + buttonMargin, self.passwordField.frame.size.width, 45)
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -254,13 +254,9 @@ class SCHomeViewController: SCBeaconViewController {
         
         self.newInvisibleAreaView = SCNewInvisibleAreaView(frame: CGRectZero)
         self.newInvisibleAreaView.actionDelegate = self
-        
-        self.getInvisibleZones()
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: SCTheme.logoImageView)
         
         if let navigationBar = self.navigationController?.navigationBar {
@@ -281,30 +277,28 @@ class SCHomeViewController: SCBeaconViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
         self.tableView.contentInset = UIEdgeInsetsZero
+        
+        self.getInvisibleZones()
     }
     
     // MARK: - Actions
     
     func getInvisibleZones() {
-        if let user = SCUser.currentUser {
-            self.invisibleAreaButton.myTitleLabel.text = "Loading..."
-            self.invisibleAreaButton.plusImageView.hidden = true
-            self.invisibleAreaButton.userInteractionEnabled = false
+        self.invisibleAreaButton.myTitleLabel.text = "Loading..."
+        self.invisibleAreaButton.plusImageView.hidden = true
+        self.invisibleAreaButton.userInteractionEnabled = false
+        
+        SCUser.getProfile({ (responseObject, error) -> Void in
+            if error == nil {
+                self.invisibleAreas = SCUser.currentUser?.invisibleAreas
+                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
             
-            SCUser.getUserProfile(user.objectId, completionHandler: { (responseObject, error) -> Void in
-                if error == nil {
-                    self.invisibleAreas = SCUser.currentUser?.invisibleAreas
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
-                }
-                
-                self.invisibleAreaButton.myTitleLabel.text = self.invisibleAreaButton.defaultTitleText
-                self.invisibleAreaButton.plusImageView.hidden = false
-                self.invisibleAreaButton.userInteractionEnabled = true
-            })
-        }
+            self.invisibleAreaButton.myTitleLabel.text = self.invisibleAreaButton.defaultTitleText
+            self.invisibleAreaButton.plusImageView.hidden = false
+            self.invisibleAreaButton.userInteractionEnabled = true
+        })
     }
     
     func deleteInvisibleArea(indexPath:NSIndexPath!) {

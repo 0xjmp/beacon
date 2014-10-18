@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		063EF16730DB7B69C000D31B /* libPods-Beacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDA0362867E6312BE77FAA7 /* libPods-Beacon.a */; };
 		D2081C8719DA8B0300ABD203 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2081C8419DA8AD800ABD203 /* Alamofire.framework */; };
 		D2081C8919DA8B2D00ABD203 /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D2081C8419DA8AD800ABD203 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2081CD419E2930500ABD203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CC919E2930500ABD203 /* AppDelegate.swift */; };
@@ -112,7 +113,11 @@
 		D2108ED819E7291C0012E664 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC619E7291C0012E664 /* Icon.png */; };
 		D2108ED919E7291C0012E664 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC719E7291C0012E664 /* Icon@2x.png */; };
 		D2108EDA19E7291C0012E664 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */; };
-		D2108EDC19E753ED0012E664 /* SCOAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2108EDB19E753ED0012E664 /* SCOAuthViewController.swift */; };
+		D2108EDC19E753ED0012E664 /* SCOAuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2108EDB19E753ED0012E664 /* SCOAuthController.swift */; };
+		D21992A519F1D942001B35F5 /* SCTwitterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21992A419F1D942001B35F5 /* SCTwitterManager.swift */; };
+		D2684BE719F1EDE70021C6D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */; };
+		D2684BEB19F1EDED0021C6D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */; };
+		D2684BEF19F1F2810021C6D5 /* SCInstagramManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2684BEE19F1F2810021C6D5 /* SCInstagramManager.swift */; };
 		D2AA9AB719E9ED4D00255FC2 /* SCFacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */; };
 		D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */; };
 		D2AA9AC019EE702800255FC2 /* SCEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */; };
@@ -124,7 +129,6 @@
 		D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */; };
 		D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */; };
 		D2E47B4619E5FA8200665BC3 /* SCObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4519E5FA8200665BC3 /* SCObject.swift */; };
-		E9AF78F255CC420AB70E12F0 /* libPods-Beacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 553BC5C30D2B404F9DB26340 /* libPods-Beacon.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,7 +170,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		553BC5C30D2B404F9DB26340 /* libPods-Beacon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Beacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23DD8ACFE16F7FE408C81719 /* Pods-Beacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Beacon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Beacon/Pods-Beacon.release.xcconfig"; sourceTree = "<group>"; };
+		601E153EE575C3F1509235A4 /* Pods-Beacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Beacon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Beacon/Pods-Beacon.debug.xcconfig"; sourceTree = "<group>"; };
+		6BDA0362867E6312BE77FAA7 /* libPods-Beacon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Beacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C4B19DA7C8100ABD203 /* Beacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C6519DA7C8100ABD203 /* BeaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
@@ -275,7 +281,11 @@
 		D2108EC619E7291C0012E664 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D2108EC719E7291C0012E664 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
-		D2108EDB19E753ED0012E664 /* SCOAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOAuthViewController.swift; sourceTree = "<group>"; };
+		D2108EDB19E753ED0012E664 /* SCOAuthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOAuthController.swift; sourceTree = "<group>"; };
+		D21992A419F1D942001B35F5 /* SCTwitterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCTwitterManager.swift; sourceTree = "<group>"; };
+		D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D2684BEE19F1F2810021C6D5 /* SCInstagramManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCInstagramManager.swift; sourceTree = "<group>"; };
 		D2AA9AB219E9E7C200255FC2 /* Beacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Beacon-Bridging-Header.h"; sourceTree = "<group>"; };
 		D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCFacebookManager.swift; sourceTree = "<group>"; };
 		D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCViewController.swift; sourceTree = "<group>"; };
@@ -288,7 +298,6 @@
 		D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenProLight-300.otf"; sourceTree = "<group>"; };
 		D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCInvisibleArea.swift; sourceTree = "<group>"; };
 		D2E47B4519E5FA8200665BC3 /* SCObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCObject.swift; sourceTree = "<group>"; };
-		F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Beacon.xcconfig"; path = "Pods/Pods-Beacon.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,9 +305,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2684BEB19F1EDED0021C6D5 /* MobileCoreServices.framework in Frameworks */,
+				D2684BE719F1EDE70021C6D5 /* SystemConfiguration.framework in Frameworks */,
 				D2BB154219E7ADFC0052D117 /* CoreGraphics.framework in Frameworks */,
 				D2081C8719DA8B0300ABD203 /* Alamofire.framework in Frameworks */,
-				E9AF78F255CC420AB70E12F0 /* libPods-Beacon.a in Frameworks */,
+				063EF16730DB7B69C000D31B /* libPods-Beacon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,8 +331,8 @@
 				D2081CDE19E2930D00ABD203 /* BeaconTests */,
 				D2081C4C19DA7C8100ABD203 /* Products */,
 				D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */,
-				F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */,
 				D31DF787417A46C88F1508F2 /* Frameworks */,
+				E5CD05A153FA8E21E97F79EA /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -353,6 +364,8 @@
 				D2081CC919E2930500ABD203 /* AppDelegate.swift */,
 				D2081CCF19E2930500ABD203 /* SCHandOffActivityManager.swift */,
 				D2AA9AB619E9ED4D00255FC2 /* SCFacebookManager.swift */,
+				D21992A419F1D942001B35F5 /* SCTwitterManager.swift */,
+				D2684BEE19F1F2810021C6D5 /* SCInstagramManager.swift */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -486,7 +499,7 @@
 			children = (
 				D2081CD019E2930500ABD203 /* SCHomeViewController.swift */,
 				D2081CEA19E536D800ABD203 /* SCBeaconViewController.swift */,
-				D2108EDB19E753ED0012E664 /* SCOAuthViewController.swift */,
+				D2108EDB19E753ED0012E664 /* SCOAuthController.swift */,
 				D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */,
 				D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */,
 				D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */,
@@ -549,9 +562,20 @@
 		D31DF787417A46C88F1508F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				553BC5C30D2B404F9DB26340 /* libPods-Beacon.a */,
+				D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */,
+				D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */,
+				6BDA0362867E6312BE77FAA7 /* libPods-Beacon.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E5CD05A153FA8E21E97F79EA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				601E153EE575C3F1509235A4 /* Pods-Beacon.debug.xcconfig */,
+				23DD8ACFE16F7FE408C81719 /* Pods-Beacon.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,12 +585,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D2081C6F19DA7C8100ABD203 /* Build configuration list for PBXNativeTarget "Beacon" */;
 			buildPhases = (
-				0EDA4B678A0B4C0AB9ECE2B6 /* Check Pods Manifest.lock */,
+				5C0C76D68BD2071F85EF318A /* Check Pods Manifest.lock */,
 				D2081C4719DA7C8100ABD203 /* Sources */,
 				D2081C4819DA7C8100ABD203 /* Frameworks */,
 				D2081C4919DA7C8100ABD203 /* Resources */,
 				D2081C8819DA8B0D00ABD203 /* Copy Frameworks */,
-				B21026C359EE4A34853AF7B5 /* Copy Pods Resources */,
+				0EFE9A836EA9AB5DE880B58B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -766,7 +790,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0EDA4B678A0B4C0AB9ECE2B6 /* Check Pods Manifest.lock */ = {
+		0EFE9A836EA9AB5DE880B58B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Beacon/Pods-Beacon-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5C0C76D68BD2071F85EF318A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -779,21 +818,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B21026C359EE4A34853AF7B5 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-Beacon-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -814,12 +838,14 @@
 				D2AA9AC819EF5B0200255FC2 /* SCTutorialViewController.swift in Sources */,
 				D2AA9AC419EE7DD500255FC2 /* SCLoginViewController.swift in Sources */,
 				D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */,
-				D2108EDC19E753ED0012E664 /* SCOAuthViewController.swift in Sources */,
+				D2108EDC19E753ED0012E664 /* SCOAuthController.swift in Sources */,
 				D2081CEF19E5463500ABD203 /* SCSocialIconsToolbar.swift in Sources */,
+				D21992A519F1D942001B35F5 /* SCTwitterManager.swift in Sources */,
 				D2081CD919E2930500ABD203 /* SCHandOffActivityManager.swift in Sources */,
 				D2081CDB19E2930500ABD203 /* SCNetworking.swift in Sources */,
 				D2081CDD19E2930500ABD203 /* SCUser.swift in Sources */,
 				D2AA9AC619EF56C400255FC2 /* SCSignUpViewController.swift in Sources */,
+				D2684BEF19F1F2810021C6D5 /* SCInstagramManager.swift in Sources */,
 				D2081CEB19E536D800ABD203 /* SCBeaconViewController.swift in Sources */,
 				D2E47B4619E5FA8200665BC3 /* SCObject.swift in Sources */,
 				D2AA9AB719E9ED4D00255FC2 /* SCFacebookManager.swift in Sources */,
@@ -927,7 +953,7 @@
 		};
 		D2081C7019DA7C8100ABD203 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */;
+			baseConfigurationReference = 601E153EE575C3F1509235A4 /* Pods-Beacon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -944,7 +970,7 @@
 		};
 		D2081C7119DA7C8100ABD203 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8FA29CA7AD548ABBBE8B672 /* Pods-Beacon.xcconfig */;
+			baseConfigurationReference = 23DD8ACFE16F7FE408C81719 /* Pods-Beacon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

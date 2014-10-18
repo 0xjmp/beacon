@@ -30,6 +30,7 @@ class SCEmailViewController: UIViewController {
         self.emailField = UITextField()
         self.emailField.returnKeyType = UIReturnKeyType.Go
         self.emailField.textColor = UIColor.blackColor()
+        self.emailField.layer.cornerRadius = 5;
         var gray:CGFloat = 200.0/255.0
         self.emailField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.emailField.attributedPlaceholder = NSAttributedString(string: "Email goes here...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
@@ -73,8 +74,8 @@ class SCEmailViewController: UIViewController {
         
         self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
         self.emailLabel.frame = CGRectMake(0, CGRectGetMaxY(self.logoImageView.frame) + 85, self.view.bounds.size.width, 20)
-        self.emailField.frame = CGRectMake(0, CGRectGetMaxY(self.emailLabel.frame) + 10, self.view.bounds.size.width, 45)
-        self.continueButton.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.emailField.frame) + buttonMargin, self.view.bounds.size.width - (buttonMargin * 2), 45)
+        self.emailField.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.emailLabel.frame) + 10, self.view.bounds.size.width - (buttonMargin * 2), 45)
+        self.continueButton.frame = CGRectMake(self.emailField.frame.origin.x, CGRectGetMaxY(self.emailField.frame) + buttonMargin, self.emailField.bounds.size.width, 45)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -96,7 +97,7 @@ class SCEmailViewController: UIViewController {
                 if error == nil {
                     viewController = SCLoginViewController(email: self.emailField.text)
                 } else {
-                    viewController = SCLoginViewController(email: self.emailField.text)
+                    viewController = SCSignUpViewController(email: self.emailField.text)
                 }
                 self.navigationController?.pushViewController(viewController!, animated: true)
             })

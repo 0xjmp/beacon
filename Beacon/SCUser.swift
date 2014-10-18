@@ -18,26 +18,30 @@ class SCUser: SCObject {
     var invisibleAreas:NSArray?
     var defaultSocialType:NSString?
     var socialUrls:NSArray?
+    var email:NSString?
     
     override class func jsonMapping() -> NSDictionary {
         return [
             "id" : "objectId",
             "default_social_type" : "defaultSocialType",
-            "social_urls" : "socialUrls"
+            "social_urls" : "socialUrls",
+            "email" : "email"
         ]
     }
     
     class var currentUser:SCUser? {
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue!.toJSON(), forKey: SCCurrentUserKey)
-            var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
-            println(userInfo)
-            println()
+            NSUserDefaults.standardUserDefaults().setObject(newValue!.toDictionary(), forKey: SCCurrentUserKey)
         }
         get {
             var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
             if userInfo?.allKeys.count > 0 {
-                return SCUser(json: userInfo!)
+                var user:SCUser = SCUser(json: userInfo!)
+                if user.objectId == nil {
+                    NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
+                } else {
+                    return user
+                }
             } else {
                 NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
             }
@@ -46,23 +50,25 @@ class SCUser: SCObject {
         }
     }
     
-    class func getUserProfile(id:Int!, completionHandler:SCRequestResultsBlock) {
-        let path = "users/\(String(id))"
-        SCNetworking.shared.request(.GET, path: path, params: ["" : ""], completionHandler: { (responseObject, error) -> Void in
-            if error != nil {
-                completionHandler(responseObject: nil, error: error)
-            } else {
-                var user:SCUser? = nil
-                if let response = responseObject as? NSDictionary {
-                    user = SCUser(json: response["user"] as? NSDictionary)
-                    if user != nil {
-                        self.currentUser = user
+    class func getProfile(completionHandler:SCRequestResultsBlock) {
+        if let user = self.currentUser {
+            let path = "users/\(user.objectId.stringValue)"
+            SCNetworking.shared.request(.GET, path: path, params: ["" : ""], completionHandler: { (responseObject, error) -> Void in
+                if error != nil {
+                    completionHandler(responseObject: nil, error: error)
+                } else {
+                    var user:SCUser? = nil
+                    if let response = responseObject as? NSDictionary {
+                        user = SCUser(json: response["user"] as? NSDictionary)
+                        if user != nil {
+                            self.currentUser = user
+                        }
                     }
+                    
+                    completionHandler(responseObject: user, error: nil)
                 }
-                
-                completionHandler(responseObject: user, error: nil)
-            }
-        })
+            })
+        }
     }
     
     class func delete(invisibleArea:SCInvisibleArea!, completionHandler:SCRequestResultsBlock) {
@@ -187,7 +193,7 @@ class SCUser: SCObject {
                 if user != nil {
                     self.currentUser = user
                 }
-                
+
                 completionHandler(responseObject: user, error: nil)
             }
         }

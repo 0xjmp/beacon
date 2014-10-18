@@ -27,6 +27,7 @@ class SCSignUpViewController: UIViewController {
         self.passwordField.secureTextEntry = true
         self.passwordField.returnKeyType = UIReturnKeyType.Next
         self.passwordField.textColor = UIColor.blackColor()
+        self.passwordField.layer.cornerRadius = 5
         var gray:CGFloat = 200.0/255.0
         self.passwordField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.passwordField.attributedPlaceholder = NSAttributedString(string: "Choose a new password...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
@@ -38,6 +39,7 @@ class SCSignUpViewController: UIViewController {
         self.confirmPasswordField = UITextField()
         self.confirmPasswordField.secureTextEntry = true
         self.confirmPasswordField.returnKeyType = UIReturnKeyType.Go
+        self.confirmPasswordField.layer.cornerRadius = 5
         self.confirmPasswordField.textColor = UIColor.blackColor()
         self.confirmPasswordField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.confirmPasswordField.attributedPlaceholder = NSAttributedString(string: "Confirm your password...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
@@ -80,15 +82,14 @@ class SCSignUpViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        let buttonMargin:CGFloat = 15.0
         
         self.logoImageView.center = CGPointMake(self.view.center.x, self.view.bounds.size.height / 5)
-        self.passwordField.frame = CGRectMake(0, CGRectGetMaxY(self.logoImageView.frame) + 100, self.view.bounds.size.width, 45)
-
-        let buttonMargin:CGFloat = 15.0
-        self.confirmPasswordField.frame = CGRectMake(0, CGRectGetMaxY(self.passwordField.frame) + buttonMargin, self.view.bounds.size.width, self.passwordField.bounds.size.height)
-        
-        self.continueButton.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.confirmPasswordField.frame) + buttonMargin, self.view.bounds.size.width - (buttonMargin * 2), 45)
+        self.passwordField.frame = CGRectMake(buttonMargin, CGRectGetMaxY(self.logoImageView.frame) + 100, self.view.bounds.size.width - (buttonMargin * 2), 45)
+        self.confirmPasswordField.frame = CGRectMake(self.passwordField.frame.origin.x, CGRectGetMaxY(self.passwordField.frame) + buttonMargin, self.passwordField.bounds.size.width, self.passwordField.bounds.size.height)
+        self.continueButton.frame = CGRectMake(self.passwordField.frame.origin.x, CGRectGetMaxY(self.confirmPasswordField.frame) + buttonMargin, self.passwordField.bounds.size.width, 45)
     }
     
     override func viewDidAppear(animated: Bool) {

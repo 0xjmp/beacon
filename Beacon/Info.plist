@@ -78,6 +78,8 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb351174861715938</string>
+				<string>beacon</string>
+				<string>WFIO.Beacon</string>
 			</array>
 			<key>CFBundleURLName</key>
 			<string></string>
