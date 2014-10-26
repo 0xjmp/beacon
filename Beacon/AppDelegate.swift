@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationDidBecomeActive(application: UIApplication) {
         NSHTTPCookieStorage.sharedHTTPCookieStorage().cookieAcceptPolicy = NSHTTPCookieAcceptPolicy.Always
+        SCSocialManager.shared.applicationDidBecomeActive()
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -55,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String, annotation: AnyObject?) -> Bool {        
-        return FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+        return SCSocialManager.shared.handleOpenUrl(url, sourceApplication: sourceApplication)
     }
     
     // MARK: - Hand off

@@ -40,6 +40,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         self.addSubview(self.nameField)
         
         self.mapView = MKMapView()
+        self.mapView.layer.cornerRadius = 5
         self.mapView.delegate = self
         self.mapView.mapType = MKMapType.Standard
         self.addSubview(self.mapView)

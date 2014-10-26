@@ -8,29 +8,6 @@
 
 import UIKit
 
-enum SCSocialType {
-    case Facebook
-    case Twitter
-    case Instagram
-    case LinkedIn
-    case Tumblr
-    
-    func description() -> NSString {
-        switch self {
-        case .Facebook:
-            return "facebook"
-        case .Twitter:
-            return "twitter"
-        case .Instagram:
-            return "instagram"
-        case .LinkedIn:
-            return "linkedIn"
-        case .Tumblr:
-            return "tumblr"
-        }
-    }
-}
-
 class SCSwitchButton:UIButton {
     
     var socialType:SCSocialType!
@@ -168,10 +145,10 @@ class SCSocialIconsToolbar: UIToolbar {
             button.pressed()
         }
         
-        if SCOAuthController.isSetup(button.socialType) {
+        if SCSocialManager.isSetup(button.socialType) {
             block()
         } else {
-            SCOAuthController().attemptOAuth(button.socialType, completion: { () -> Void in
+            SCSocialManager().attemptOAuth(button.socialType, completion: { (token) -> Void in
                 block()
             })
         }

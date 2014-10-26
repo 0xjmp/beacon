@@ -19,11 +19,19 @@ class SCNetworking: NSObject {
         }
     }
     
+    var OAuthEnabled:Bool?
     var baseUrl:NSString! {
         get {
 #if DEBUG
-                return "http://localhost:3000/\(self.apiVersion)/"
+    if self.OAuthEnabled == true {
+        return "http://localhost:3000/user/auth/"
+    }
+    
+        return "http://localhost:3000/\(self.apiVersion)/"
 #else
+    if self.OAuthEnabled == true {
+        return "http://api.sce.ne/user/auth/"
+    }
                 return "http://api.sce.ne/\(self.apiVersion)/"
 #endif
         }
@@ -87,7 +95,6 @@ class SCNetworking: NSObject {
                         println("Error parsing response to JSON: \(jsonError)")
                         SCNetworking.presentUserError(SCLocale.ServerFailure)
                     } else {
-                        var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError)
                         if response?.statusCode == 200 || response?.statusCode == 204 {
                             completionHandler(responseObject: jsonObject, error: nil)
                         } else {
@@ -112,6 +119,16 @@ extension SCNetworking {
     class func presentUserError(locale:SCLocale) {
         let (title, message) = locale.description()
         UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK").show()
+    }
+    
+}
+
+extension SCNetworking {
+    
+    func OAuthRequest(method:Alamofire.Method, authPath:NSString!, params:[String: AnyObject], completionHandler:SCRequestResultsBlock) {
+        self.OAuthEnabled = true
+        self.request(method, path: authPath, params: params, completionHandler: completionHandler)
+        self.OAuthEnabled = false
     }
     
 }

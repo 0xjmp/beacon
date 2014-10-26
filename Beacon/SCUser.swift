@@ -10,6 +10,7 @@ import UIKit
 
 var SCUserLoggedOutNotification = "SCUserLoggedOutNotification"
 var SCCurrentUserKey = "com.beacon.current_user"
+var SCCookieName = "com.beacon.cookie_store"
 
 class SCUser: SCObject {
     
@@ -31,17 +32,30 @@ class SCUser: SCObject {
     
     class var currentUser:SCUser? {
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue!.toDictionary(), forKey: SCCurrentUserKey)
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(newValue!.toDictionary(), forKey: SCCurrentUserKey)
             println("Setting new currentUser: \(newValue!.toDictionary())")
+            if let cookies:[AnyObject] = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
+                for cookie in cookies {
+                    if cookie.name == "_beacon-ruby-session" {
+                        defaults.setObject(cookie.userInfo, forKey: SCCookieName)
+                    }
+                }
+            }
         }
         get {
             var userInfo:NSDictionary? = NSUserDefaults.standardUserDefaults().objectForKey(SCCurrentUserKey) as? NSDictionary
             if userInfo?.allKeys.count > 0 {
                 var user:SCUser = SCUser(json: userInfo!)
-                println("Current user: \(user)")
                 if user.objectId == nil {
                     NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
                 } else {
+                    // Set the cookie. This just serves for a bug that only exists in debuggging.
+                    if let cookieInfo = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? NSDictionary {
+                        let cookie = NSHTTPCookie(properties: cookieInfo)
+                        NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
+                    }
+                    
                     return user
                 }
             } else {
@@ -122,7 +136,7 @@ class SCUser: SCObject {
     
     class func changeDefaultSocial(type:SCSocialType, completionHandler:SCRequestResultsBlock) {
         if let user = self.currentUser {
-            user.defaultSocialType = type.description()
+            user.defaultSocialType = type.getDescription()
             
             let path = "users/\(user.objectId.stringValue)"
             SCNetworking.shared.request(.PUT, path: path, params: ["user" : user.toJSON()], completionHandler: { (responseObject, error) -> Void in
@@ -163,7 +177,7 @@ class SCUser: SCObject {
     
     class func update(type:SCSocialType!, link:NSString!, completionHandler:SCRequestResultsBlock) {
         if let user = SCUser.currentUser {
-            SCNetworking.shared.request(.PUT, path: "users/\(user.objectId)/social", params: ["type" : type.description(), "link" : link]) { (responseObject, error) -> Void in
+            SCNetworking.shared.request(.PUT, path: "users/\(user.objectId)/social", params: ["type" : type.getDescription(), "link" : link]) { (responseObject, error) -> Void in
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {
