@@ -76,11 +76,11 @@ class SCNetworking: NSObject {
                     if let info:NSDictionary = error?.userInfo! {
                         let code = info["_kCFStreamErrorDomainKey"] as NSNumber
                         switch code.integerValue {
-                            case 1:
-                                NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
-                                SCNetworking.presentUserError(SCLocale.NoInternet)
-                                return
-                                
+                        case 1:
+                            NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
+                            SCNetworking.presentUserError(SCLocale.NoInternet)
+                            return
+                            
                             default:
                                 break
                         }

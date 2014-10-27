@@ -67,7 +67,10 @@ class SCSocialManager: NSObject {
     func handleOpenUrl(url:NSURL, sourceApplication:NSString) -> Bool {
         if url.scheme == "beacon" {
             if url.host == "twitter" {
-                println(url)
+                let path = url.path?.stringByReplacingCharactersInRange(<#range: Range<String.Index>#>, withString: "")
+                if let user = SCUser.currentUser {
+                    
+                }
             }
         }
         
