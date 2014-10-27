@@ -59,12 +59,17 @@ class SCSocialManager: NSObject {
     func attemptOAuth(type:SCSocialType, completion:SCSocialCompletionBlock) {
         self.completionBlock = completion
         
-        let url = NSURL(string: "\(SCNetworking().baseUrl)/user/auth/\(type.getDescription())")
+        let base = SCNetworking().baseUrl.stringByReplacingOccurrencesOfString("v1", withString: "")
+        let url = NSURL(string: "\(base)/user/auth/\(type.getDescription())")
         UIApplication.sharedApplication().openURL(url)
     }
     
     func handleOpenUrl(url:NSURL, sourceApplication:NSString) -> Bool {
-        
+        if url.scheme == "beacon" {
+            if url.host == "twitter" {
+                println(url)
+            }
+        }
         
         return true
     }

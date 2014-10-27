@@ -59,9 +59,6 @@ class SCNetworking: NSObject {
                         NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
                         let locale = SCLocale.InvalidUser
                         SCNetworking.presentUserError(locale)
-                        let (title, message) = locale.description()
-                        let error = NSError(domain: title, code: code, userInfo: nil)
-                        completionHandler(responseObject: nil, error: error)
                         return
                     
                     case 500:
@@ -80,8 +77,9 @@ class SCNetworking: NSObject {
                         let code = info["_kCFStreamErrorDomainKey"] as NSNumber
                         switch code.integerValue {
                             case 1:
+                                NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
                                 SCNetworking.presentUserError(SCLocale.NoInternet)
-                                break
+                                return
                                 
                             default:
                                 break
