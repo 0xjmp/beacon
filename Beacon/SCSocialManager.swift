@@ -66,12 +66,7 @@ class SCSocialManager: NSObject {
     
     func handleOpenUrl(url:NSURL, sourceApplication:NSString) -> Bool {
         if url.scheme == "beacon" {
-            if url.host == "twitter" {
-                let path = url.path?.stringByReplacingCharactersInRange(<#range: Range<String.Index>#>, withString: "")
-                if let user = SCUser.currentUser {
-                    
-                }
-            }
+            self.reloadProfile()
         }
         
         return true
@@ -79,6 +74,14 @@ class SCSocialManager: NSObject {
     
     func applicationDidBecomeActive() {
         
+    }
+    
+    func reloadProfile() {
+        SCUser.getProfile { (responseObject, error) -> Void in
+            if let block = self.completionBlock {
+                block("")
+            }
+        }
     }
     
 }

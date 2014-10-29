@@ -17,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        if let properties:NSDictionary = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? NSDictionary {
+            let cookie = NSHTTPCookie(properties: properties)
+            NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
+        }
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
         let homeViewController = SCHomeViewController(nibName: nil, bundle: nil)

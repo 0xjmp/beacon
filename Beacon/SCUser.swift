@@ -10,7 +10,7 @@ import UIKit
 
 var SCUserLoggedOutNotification = "SCUserLoggedOutNotification"
 var SCCurrentUserKey = "com.beacon.current_user"
-var SCCookieName = "com.beacon.cookie_store"
+var SCCookieName = "_session_id"
 
 class SCUser: SCObject {
     
@@ -209,6 +209,19 @@ class SCUser: SCObject {
                 
                 if user != nil {
                     self.currentUser = user
+                }
+                
+                var beaconCookie:NSHTTPCookie?
+                if let cookies:[AnyObject] = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
+                    for cookie in cookies {
+                        if cookie.name == SCCookieName {
+                            beaconCookie = cookie as? NSHTTPCookie
+                        }
+                    }
+                }
+                
+                if beaconCookie != nil {
+                    NSUserDefaults.standardUserDefaults().setObject(beaconCookie?.properties, forKey: SCCookieName)
                 }
 
                 completionHandler(responseObject: user, error: nil)
