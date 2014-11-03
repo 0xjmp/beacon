@@ -14,13 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        if let properties:NSDictionary = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? NSDictionary {
-            let cookie = NSHTTPCookie(properties: properties)
-            NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
-        }
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
@@ -51,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationDidBecomeActive(application: UIApplication) {
         NSHTTPCookieStorage.sharedHTTPCookieStorage().cookieAcceptPolicy = NSHTTPCookieAcceptPolicy.Always
-        SCSocialManager.shared.applicationDidBecomeActive()
+        SSocialManager.singleton().applicationDidBecomeActive()
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -61,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String, annotation: AnyObject?) -> Bool {        
-        return SCSocialManager.shared.handleOpenUrl(url, sourceApplication: sourceApplication)
+        return SSocialManager.singleton().handleOpenUrl(url, sourceApplication: sourceApplication)
     }
     
     // MARK: - Hand off

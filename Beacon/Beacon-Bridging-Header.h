@@ -8,3 +8,4 @@
 
 #import <FacebookSDK.h>
 #import <InstagramSimpleOAuth.h>
+#import "SSocialManager.h"

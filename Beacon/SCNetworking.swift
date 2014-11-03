@@ -11,7 +11,7 @@ import Alamofire
 
 typealias SCRequestResultsBlock = (responseObject:AnyObject?, error:NSError?)->Void
 
-class SCNetworking: NSObject {
+public class SCNetworking: NSObject {
     
     var apiVersion:NSString! {
         get {
@@ -20,7 +20,7 @@ class SCNetworking: NSObject {
     }
     
     var OAuthEnabled:Bool?
-    var baseUrl:NSString! {
+    public var baseUrl:NSString! {
         get {
 #if DEBUG
     if self.OAuthEnabled == true {
@@ -37,7 +37,7 @@ class SCNetworking: NSObject {
         }
     }
     
-    class var shared : SCNetworking {
+    public class var shared : SCNetworking {
     struct Static {
         static let instance : SCNetworking = SCNetworking()
         }
@@ -74,15 +74,16 @@ class SCNetworking: NSObject {
                 
                 if error != nil {
                     if let info:NSDictionary = error?.userInfo! {
-                        let code = info["_kCFStreamErrorDomainKey"] as NSNumber
-                        switch code.integerValue {
-                        case 1:
-                            NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
-                            SCNetworking.presentUserError(SCLocale.NoInternet)
-                            return
-                            
+                        if let code = info["_kCFStreamErrorDomainKey"] as? NSNumber {
+                            switch code.integerValue {
+                            case 1:
+                                NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
+                                SCNetworking.presentUserError(SCLocale.NoInternet)
+                                return
+                                
                             default:
                                 break
+                            }
                         }
                     }
                     completionHandler(responseObject: nil, error: error!)

@@ -136,7 +136,7 @@ class SCUser: SCObject {
     
     class func changeDefaultSocial(type:SCSocialType, completionHandler:SCRequestResultsBlock) {
         if let user = self.currentUser {
-            user.defaultSocialType = type.getDescription()
+            user.defaultSocialType = SSocialManager.nameForSocialType(type)
             
             let path = "users/\(user.objectId.stringValue)"
             SCNetworking.shared.request(.PUT, path: path, params: ["user" : user.toJSON()], completionHandler: { (responseObject, error) -> Void in
@@ -177,7 +177,7 @@ class SCUser: SCObject {
     
     class func update(type:SCSocialType!, link:NSString!, completionHandler:SCRequestResultsBlock) {
         if let user = SCUser.currentUser {
-            SCNetworking.shared.request(.PUT, path: "users/\(user.objectId)/social", params: ["type" : type.getDescription(), "link" : link]) { (responseObject, error) -> Void in
+            SCNetworking.shared.request(.PUT, path: "users/\(user.objectId)/social", params: ["type" : [SSocialManager .nameForSocialType(type)], "link" : link]) { (responseObject, error) -> Void in
                 if error != nil {
                     completionHandler(responseObject: nil, error: error)
                 } else {

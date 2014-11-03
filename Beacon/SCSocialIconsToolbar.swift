@@ -50,7 +50,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let facebookImage = UIImage(named: "facebookoff")
             let facebookClickedImage = UIImage(named: "facebookon")
-            return SCSwitchButton(on: false, defaultImage: facebookImage, clickedImage: facebookClickedImage, type:SCSocialType.Facebook)
+            return SCSwitchButton(on: false, defaultImage: facebookImage, clickedImage: facebookClickedImage, type:SCSocialTypeFacebook)
         }
     }
     
@@ -58,7 +58,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let twitterImage = UIImage(named: "twitteroff")
             let twitterClickedImage = UIImage(named: "twitteron")
-            return SCSwitchButton(on: false, defaultImage: twitterImage, clickedImage: twitterClickedImage, type:SCSocialType.Twitter)
+            return SCSwitchButton(on: false, defaultImage: twitterImage, clickedImage: twitterClickedImage, type:SCSocialTypeTwitter)
         }
     }
     
@@ -66,7 +66,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let instagramImage = UIImage(named: "instagramoff")
             let instagramClickedImage = UIImage(named: "instagramon")
-            return SCSwitchButton(on: false, defaultImage: instagramImage, clickedImage: instagramClickedImage, type:SCSocialType.Instagram)
+            return SCSwitchButton(on: false, defaultImage: instagramImage, clickedImage: instagramClickedImage, type:SCSocialTypeInstagram)
         }
     }
     
@@ -74,7 +74,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let linkedInImage = UIImage(named: "linkedinoff")
             let linkedInClickedImage = UIImage(named: "linkedinon")
-            return SCSwitchButton(on: false, defaultImage: linkedInImage, clickedImage: linkedInClickedImage, type:SCSocialType.LinkedIn)
+            return SCSwitchButton(on: false, defaultImage: linkedInImage, clickedImage: linkedInClickedImage, type:SCSocialTypeLinkedIn)
         }
     }
     
@@ -82,7 +82,7 @@ class SCSocialIconsToolbar: UIToolbar {
         get {
             let tumblrImage = UIImage(named: "tumblroff")
             let tumblrClickedImage = UIImage(named: "tumblron")
-            return SCSwitchButton(on: false, defaultImage: tumblrImage, clickedImage: tumblrClickedImage, type:SCSocialType.Tumblr)
+            return SCSwitchButton(on: false, defaultImage: tumblrImage, clickedImage: tumblrClickedImage, type:SCSocialTypeTumblr)
         }
     }
     
@@ -138,17 +138,18 @@ class SCSocialIconsToolbar: UIToolbar {
     
     func press(button:SCSwitchButton!) {
         var block:(Void -> Void) = {
-            if button.on != true {
+            if button.on == false {
                 self.clearButtons()
             }
-            
+
             button.pressed()
+            println(button.on)
         }
         
-        if SCSocialManager.isSetup(button.socialType) {
+        if SSocialManager.isSetup(button.socialType) {
             block()
         } else {
-            SCSocialManager().attemptOAuth(button.socialType, completion: { (token) -> Void in
+            SSocialManager.singleton().attemptOAuth(button.socialType, completionBlock: { (success) -> Void in
                 block()
             })
         }
