@@ -34,7 +34,6 @@ class SCUser: SCObject {
         set {
             let defaults = NSUserDefaults.standardUserDefaults()
             defaults.setObject(newValue!.toDictionary(), forKey: SCCurrentUserKey)
-            println("Setting new currentUser: \(newValue!.toDictionary())")
             if let cookies:[AnyObject] = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
                 for cookie in cookies {
                     if cookie.name == "_beacon-ruby-session" {

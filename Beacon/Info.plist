@@ -85,5 +85,7 @@
 			<string></string>
 		</dict>
 	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Beacon needs to know where you are to use invisible areas</string>
 </dict>
 </plist>
