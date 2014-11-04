@@ -46,61 +46,44 @@ class SCSwitchButton:UIButton {
 
 class SCSocialIconsToolbar: UIToolbar {
     
-    var facebookButton:SCSwitchButton! {
-        get {
-            let facebookImage = UIImage(named: "facebookoff")
-            let facebookClickedImage = UIImage(named: "facebookon")
-            return SCSwitchButton(on: false, defaultImage: facebookImage, clickedImage: facebookClickedImage, type:SCSocialTypeFacebook)
-        }
-    }
-    
-    var twitterButton:SCSwitchButton! {
-        get {
-            let twitterImage = UIImage(named: "twitteroff")
-            let twitterClickedImage = UIImage(named: "twitteron")
-            return SCSwitchButton(on: false, defaultImage: twitterImage, clickedImage: twitterClickedImage, type:SCSocialTypeTwitter)
-        }
-    }
-    
-    var instagramButton:SCSwitchButton! {
-        get {
-            let instagramImage = UIImage(named: "instagramoff")
-            let instagramClickedImage = UIImage(named: "instagramon")
-            return SCSwitchButton(on: false, defaultImage: instagramImage, clickedImage: instagramClickedImage, type:SCSocialTypeInstagram)
-        }
-    }
-    
-    var linkedinButton:SCSwitchButton! {
-        get {
-            let linkedInImage = UIImage(named: "linkedinoff")
-            let linkedInClickedImage = UIImage(named: "linkedinon")
-            return SCSwitchButton(on: false, defaultImage: linkedInImage, clickedImage: linkedInClickedImage, type:SCSocialTypeLinkedIn)
-        }
-    }
-    
-    var tumblrButton:SCSwitchButton! {
-        get {
-            let tumblrImage = UIImage(named: "tumblroff")
-            let tumblrClickedImage = UIImage(named: "tumblron")
-            return SCSwitchButton(on: false, defaultImage: tumblrImage, clickedImage: tumblrClickedImage, type:SCSocialTypeTumblr)
-        }
-    }
-    
-    var defaultSeparator:UIBarButtonItem! {
-        get {
-            var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-            barButton.width = 12.0;
-            return barButton
-        }
-    }
+    var facebookButton:SCSwitchButton!
+    var twitterButton:SCSwitchButton!
+    var instagramButton:SCSwitchButton!
+    var linkedinButton:SCSwitchButton!
+    var tumblrButton:SCSwitchButton!
+    var defaultSeparator:UIBarButtonItem!
     
     var socialButtons:NSArray {
         get {
-            return [facebookButton, twitterButton, instagramButton, linkedinButton, tumblrButton]
+            return [self.facebookButton, self.twitterButton, self.instagramButton, self.linkedinButton, self.tumblrButton]
         }
     }
     
     override init(frame:CGRect) {
+        let facebookImage = UIImage(named: "facebookoff")
+        let facebookClickedImage = UIImage(named: "facebookon")
+        self.facebookButton = SCSwitchButton(on: false, defaultImage: facebookImage, clickedImage: facebookClickedImage, type:SCSocialTypeFacebook)
+        
+        let twitterImage = UIImage(named: "twitteroff")
+        let twitterClickedImage = UIImage(named: "twitteron")
+        self.twitterButton = SCSwitchButton(on: false, defaultImage: twitterImage, clickedImage: twitterClickedImage, type:SCSocialTypeTwitter)
+        
+        let instagramImage = UIImage(named: "instagramoff")
+        let instagramClickedImage = UIImage(named: "instagramon")
+        self.instagramButton = SCSwitchButton(on: false, defaultImage: instagramImage, clickedImage: instagramClickedImage, type:SCSocialTypeInstagram)
+        
+        let linkedInImage = UIImage(named: "linkedinoff")
+        let linkedInClickedImage = UIImage(named: "linkedinon")
+        self.linkedinButton = SCSwitchButton(on: false, defaultImage: linkedInImage, clickedImage: linkedInClickedImage, type:SCSocialTypeLinkedIn)
+        
+        let tumblrImage = UIImage(named: "tumblroff")
+        let tumblrClickedImage = UIImage(named: "tumblron")
+        self.tumblrButton = SCSwitchButton(on: false, defaultImage: tumblrImage, clickedImage: tumblrClickedImage, type:SCSocialTypeTumblr)
+        
+        var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        barButton.width = 12.0;
+        self.defaultSeparator = barButton
+        
         super.init(frame: frame)
         
         self.setBackgroundImage(UIImage(), forToolbarPosition: UIBarPosition.TopAttached, barMetrics: UIBarMetrics.Default)
@@ -131,7 +114,10 @@ class SCSocialIconsToolbar: UIToolbar {
     func clearButtons() {
         for button in self.socialButtons {
             if let actionButton = button as? SCSwitchButton {
-                actionButton.on = false
+                if actionButton.on == true {
+                    actionButton.on = false
+                    actionButton.setNeedsDisplay()
+                }
             }
         }
     }
@@ -143,7 +129,6 @@ class SCSocialIconsToolbar: UIToolbar {
             }
 
             button.pressed()
-            println(button.on)
         }
         
         if SSocialManager.isSetup(button.socialType) {

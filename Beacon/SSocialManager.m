@@ -46,7 +46,7 @@ static SSocialManager *_sharedManager = nil;
             return @"instagram";
             
         case SCSocialTypeLinkedIn:
-            return @"linkedIn";
+            return @"linkedin";
             
         case SCSocialTypeTumblr:
             return @"tumblr";
