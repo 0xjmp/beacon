@@ -45,7 +45,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         self.mapView.mapType = MKMapType.Standard
         self.addSubview(self.mapView)
         
-        let image = UIImage(named: "overlaybutton")
+        let image = UIImage(named: "overlaybutton")!
         self.addButton = UIButton()
         self.addButton.setBackgroundImage(image, forState: UIControlState.Normal)
         self.addButton.frame = CGRectMake(0, 0, image.size.width, image.size.height)

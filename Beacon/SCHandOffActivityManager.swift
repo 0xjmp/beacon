@@ -15,7 +15,7 @@ class SCHandOffActivityManager: NSObject {
             if let user = responseObject as? SCUser {
                 if (error == nil) {
                     if let path = user.profileUrl {
-                        let url = NSURL(string: path)
+                        let url = NSURL(string: path)!
                         UIApplication.sharedApplication().openURL(url)
                     }
                 }

@@ -14,7 +14,7 @@ class SCObject: NSObject {
         var error:NSError?
         let jsonData = NSJSONSerialization.dataWithJSONObject(self.toDictionary(), options: NSJSONWritingOptions.allZeros, error: &error)
         if error != nil { fatalError("Serious error") }
-        return NSString(data: jsonData!, encoding: NSUTF8StringEncoding)
+        return NSString(data: jsonData!, encoding: NSUTF8StringEncoding)!
     }
     
     func toDictionary() -> NSDictionary {

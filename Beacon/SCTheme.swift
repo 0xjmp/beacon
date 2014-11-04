@@ -18,7 +18,7 @@ class SCTheme: NSObject {
             let image = UIImage(named: "mainlogo")
             var imageView = UIImageView(image: image)
             let heightPadding:CGFloat = 15.0
-            imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height + heightPadding)
+            imageView.frame = CGRectMake(0, 0, image!.size.width, image!.size.height + heightPadding)
             imageView.contentMode = UIViewContentMode.Bottom
             return imageView
         }
@@ -31,7 +31,7 @@ class SCTheme: NSObject {
             let image = UIImage(named: "background.jpg")
             var imageView = UIImageView(image: image)
             imageView.userInteractionEnabled = true
-            imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+            imageView.frame = CGRectMake(0, 0, image!.size.width, image!.size.height)
             return imageView
         }
     }
@@ -60,6 +60,6 @@ class SCTheme: NSObject {
     }
     
     class func primaryFont(size:CGFloat!) -> UIFont {
-        return UIFont(name: "MavenProLight300-Regular", size: size)
+        return UIFont(name: "MavenProLight300-Regular", size: size)!
     }
 }

@@ -31,7 +31,7 @@ static SSocialManager *_sharedManager = nil;
 
 + (BOOL)isSetup:(SCSocialType)socialType {
     NSDictionary *urls = [SCUser currentUser].socialUrls;
-    return [urls[[self nameForSocialType:socialType]] boolValue];
+    return urls[[self nameForSocialType:socialType]] != nil;
 }
 
 + (NSString *)nameForSocialType:(SCSocialType)type {
@@ -64,7 +64,7 @@ static SSocialManager *_sharedManager = nil;
     self.completionBlock = block;
     
     NSString *base = [[SCNetworking shared].baseUrl stringByReplacingOccurrencesOfString:@"/v1/" withString:@""];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/auth/%@/", base, [self.class nameForSocialType:socialType]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/auth/%@?id=%@", base, [self.class nameForSocialType:socialType], [SCUser currentUser].objectId.stringValue]];
     [[UIApplication sharedApplication] openURL:url];
 }
 
@@ -73,7 +73,6 @@ static SSocialManager *_sharedManager = nil;
         if (url.host.length > 2) {
             NSString *provider = [url.path stringByReplacingOccurrencesOfString:@"/" withString:@""];
             NSNumber *setup = SCUser.currentUser.socialUrls[provider];
-            [self reloadUserProfile];
             if (self.completionBlock) self.completionBlock(setup.boolValue);
             self.completionBlock = nil;
         }

@@ -19,7 +19,7 @@ class SCSignUpViewController: UIViewController {
     required init(email:NSString) {
         self.email = email
         
-        let logo = UIImage(named: "loadinglogo")
+        let logo = UIImage(named: "loadinglogo")!
         self.logoImageView = UIImageView(image: logo)
         self.logoImageView.frame = CGRectMake(0, 0, logo.size.width, logo.size.height)
         

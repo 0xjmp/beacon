@@ -29,7 +29,7 @@ class SCViewController: UIViewController {
     // MARK: - Getters
     
     class func getTopViewController() -> UIViewController? {
-        if let navigationController:UINavigationController = UIApplication.sharedApplication().keyWindow.rootViewController as? UINavigationController {
+        if let navigationController:UINavigationController = UIApplication.sharedApplication().keyWindow!.rootViewController as? UINavigationController {
             if navigationController.isKindOfClass(UINavigationController) {
                 return navigationController.topViewController
             } else if navigationController.isKindOfClass(UIViewController) {

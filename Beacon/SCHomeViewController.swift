@@ -60,7 +60,7 @@ class SCInvisibleAreaButton:UIButton {
     override init(frame:CGRect) {
         super.init(frame: frame)
         
-        let image = UIImage(named: "pluswhite")
+        let image = UIImage(named: "pluswhite")!
         self.plusImageView = UIImageView(image: image)
         self.plusImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
         self.plusImageView.userInteractionEnabled = false
@@ -148,7 +148,7 @@ class SCTransitioningTableCell:UITableViewCell {
         
         let margin:CGFloat = 20.0
         
-        var deleteImage = UIImage(named: "xblack")
+        var deleteImage = UIImage(named: "xblack")!
         let y:CGFloat = view.bounds.size.height / 2 - (deleteImage.size.height / 2)
         self.deleteButton = SCDeleteCellButton(cell: self)
         self.deleteButton.frame = CGRectMake(margin, y, deleteImage.size.width, deleteImage.size.height)

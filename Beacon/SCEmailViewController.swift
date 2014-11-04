@@ -18,7 +18,7 @@ class SCEmailViewController: UIViewController {
     override init() {
         let logo = UIImage(named: "loadinglogo")
         self.logoImageView = UIImageView(image: logo)
-        self.logoImageView.frame = CGRectMake(0, 0, logo.size.width, logo.size.height)
+        self.logoImageView.frame = CGRectMake(0, 0, logo!.size.width, logo!.size.height)
         
         self.emailLabel = UILabel()
         self.emailLabel.textColor = UIColor.whiteColor()

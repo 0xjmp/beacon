@@ -52,7 +52,7 @@ class SCUser: SCObject {
                 } else {
                     // Set the cookie. This just serves for a bug that only exists in debuggging.
                     if let cookieInfo = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? NSDictionary {
-                        let cookie = NSHTTPCookie(properties: cookieInfo)
+                        let cookie = NSHTTPCookie(properties: cookieInfo)!
                         NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
                     }
                     
@@ -68,24 +68,22 @@ class SCUser: SCObject {
     }
     
     class func getProfile(completionHandler:SCRequestResultsBlock) {
-        if let user = self.currentUser {
-            let path = "users/\(user.objectId.stringValue)"
-            SCNetworking.shared.request(.GET, path: path, params: ["" : ""], completionHandler: { (responseObject, error) -> Void in
-                if error != nil {
-                    completionHandler(responseObject: nil, error: error)
-                } else {
-                    var user:SCUser? = nil
-                    if let response = responseObject as? NSDictionary {
-                        user = SCUser(json: response["user"] as? NSDictionary)
-                        if user != nil {
-                            self.currentUser = user
-                        }
+        let path = "users/"
+        SCNetworking.shared.request(.GET, path: path, params: ["" : ""], completionHandler: { (responseObject, error) -> Void in
+            if error != nil {
+                completionHandler(responseObject: nil, error: error)
+            } else {
+                var user:SCUser? = nil
+                if let response = responseObject as? NSDictionary {
+                    user = SCUser(json: response["user"] as? NSDictionary)
+                    if user != nil {
+                        self.currentUser = user
                     }
-                    
-                    completionHandler(responseObject: user, error: nil)
                 }
-            })
-        }
+                
+                completionHandler(responseObject: user, error: nil)
+            }
+        })
     }
     
     class func delete(invisibleArea:SCInvisibleArea!, completionHandler:SCRequestResultsBlock) {

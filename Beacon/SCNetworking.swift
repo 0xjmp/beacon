@@ -46,7 +46,7 @@ public class SCNetworking: NSObject {
     
     func request(method:Alamofire.Method, path:NSString!, params:[String: AnyObject], completionHandler:SCRequestResultsBlock) {
         let url = "\(self.baseUrl)\(path)"
-        let encoding = method.toRaw() == "GET" ? ParameterEncoding.URL : ParameterEncoding.JSON
+        let encoding = method.rawValue == "GET" ? ParameterEncoding.URL : ParameterEncoding.JSON
         Alamofire.request(method, url, parameters: params, encoding:encoding)
             .response { (request, response, data, error) in
                 let url:NSString! = request.URL.absoluteString

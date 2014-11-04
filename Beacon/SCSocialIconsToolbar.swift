@@ -150,7 +150,9 @@ class SCSocialIconsToolbar: UIToolbar {
             block()
         } else {
             SSocialManager.singleton().attemptOAuth(button.socialType, completionBlock: { (success) -> Void in
-                block()
+                SCUser.getProfile({ (responseObject, error) -> Void in
+                    block()
+                })
             })
         }
     }
