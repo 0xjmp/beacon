@@ -26,6 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         
+        if (NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) != nil) {
+            if let prop:NSDictionary = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? NSDictionary {
+                if let cookie:NSHTTPCookie = NSHTTPCookie(properties: prop) {
+                    NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
+                }
+            }
+        }
+        
         return true
     }
 
