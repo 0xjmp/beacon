@@ -62,4 +62,10 @@ class SCTheme: NSObject {
     class func primaryFont(size:CGFloat!) -> UIFont {
         return UIFont(name: "MavenProLight300-Regular", size: size)!
     }
+    
+    class var beaconPurple:UIColor {
+        get {
+            return UIColor(red: 53.0/255.0, green: 25.0/255.0, blue: 59.0/255.0, alpha: 1.0)
+        }
+    }
 }
