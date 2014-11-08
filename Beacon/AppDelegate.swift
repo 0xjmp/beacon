@@ -16,6 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        if (NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) != nil) {
+            if let prop:NSDictionary = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? NSDictionary {
+                if let cookie:NSHTTPCookie = NSHTTPCookie(properties: prop) {
+                    NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
+                }
+            }
+        }
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
         let homeViewController = SCHomeViewController(nibName: nil, bundle: nil)
@@ -25,14 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         self.window!.makeKeyAndVisible()
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
-        
-        if (NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) != nil) {
-            if let prop:NSDictionary = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? NSDictionary {
-                if let cookie:NSHTTPCookie = NSHTTPCookie(properties: prop) {
-                    NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
-                }
-            }
-        }
         
         return true
     }
