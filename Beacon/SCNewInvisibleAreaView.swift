@@ -134,26 +134,17 @@ class SPinControl: UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        println("begin tracking")
-        return super.beginTrackingWithTouch(touch, withEvent: event)
-    }
-    
     override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
         super.endTrackingWithTouch(touch, withEvent: event)
         
         self.sendActionsForControlEvents(UIControlEvents.TouchDragExit)
-        
-        println("end tracking")
     }
     
     override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        println("continue tracking")
-        
         let prevLocation = touch.previousLocationInView(touch.view)
         let location = touch.locationInView(touch.view)
         let xChange = location.x - prevLocation.x
-        self.currentRadius += xChange
+        self.currentRadius += xChange * 4
         
         // Guard rails for min/max values of scale
         if self.currentRadius < self.minimumRadius {
@@ -165,11 +156,6 @@ class SPinControl: UIControl {
         self.sendActionsForControlEvents(.ValueChanged)
         
         return super.continueTrackingWithTouch(touch, withEvent: event)
-    }
-    
-    override func cancelTrackingWithEvent(event: UIEvent?) {
-        println("cancelTracking")
-        super.cancelTrackingWithEvent(event)
     }
     
     // MARK: - Actions
@@ -193,6 +179,7 @@ class SCNewInvisibleAreaView: UIToolbar {
     var userLocationAnnotation:MKPointAnnotation?
     var pinControl:SPinControl!
     var circle:MKCircle?
+    var radiusLabel:UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -232,6 +219,12 @@ class SCNewInvisibleAreaView: UIToolbar {
         self.pinControl.addTarget(self, action: "resetPin:", forControlEvents: UIControlEvents.TouchDragExit)
         self.mapView.addSubview(self.pinControl)
         
+        self.radiusLabel = UILabel(frame: CGRectZero)
+        self.radiusLabel.textColor = UIColor.whiteColor()
+        self.radiusLabel.font = SCTheme.primaryFont(13)
+        self.radiusLabel.textAlignment = NSTextAlignment.Center
+        self.mapView.addSubview(self.radiusLabel)
+        
         let image = UIImage(named: "overlaybutton")!
         self.addButton = UIButton()
         self.addButton.setBackgroundImage(image, forState: UIControlState.Normal)
@@ -251,6 +244,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         self.nameField.frame = CGRectMake(margin, margin, self.bounds.size.width - (margin * 2), 55)
         self.mapView.frame = CGRectMake(margin, CGRectGetMaxY(self.nameField.frame) + 10, self.nameField.bounds.size.width, 200)
         self.pinControl.frame = CGRectMake(self.pinControl.frame.origin.x, self.pinControl.frame.origin.y, self.pinControl.currentRadius / 5 + 20, 45)
+        self.radiusLabel.frame = CGRectMake(self.pinControl.frame.origin.x, self.pinControl.frame.origin.y, self.pinControl.bounds.size.width, self.pinControl.bounds.size.height)
         self.addButton.frame = CGRectMake(self.nameField.frame.origin.x, CGRectGetMaxY(self.mapView.frame) + 10, self.nameField.bounds.size.width, 50)
         
         self.startUpdatingLocation()
@@ -279,7 +273,6 @@ class SCNewInvisibleAreaView: UIToolbar {
         if CLLocationManager.locationServicesEnabled() == true {
             if self.locationManager.location == nil {
                 self.locationManager.requestAlwaysAuthorization()
-                self.locationManager.startUpdatingLocation()
             }
         }
     }
@@ -301,11 +294,34 @@ class SCNewInvisibleAreaView: UIToolbar {
     }
     
     func pinDragged(pin:SPinControl!) {
+        if let userLocation = self.locationManager.location {
+            self.resetCircle(userLocation)
+        }
+        
         self.mapView.delegate.mapView!(self.mapView, regionDidChangeAnimated: true)
     }
     
     func resetPin(pin:UIControl!) {
         
+    }
+    
+    func resetCircle(userLocation:CLLocation!) {
+        self.mapView.removeOverlay(self.circle)
+        self.circle = MKCircle(centerCoordinate: userLocation.coordinate, radius: CLLocationDistance(self.pinControl.currentRadius))
+        self.mapView.addOverlay(self.circle)
+        
+        let radius = NSNumber(float: Float(self.pinControl.currentRadius) * 3.0)
+        self.radiusLabel.text = "\(radius.integerValue) ft."
+    }
+    
+    func resetUserLocationAnnotation(coord:CLLocationCoordinate2D) {
+        if self.userLocationAnnotation != nil {
+            self.mapView.removeAnnotation(self.userLocationAnnotation)
+        }
+        
+        self.userLocationAnnotation = MKPointAnnotation()
+        self.userLocationAnnotation!.setCoordinate(coord)
+        self.mapView.addAnnotation(self.userLocationAnnotation!)
     }
 
 }
@@ -337,12 +353,9 @@ extension SCNewInvisibleAreaView: MKMapViewDelegate {
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         if userLocation != nil {
             if self.circle == nil {
-                self.circle = MKCircle(centerCoordinate: userLocation.coordinate, radius: CLLocationDistance(self.pinControl.currentRadius))
-                self.mapView.addOverlay(self.circle)
+                self.resetCircle(userLocation.location)
                 
-                var region = MKCoordinateRegionForMapRect(self.circle!.boundingMapRect)
-                region = mapView.regionThatFits(region)
-                mapView.setRegion(region, animated: false)
+                mapView.delegate.mapView!(mapView, regionDidChangeAnimated: false)
                 
                 self.pinControl.animate()
             }
@@ -372,14 +385,19 @@ extension SCNewInvisibleAreaView: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
         if let location = self.locationManager.location {
+            if self.circle != nil {
+                var region = MKCoordinateRegionForMapRect(self.circle!.boundingMapRect)
+                region = mapView.regionThatFits(region)
+                mapView.setRegion(region, animated: false)
+            }
+            
             if self.userLocationAnnotation == nil {
-                self.userLocationAnnotation = MKPointAnnotation()
-                self.userLocationAnnotation!.setCoordinate(location.coordinate)
-                mapView.addAnnotation(self.userLocationAnnotation!)
+                self.resetUserLocationAnnotation(location.coordinate)
             }
             
             let userPoint = self.mapView.convertCoordinate(location.coordinate, toPointToView: self.mapView)
             self.pinControl.frame = CGRectMake(userPoint.x, userPoint.y - (self.pinControl.bounds.size.height / 2), self.pinControl.bounds.size.width, self.pinControl.bounds.size.height)
+            self.radiusLabel.frame = CGRectMake(self.pinControl.frame.origin.x, self.pinControl.frame.origin.y - 10, self.pinControl.bounds.size.width, self.pinControl.bounds.size.height)
             self.pinControl.animate()
         }
     }
