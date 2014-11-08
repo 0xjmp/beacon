@@ -115,6 +115,7 @@
 		D2108EDA19E7291C0012E664 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */; };
 		D2684BE719F1EDE70021C6D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */; };
 		D2684BEB19F1EDED0021C6D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */; };
+		D2A0A00F1A0EE3410031F2B3 /* Argo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29FDCD01A0EDD2600CA785C /* Argo.framework */; };
 		D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */; };
 		D2AA9AC019EE702800255FC2 /* SCEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */; };
 		D2AA9AC419EE7DD500255FC2 /* SCLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */; };
@@ -128,7 +129,6 @@
 		D2BFA2811A058FAB00D962C3 /* SSocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BFA2801A058FAB00D962C3 /* SSocialManager.m */; };
 		D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */; };
 		D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */; };
-		D2E47B4619E5FA8200665BC3 /* SCObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4519E5FA8200665BC3 /* SCObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +152,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
 			remoteInfo = AlamofireTests;
+		};
+		D29FDCCF1A0EDD2600CA785C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EAD9FACF19D0EAB50031E006;
+			remoteInfo = Argo;
+		};
+		D29FDCD11A0EDD2600CA785C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EAD9FADA19D0EAB60031E006;
+			remoteInfo = ArgoTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -283,6 +297,7 @@
 		D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Argo.xcodeproj; path = Argo/Argo.xcodeproj; sourceTree = "<group>"; };
 		D2AA9AB219E9E7C200255FC2 /* Beacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Beacon-Bridging-Header.h"; sourceTree = "<group>"; };
 		D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCViewController.swift; sourceTree = "<group>"; };
 		D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEmailViewController.swift; sourceTree = "<group>"; };
@@ -298,7 +313,6 @@
 		D2BFA2801A058FAB00D962C3 /* SSocialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSocialManager.m; sourceTree = "<group>"; };
 		D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenProLight-300.otf"; sourceTree = "<group>"; };
 		D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCInvisibleArea.swift; sourceTree = "<group>"; };
-		D2E47B4519E5FA8200665BC3 /* SCObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +320,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2A0A00F1A0EE3410031F2B3 /* Argo.framework in Frameworks */,
 				D2BD011719F64D320093E280 /* Accounts.framework in Frameworks */,
 				D2BD011519F64B2C0093E280 /* Social.framework in Frameworks */,
 				D2BD011119F2E50C0093E280 /* MapKit.framework in Frameworks */,
@@ -334,6 +349,7 @@
 				D2BB154319E7AE030052D117 /* Vendor */,
 				D2081CDE19E2930D00ABD203 /* BeaconTests */,
 				D2081C4C19DA7C8100ABD203 /* Products */,
+				D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */,
 				D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */,
 				D31DF787417A46C88F1508F2 /* Frameworks */,
 				E5CD05A153FA8E21E97F79EA /* Pods */,
@@ -492,6 +508,15 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		D29FDCC91A0EDD2600CA785C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D29FDCD01A0EDD2600CA785C /* Argo.framework */,
+				D29FDCD21A0EDD2600CA785C /* ArgoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D2AA9AC919EF5B6A00255FC2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,7 +540,6 @@
 				D2081CD319E2930500ABD203 /* SCUser.swift */,
 				D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */,
 				D2081CEC19E5414300ABD203 /* SCBeacon.swift */,
-				D2E47B4519E5FA8200665BC3 /* SCObject.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -707,6 +731,10 @@
 					ProductGroup = D2081C7F19DA8AD800ABD203 /* Products */;
 					ProjectRef = D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */;
 				},
+				{
+					ProductGroup = D29FDCC91A0EDD2600CA785C /* Products */;
+					ProjectRef = D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -729,6 +757,20 @@
 			fileType = wrapper.cfbundle;
 			path = AlamofireTests.xctest;
 			remoteRef = D2081C8519DA8AD800ABD203 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D29FDCD01A0EDD2600CA785C /* Argo.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Argo.framework;
+			remoteRef = D29FDCCF1A0EDD2600CA785C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D29FDCD21A0EDD2600CA785C /* ArgoTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ArgoTests.xctest;
+			remoteRef = D29FDCD11A0EDD2600CA785C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -898,7 +940,6 @@
 				D2081CDD19E2930500ABD203 /* SCUser.swift in Sources */,
 				D2AA9AC619EF56C400255FC2 /* SCSignUpViewController.swift in Sources */,
 				D2081CEB19E536D800ABD203 /* SCBeaconViewController.swift in Sources */,
-				D2E47B4619E5FA8200665BC3 /* SCObject.swift in Sources */,
 				D2081CD419E2930500ABD203 /* AppDelegate.swift in Sources */,
 				D2081CD519E2930500ABD203 /* Beacon.xcdatamodeld in Sources */,
 			);

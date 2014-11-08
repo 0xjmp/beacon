@@ -77,7 +77,7 @@ class SCInvisibleAreaButton:UIButton {
 }
 
 protocol SCNewInvisibleAreaDelegate {
-    func didCreateNew(invisibleArea:SCInvisibleArea!)
+    func didFinishCreatingInvisibleArea()
 }
 
 
@@ -259,9 +259,7 @@ class SCNewInvisibleAreaView: UIToolbar {
     func createNewArea() {
         if let actionDelegate = self.actionDelegate {
             if self.nameField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-                var invisibleArea = SCInvisibleArea(json: nil)
-                invisibleArea.location = self.nameField.text
-                actionDelegate.didCreateNew(invisibleArea)
+                actionDelegate.didFinishCreatingInvisibleArea()
             } else {
                 var alertView = UIAlertView(title: "Please fill in the required fields", message: nil, delegate: nil, cancelButtonTitle: "OK")
                 alertView.show()

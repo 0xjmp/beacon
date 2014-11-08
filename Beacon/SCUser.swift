@@ -7,28 +7,18 @@
 //
 
 import UIKit
+import Argo
 
 var SCUserLoggedOutNotification = "SCUserLoggedOutNotification"
 var SCCurrentUserKey = "com.beacon.current_user"
 var SCCookieName = "_session_id"
 
-class SCUser: SCObject {
+class SCUser {
     
-    var objectId:NSNumber!
-    var profileUrl:NSString?
-    var invisibleAreas:NSArray?
-    var defaultSocialType:NSString?
-    var socialUrls:NSDictionary?
-    var email:NSString?
-    
-    override class func jsonMapping() -> NSDictionary {
-        return [
-            "id" : "objectId",
-            "default_social_type" : "defaultSocialType",
-            "social_urls" : "socialUrls",
-            "email" : "email"
-        ]
-    }
+    var id:NSNumber!
+    var email:NSString!
+    var invisibleAreas:[SCInvisibleArea]?
+    var socialUrls:[NSString]?
     
     class var currentUser:SCUser? {
         set {
@@ -87,7 +77,7 @@ class SCUser: SCObject {
     
     class func delete(invisibleArea:SCInvisibleArea!, completionHandler:SCRequestResultsBlock) {
         if let user = self.currentUser {
-            if let areas:NSMutableArray = user.invisibleAreas?.mutableCopy() as? NSMutableArray {
+            if let areas:NSMutableArray = NSArray(array: user.invisibleAreas!).mutableCopy() as? NSMutableArray {
                 areas.removeObject(invisibleArea)
             } else {
                 fatalError("Serious error")
@@ -155,7 +145,7 @@ class SCUser: SCObject {
     }
     
     class func create(invisibleArea:SCInvisibleArea!, completionHandler:SCRequestResultsBlock) {
-        SCNetworking.shared.request(.POST, path: "invisible_areas", params: ["invisible_area" : invisibleArea.toJSON()], completionHandler: { (responseObject, error) -> Void in
+        SCNetworking.shared.request(.POST, path: "invisible_areas", params: ["invisible_area" : invisibleArea.toDictionary()], completionHandler: { (responseObject, error) -> Void in
             if error != nil {
                 completionHandler(responseObject: nil, error: error)
             } else {
@@ -249,3 +239,24 @@ class SCUser: SCObject {
         SCNetworking.shared.request(.GET, path: "email/new", params: ["email" : email], completionHandler: completionHandler)
     }
 }
+
+extension SCUser: JSONDecodable {
+    class func create(id: NSNumber!)(email: NSString!)(invisibleAreas: [SCInvisibleArea]?)(socialUrls: [NSString]?) {
+        return SCUser(id: id, email: email, invisibleAreas: invisibleAreas, socialUrls: socialUrls)
+    }
+    
+    class func decode(json: JSON) -> SCUser? {
+        return _JSONParse(json) >>- { d in
+            SCUser.create
+                <^> d <| "id"
+                <*> d <| "email"
+                <*> d <|* "invisible_areas"
+                <*> d <|* "social_urls"
+        }
+    }
+}
+
+var id:NSNumber!
+var email:NSString?
+var invisibleAreas:[SCInvisibleArea]?
+var socialUrls:[NSString]?

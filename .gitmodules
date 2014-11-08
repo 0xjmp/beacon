@@ -1,3 +1,6 @@
 [submodule "Alamofire"]
 	path = Alamofire
 	url = https://github.com/Alamofire/Alamofire.git
+[submodule "Argo"]
+	path = Argo
+	url = git@github.com:thoughtbot/Argo.git

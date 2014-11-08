@@ -108,7 +108,7 @@ class SCTransitioningTableCell:UITableViewCell {
         let gray:CGFloat = 220.0/255.0
         self.subtitleLabel.textColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.subtitleLabel.font = SCTheme.primaryFont(15)
-        self.subtitleLabel.text = invisibleArea.location
+        self.subtitleLabel.text = invisibleArea.address
         view.addSubview(self.subtitleLabel)
         
         return view
@@ -398,9 +398,9 @@ extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension SCHomeViewController: SCNewInvisibleAreaDelegate {
-    
-    func didCreateNew(invisibleArea:SCInvisibleArea!) {
-        self.create(invisibleArea)
+
+    func didFinishCreatingInvisibleArea() {
+        self.getInvisibleZones()
     }
     
 }
