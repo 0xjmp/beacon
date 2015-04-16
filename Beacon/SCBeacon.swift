@@ -8,13 +8,9 @@
 
 import UIKit
 
-class SCBeacon {
+struct SCBeacon {
     
-    private var beaconKey:NSString {
-        get {
-            return "com.beacon.beacon_key"
-        }
-    }
+    let beaconKey:NSString = "com.beacon.beacon_key"
     
     func beaconIsOn() -> Bool {
         let beaconState: NSNumber? = NSUserDefaults.standardUserDefaults().objectForKey(self.beaconKey) as? NSNumber

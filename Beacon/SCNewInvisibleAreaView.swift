@@ -1,14 +1,14 @@
+////
+////  SCNewInvisibleAreaView.swift
+////  Beacon
+////
+////  Created by Jake Peterson on 10/9/14.
+////  Copyright (c) 2014 Jake Peterson. All rights reserved.
+////
 //
-//  SCNewInvisibleAreaView.swift
-//  Beacon
+//import UIKit
+//import MapKit
 //
-//  Created by Jake Peterson on 10/9/14.
-//  Copyright (c) 2014 Jake Peterson. All rights reserved.
-//
-
-import UIKit
-import MapKit
-
 class SCInvisibleAreaButton:UIButton {
     var plusImageView:UIImageView!
     var plusImageContainerView:UIView!
@@ -32,15 +32,15 @@ class SCInvisibleAreaButton:UIButton {
         self.addSubview(self.plusImageContainerView)
         
         self.myTitleLabel = UILabel()
-        self.myTitleLabel.font = SCTheme.primaryFont(27)
-        self.myTitleLabel.textColor = SCTheme.primaryTextColor
+//        self.myTitleLabel.font = SCTheme.primaryFont(27)
+//        self.myTitleLabel.textColor = SCTheme.primaryTextColor
         self.myTitleLabel.text = self.defaultTitleText
         self.myTitleLabel.userInteractionEnabled = false
         self.addSubview(self.myTitleLabel)
         
         self.closeLabel = UILabel()
-        self.closeLabel.font = SCTheme.primaryFont(27)
-        self.closeLabel.textColor = SCTheme.primaryTextColor
+//        self.closeLabel.font = SCTheme.primaryFont(27)
+//        self.closeLabel.textColor = SCTheme.primaryTextColor
         self.closeLabel.text = "Cancel"
         self.closeLabel.userInteractionEnabled = false
         self.closeLabel.layer.opacity = 0.0
@@ -192,7 +192,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         self.nameField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.nameField.layer.cornerRadius = 5.0
         self.nameField.attributedPlaceholder = NSAttributedString(string: "Name goes here...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
-        self.nameField.font = SCTheme.primaryFont(25)
+//        self.nameField.font = SCTheme.primaryFont(25)
         self.nameField.layer.borderColor = UIColor.whiteColor().CGColor
         self.nameField.layer.borderWidth = 1.0
         self.nameField.leftViewMode = UITextFieldViewMode.Always
@@ -221,7 +221,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         
         self.radiusLabel = UILabel(frame: CGRectZero)
         self.radiusLabel.textColor = UIColor.whiteColor()
-        self.radiusLabel.font = SCTheme.primaryFont(13)
+//        self.radiusLabel.font = SCTheme.primaryFont(13)
         self.radiusLabel.textAlignment = NSTextAlignment.Center
         self.mapView.addSubview(self.radiusLabel)
         
@@ -230,7 +230,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         self.addButton.setBackgroundImage(image, forState: UIControlState.Normal)
         self.addButton.frame = CGRectMake(0, 0, image.size.width, image.size.height)
         self.addButton.setTitle("Add Invisible Area", forState: UIControlState.Normal)
-        self.addButton.titleLabel?.font = SCTheme.primaryFont(25)
+//        self.addButton.titleLabel?.font = SCTheme.primaryFont(25)
         self.addButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.addButton.addTarget(self, action: "createNewArea", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(self.addButton)
@@ -367,9 +367,9 @@ extension SCNewInvisibleAreaView: MKMapViewDelegate {
     func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
         if overlay.isKindOfClass(MKCircle) {
             var circleView = MKCircleRenderer(overlay: overlay)
-            let color:UIColor = SCTheme.beaconPurple
-            circleView.strokeColor = color
-            circleView.fillColor = color.colorWithAlphaComponent(0.4)
+//            let color:UIColor = SCTheme.beaconPurple
+//            circleView.strokeColor = color
+//            circleView.fillColor = color.colorWithAlphaComponent(0.4)
             circleView.lineWidth = 3.0
             return circleView
         }

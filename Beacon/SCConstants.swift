@@ -8,13 +8,9 @@
 
 import UIKit
 
-class SCConstants: NSObject {
+struct SCConstants {
     
-    class var handOffActivityType:NSString! {
-        get {
-            return "com.WFIO.hand-off-message"
-        }
-    }
+    static var handOffActivityType:NSString = "com.WFIO.hand-off-message"
     
 }
 

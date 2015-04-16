@@ -8,12 +8,9 @@
 
 import UIKit
 
-/** 
- * This is mainly a "populator" class 
- */
-class SCTheme: NSObject {
+struct SCTheme {
    
-    class var logoImageView:UIImageView {
+    static var logoImageView:UIImageView {
         get {
             let image = UIImage(named: "mainlogo")
             var imageView = UIImageView(image: image)
@@ -24,9 +21,15 @@ class SCTheme: NSObject {
         }
     }
     
+//    static var beaconPurple:UIColor {
+//        get {
+//            return UIColor(red: CGFloat(53.0/255.0), green: CGFloat(25.0/255.0), blue: CGFloat(59.0/255.0), alpha: CGFloat(1.0))
+//        }
+//    }
+
     // MARK: - Getters
     
-    class var defaultBackgroundImageView:UIImageView {
+    static var defaultBackgroundImageView:UIImageView {
         get {
             let image = UIImage(named: "background.jpg")
             var imageView = UIImageView(image: image)
@@ -35,8 +38,8 @@ class SCTheme: NSObject {
             return imageView
         }
     }
-    
-    class func clearNavigation(bar:UINavigationBar) {
+
+    static func clearNavigation(bar:UINavigationBar) {
         bar.shadowImage = UIImage()
         bar.translucent = true
         
@@ -52,20 +55,15 @@ class SCTheme: NSObject {
         
         bar.setBackgroundImage(imageView.image, forBarMetrics: UIBarMetrics.Default)
     }
-    
-    class var primaryTextColor:UIColor {
+
+    static var primaryTextColor:UIColor {
         get {
             return UIColor.whiteColor()
         }
     }
-    
-    class func primaryFont(size:CGFloat!) -> UIFont {
+
+    static func primaryFont(size:CGFloat!) -> UIFont {
         return UIFont(name: "MavenProLight300-Regular", size: size)!
     }
     
-    class var beaconPurple:UIColor {
-        get {
-            return UIColor(red: 53.0/255.0, green: 25.0/255.0, blue: 59.0/255.0, alpha: 1.0)
-        }
-    }
 }

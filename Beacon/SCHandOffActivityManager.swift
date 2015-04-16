@@ -12,7 +12,7 @@ class SCHandOffActivityManager: NSObject {
     
     class func receive(userActivity:NSUserActivity) {
         SCUser.getProfile({ (responseObject, error) -> Void in
-            if let user = responseObject as? SCUser {
+            if let user:AnyObject = responseObject {
                 if (error == nil) {
                     if let path = user.profileUrl {
                         let url = NSURL(string: path)!

@@ -99,7 +99,7 @@ class SCTransitioningTableCell:UITableViewCell {
         var frame = CGRectMake(x, 7.5, view.bounds.size.width - (x + margin), 30)
         self.titleLabel = UILabel(frame: frame)
         self.titleLabel.textColor = UIColor.whiteColor()
-        self.titleLabel.font = SCTheme.primaryFont(25)
+//        self.titleLabel.font = SCTheme.primaryFont(25)
         self.titleLabel.text = invisibleArea.name
         view.addSubview(self.titleLabel)
         
@@ -107,7 +107,7 @@ class SCTransitioningTableCell:UITableViewCell {
         self.subtitleLabel = UILabel(frame: frame)
         let gray:CGFloat = 220.0/255.0
         self.subtitleLabel.textColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
-        self.subtitleLabel.font = SCTheme.primaryFont(15)
+//        self.subtitleLabel.font = SCTheme.primaryFont(15)
         self.subtitleLabel.text = invisibleArea.address
         view.addSubview(self.subtitleLabel)
         
@@ -144,19 +144,14 @@ class SCHomeViewController: SCBeaconViewController {
     var socialToolbar:SCSocialIconsToolbar!
     var invisibleAreaButton:SCInvisibleAreaButton!
     var tableViewTag:Int = 10
-    var invisibleAreas:NSArray?
+    var invisibleAreas:[SCInvisibleArea] = []
     var tableViewSeparator:CALayer!
-    var newInvisibleAreaView:SCNewInvisibleAreaView!
+//    var newInvisibleAreaView:SCNewInvisibleAreaView!
     
     override func loadView() {
         super.loadView()
-    
-        let image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("background", ofType: "jpg")!)
-        let imageView = UIImageView(image: image)
-        imageView.userInteractionEnabled = true
-        self.view = imageView
         
-        self.view = SCBackgroundView()
+//        self.view = SCBackgroundView()
     }
     
     override func viewDidLoad() {
@@ -190,15 +185,15 @@ class SCHomeViewController: SCBeaconViewController {
         self.invisibleAreaButton.addTarget(self, action: "toggleInvisibleArea", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.invisibleAreaButton)
         
-        self.newInvisibleAreaView = SCNewInvisibleAreaView(frame: CGRectZero)
-        self.newInvisibleAreaView.actionDelegate = self
+//        self.newInvisibleAreaView = SCNewInvisibleAreaView(frame: CGRectZero)
+//        self.newInvisibleAreaView.actionDelegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: SCTheme.logoImageView)
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: SCTheme.logoImageView)
         
         if let navigationBar = self.navigationController?.navigationBar {
-            SCTheme.clearNavigation(navigationBar)
+//            SCTheme.clearNavigation(navigationBar)
             
             self.socialToolbar.frame = CGRectMake(0, CGRectGetMaxY(navigationBar.frame), self.view.bounds.size.width, self.socialToolbar.bounds.size.height)
         }
@@ -229,8 +224,10 @@ class SCHomeViewController: SCBeaconViewController {
         
         SCUser.getProfile({ (responseObject, error) -> Void in
             if error == nil {
-                self.invisibleAreas = SCUser.currentUser?.invisibleAreas
-                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+                if let user = SCUser.currentUser {
+                    self.invisibleAreas = user.invisibleAreas
+                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+                }
             }
             
             self.invisibleAreaButton.myTitleLabel.text = self.invisibleAreaButton.defaultTitleText
@@ -242,43 +239,36 @@ class SCHomeViewController: SCBeaconViewController {
     func deleteInvisibleArea(indexPath:NSIndexPath!) {
         self.tableView.beginUpdates()
         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-        if let mutableAreas:NSMutableArray = self.invisibleAreas?.mutableCopy() as? NSMutableArray {
-            mutableAreas.removeObjectAtIndex(indexPath.row)
-            self.invisibleAreas = mutableAreas as NSArray
-        }
+        self.invisibleAreas.removeAtIndex(indexPath.row)
         self.tableView.endUpdates()
         
         if let user = SCUser.currentUser {
-            if let invisibleArea = self.invisibleAreas?.objectAtIndex(indexPath.row) as? SCInvisibleArea {
-                SCUser.delete(invisibleArea, completionHandler: { (responseObject, error) -> Void in
-                    if let user = SCUser.currentUser {
-                        if let areas = self.invisibleAreas? {
-                            self.invisibleAreas = areas
-                            
-                            if areas.count != user.invisibleAreas?.count {
-                                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
-                            }
-                        }
+            var invisibleArea = self.invisibleAreas[indexPath.row]
+            SCUser.delete(invisibleArea, completionHandler: { (responseObject, error) -> Void in
+                if let user = SCUser.currentUser {
+                    self.invisibleAreas = user.invisibleAreas
+                    
+                    if self.invisibleAreas.count != user.invisibleAreas.count {
+                        self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
                     }
-                })
-            }
+                }
+            })
         }
     }
     
     func create(invisibleArea:SCInvisibleArea!) {
         self.closeInvisibleArea()
         
-        if let mutableAreas: NSMutableArray = self.invisibleAreas?.mutableCopy() as? NSMutableArray {
-            mutableAreas.addObject(invisibleArea)
-            self.invisibleAreas = mutableAreas
-            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
-        }
+        self.invisibleAreas.append(invisibleArea)
+        self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
         
         SCUser.create(invisibleArea, completionHandler: { (responseObject, error) -> Void in
             if error == nil {
-                if self.invisibleAreas?.count != SCUser.currentUser?.invisibleAreas?.count {
-                    self.invisibleAreas = SCUser.currentUser?.invisibleAreas
-                    self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+                if self.invisibleAreas.count != SCUser.currentUser?.invisibleAreas.count {
+                    if let user = SCUser.currentUser {
+                        self.invisibleAreas = user.invisibleAreas
+                        self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+                    }
                 }
             }
         })
@@ -289,13 +279,13 @@ class SCHomeViewController: SCBeaconViewController {
 extension SCHomeViewController {
     
     func openInvisibleArea() {
-        self.newInvisibleAreaView.layer.opacity = 0.0
-        self.newInvisibleAreaView.frame = self.tableView.frame
-        self.view.addSubview(self.newInvisibleAreaView)
+//        self.newInvisibleAreaView.layer.opacity = 0.0
+//        self.newInvisibleAreaView.frame = self.tableView.frame
+//        self.view.addSubview(self.newInvisibleAreaView)
         UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.invisibleAreaButton.plusImageView.transform = CGAffineTransformMakeRotation(-0.8)
             self.invisibleAreaButton.myTitleLabel.layer.opacity = 0.0
-            self.newInvisibleAreaView.layer.opacity = 1.0
+//            self.newInvisibleAreaView.layer.opacity = 1.0
             self.invisibleAreaButton.closeLabel.layer.opacity = 1.0
         })
     }
@@ -304,7 +294,7 @@ extension SCHomeViewController {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.invisibleAreaButton.plusImageView.transform = CGAffineTransformMakeRotation(0)
             
-            self.newInvisibleAreaView.layer.opacity = 0.0
+//            self.newInvisibleAreaView.layer.opacity = 0.0
             self.invisibleAreaButton.closeLabel.layer.opacity = 0.0
             
             self.invisibleAreaButton.myTitleLabel.layer.opacity = 1.0
@@ -334,11 +324,7 @@ extension SCHomeViewController: UIToolbarDelegate {
 extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let count = self.invisibleAreas?.count {
-            return count
-        }
-        
-        return 0
+        return self.invisibleAreas.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -355,7 +341,7 @@ extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.homeViewController = self
         cell?.indexPath = indexPath
         
-        var invisibleArea:SCInvisibleArea? = self.invisibleAreas?.objectAtIndex(indexPath.row) as? SCInvisibleArea
+        let invisibleArea = self.invisibleAreas[indexPath.row]
         cell?.invisibleArea = invisibleArea
         
         cell?.myContentView!.tag = self.tableViewTag
@@ -396,11 +382,11 @@ extension SCHomeViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
 }
-
-extension SCHomeViewController: SCNewInvisibleAreaDelegate {
-
-    func didFinishCreatingInvisibleArea() {
-        self.getInvisibleZones()
-    }
-    
-}
+//
+//extension SCHomeViewController: SCNewInvisibleAreaDelegate {
+//
+//    func didFinishCreatingInvisibleArea() {
+//        self.getInvisibleZones()
+//    }
+//    
+//}

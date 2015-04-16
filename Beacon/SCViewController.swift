@@ -44,11 +44,11 @@ class SCViewController: UIViewController {
 extension SCViewController {
     
     func startWatchingForLogoutEvents() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "presentLoginScreen", name: SCUserLoggedOutNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "presentLoginScreen", name: SCUserLoggedOutNotification, object: nil)
     }
     
     func endWatchingForLogoutEvents() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: SCUserLoggedOutNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: SCUserLoggedOutNotification, object: nil)
     }
     
     func presentLoginScreen() {

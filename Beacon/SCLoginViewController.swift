@@ -30,7 +30,7 @@ class SCLoginViewController: UIViewController {
         self.passwordField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.passwordField.layer.cornerRadius = 5
         self.passwordField.attributedPlaceholder = NSAttributedString(string: "Password goes here...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
-        self.passwordField.font = SCTheme.primaryFont(18)
+//        self.passwordField.font = SCTheme.primaryFont(18)
         self.passwordField.leftViewMode = UITextFieldViewMode.Always
         let leftView = UIView(frame: CGRectMake(0, 0, 15, 0))
         self.passwordField.leftView = leftView
@@ -38,7 +38,7 @@ class SCLoginViewController: UIViewController {
         self.continueButton = UIButton()
         self.continueButton.setTitle("Get Started", forState: UIControlState.Normal)
         self.continueButton.setBackgroundImage(UIImage(named: "overlaybutton"), forState: UIControlState.Normal)
-        self.continueButton.titleLabel?.font = SCTheme.primaryFont(25)
+//        self.continueButton.titleLabel?.font = SCTheme.primaryFont(25)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -58,12 +58,7 @@ class SCLoginViewController: UIViewController {
     override func loadView() {
         super.loadView()
         
-        let image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("background", ofType: "jpg")!)
-        let imageView = UIImageView(image: image)
-        imageView.userInteractionEnabled = true
-        self.view = imageView
-        
-        self.view = SCBackgroundView()
+//        self.view = SCBackgroundView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -89,7 +84,7 @@ class SCLoginViewController: UIViewController {
     
     func continuePressed() {
         if self.passwordField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
-            SCNetworking.presentUserError(SCLocale.InvalidPassword)
+//            SCNetworking.presentUserError(SCLocale.InvalidPassword)
         } else {
             SCUser.login(self.email, password: self.passwordField.text, completionHandler: { (responseObject, error) -> Void in
                 if error == nil {

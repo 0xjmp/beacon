@@ -24,10 +24,10 @@ public class SCNetworking: NSObject {
         get {
 #if DEBUG
     if self.OAuthEnabled == true {
-        return "http://localhost:3000/user/auth/"
+        return "http://localhost:5000/user/auth/"
     }
     
-        return "http://localhost:3000/\(self.apiVersion)/"
+        return "http://localhost:5000/\(self.apiVersion)/"
 #else
     if self.OAuthEnabled == true {
         return "http://api.sce.ne/user/auth/"
@@ -57,12 +57,12 @@ public class SCNetworking: NSObject {
                     switch code {
                     case 401:
                         NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
-                        let locale = SCLocale.InvalidUser
-                        SCNetworking.presentUserError(locale)
+//                        let locale = SCLocale.InvalidUser
+//                        SCNetworking.presentUserError(locale)
                         return
                     
                     case 500:
-                        SCNetworking.presentUserError(SCLocale.ServerFailure)
+//                        SCNetworking.presentUserError(SCLocale.ServerFailure)
                         return
 
                     default:
@@ -78,7 +78,7 @@ public class SCNetworking: NSObject {
                             switch code.integerValue {
                             case 1:
                                 NSNotificationCenter.defaultCenter().postNotificationName(SCUserLoggedOutNotification, object: nil)
-                                SCNetworking.presentUserError(SCLocale.NoInternet)
+//                                SCNetworking.presentUserError(SCLocale.NoInternet)
                                 return
                                 
                             default:
@@ -92,7 +92,7 @@ public class SCNetworking: NSObject {
                     var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError)
                     if jsonError != nil {
                         println("Error parsing response to JSON: \(jsonError)")
-                        SCNetworking.presentUserError(SCLocale.ServerFailure)
+//                        SCNetworking.presentUserError(SCLocale.ServerFailure)
                     } else {
                         if response?.statusCode == 200 || response?.statusCode == 204 {
                             completionHandler(responseObject: jsonObject, error: nil)
@@ -115,10 +115,10 @@ public class SCNetworking: NSObject {
 
 extension SCNetworking {
     
-    class func presentUserError(locale:SCLocale) {
-        let (title, message) = locale.description()
-        UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK").show()
-    }
+//    class func presentUserError(locale:SCLocale) {
+//        let (title, message) = locale.description()
+//        UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK").show()
+//    }
     
 }
 

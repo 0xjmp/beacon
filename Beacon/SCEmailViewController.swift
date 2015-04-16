@@ -25,7 +25,7 @@ class SCEmailViewController: UIViewController {
         self.emailLabel.text = "Enter your email to get started";
         self.emailLabel.numberOfLines = 0
         self.emailLabel.textAlignment = NSTextAlignment.Center
-        self.emailLabel.font = SCTheme.primaryFont(18)
+//        self.emailLabel.font = SCTheme.primaryFont(18)
         
         self.emailField = UITextField()
         self.emailField.returnKeyType = UIReturnKeyType.Go
@@ -34,7 +34,7 @@ class SCEmailViewController: UIViewController {
         var gray:CGFloat = 200.0/255.0
         self.emailField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.emailField.attributedPlaceholder = NSAttributedString(string: "Email goes here...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
-        self.emailField.font = SCTheme.primaryFont(18)
+//        self.emailField.font = SCTheme.primaryFont(18)
         self.emailField.leftViewMode = UITextFieldViewMode.Always
         let leftView = UIView(frame: CGRectMake(0, 0, 15, 0))
         self.emailField.leftView = leftView
@@ -42,7 +42,7 @@ class SCEmailViewController: UIViewController {
         self.continueButton = UIButton()
         self.continueButton.setTitle("Get Started", forState: UIControlState.Normal)
         self.continueButton.setBackgroundImage(UIImage(named: "overlaybutton"), forState: UIControlState.Normal)
-        self.continueButton.titleLabel?.font = SCTheme.primaryFont(25)
+//        self.continueButton.titleLabel?.font = SCTheme.primaryFont(25)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -59,12 +59,7 @@ class SCEmailViewController: UIViewController {
     override func loadView() {
         super.loadView()
         
-        let image = UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("background", ofType: "jpg")!)
-        let imageView = UIImageView(image: image)
-        imageView.userInteractionEnabled = true
-        self.view = imageView
-        
-        self.view = SCBackgroundView()
+//        self.view = SCBackgroundView()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -92,15 +87,15 @@ class SCEmailViewController: UIViewController {
         if self.emailField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
             UIAlertView(title: "You must provide an email", message: nil, delegate: nil, cancelButtonTitle: "OK").show()
         } else {
-            SCUser.getUserState(self.emailField.text, completionHandler: { (responseObject, error) -> Void in
-                var viewController:UIViewController? = nil
-                if error == nil {
-                    viewController = SCLoginViewController(email: self.emailField.text)
-                } else {
-                    viewController = SCSignUpViewController(email: self.emailField.text)
-                }
-                self.navigationController?.pushViewController(viewController!, animated: true)
-            })
+//            SCUser.getUserState(self.emailField.text, completionHandler: { (responseObject, error) -> Void in
+//                var viewController:UIViewController? = nil
+//                if error == nil {
+////                    viewController = SCLoginViewController(email: self.emailField.text)
+//                } else {
+//                    viewController = SCSignUpViewController(email: self.emailField.text)
+//                }
+//                self.navigationController?.pushViewController(viewController!, animated: true)
+//            })
         }
     }
 }
