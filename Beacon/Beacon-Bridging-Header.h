@@ -6,6 +6,6 @@
 //  Copyright (c) 2014 Jake Peterson. All rights reserved.
 //
 
-#import <FacebookSDK.h>
-#import <InstagramSimpleOAuth.h>
-#import "SSocialManager.h"
+//#import <FacebookSDK.h>
+//#import <InstagramSimpleOAuth.h>
+//#import "SSocialManager.h"

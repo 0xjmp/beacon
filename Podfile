@@ -1,7 +1,8 @@
-platform :ios, "8.0"
+platform :ios, '8.3'
 
-target "Beacon" do 
-	pod 'AFNetworking-RACExtensions'
-	pod 'Facebook-iOS-SDK', '~> 3.19'
-	pod 'InstagramSimpleOAuth', '~> 0.1'
+target 'Beacon' do
+  use_frameworks!
+
+  pod 'Alamofire'
+  pod 'Argo'
 end

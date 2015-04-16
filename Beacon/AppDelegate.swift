@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return SSocialManager.singleton().handleOpenUrl(url, sourceApplication: sourceApplication)
     }
     
-    // MARK: - Hand off
+//     MARK: - Hand off
     
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]!) -> Void) -> Bool {
         // Reconstruct the user's activity
@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         println("An error occurred while continuing the activity type \(userActivityType): \(error)")
     }
     
-    // MARK: - Core Data stack
+//     MARK: - Core Data stack
 
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "WFIO.Hand_Off_Bluetooth_Social_Media_App" in the application's documents Application Support directory.

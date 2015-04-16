@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		063EF16730DB7B69C000D31B /* libPods-Beacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDA0362867E6312BE77FAA7 /* libPods-Beacon.a */; };
-		D2081C8719DA8B0300ABD203 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2081C8419DA8AD800ABD203 /* Alamofire.framework */; };
-		D2081C8919DA8B2D00ABD203 /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D2081C8419DA8AD800ABD203 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0B67ECA6BF34F57CA086C4ED /* Pods_Beacon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0ABF239CFA92EB5193B5C6D /* Pods_Beacon.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D2081CD419E2930500ABD203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CC919E2930500ABD203 /* AppDelegate.swift */; };
 		D2081CD519E2930500ABD203 /* Beacon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2081CCA19E2930500ABD203 /* Beacon.xcdatamodeld */; };
 		D2081CD819E2930500ABD203 /* SCConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2081CCE19E2930500ABD203 /* SCConstants.swift */; };
@@ -115,7 +113,6 @@
 		D2108EDA19E7291C0012E664 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */; };
 		D2684BE719F1EDE70021C6D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */; };
 		D2684BEB19F1EDED0021C6D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */; };
-		D2A0A00F1A0EE3410031F2B3 /* Argo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29FDCD01A0EDD2600CA785C /* Argo.framework */; };
 		D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */; };
 		D2AA9AC019EE702800255FC2 /* SCEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */; };
 		D2AA9AC419EE7DD500255FC2 /* SCLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */; };
@@ -126,9 +123,8 @@
 		D2BD011119F2E50C0093E280 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BD011019F2E50C0093E280 /* MapKit.framework */; };
 		D2BD011519F64B2C0093E280 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BD011419F64B2C0093E280 /* Social.framework */; };
 		D2BD011719F64D320093E280 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BD011619F64D320093E280 /* Accounts.framework */; };
-		D2BFA2811A058FAB00D962C3 /* SSocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BFA2801A058FAB00D962C3 /* SSocialManager.m */; };
 		D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */; };
-		D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */; };
+		D2E47B4119E5E1BA00665BC3 /* SCZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4019E5E1BA00665BC3 /* SCZone.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,34 +135,6 @@
 			remoteGlobalIDString = D2081C4A19DA7C8100ABD203;
 			remoteInfo = "Hand Off Bluetooth Social Media App";
 		};
-		D2081C8319DA8AD800ABD203 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
-			remoteInfo = Alamofire;
-		};
-		D2081C8519DA8AD800ABD203 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
-			remoteInfo = AlamofireTests;
-		};
-		D29FDCCF1A0EDD2600CA785C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EAD9FACF19D0EAB50031E006;
-			remoteInfo = Argo;
-		};
-		D29FDCD11A0EDD2600CA785C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EAD9FADA19D0EAB60031E006;
-			remoteInfo = ArgoTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -176,7 +144,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D2081C8919DA8B2D00ABD203 /* Alamofire.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,10 +153,8 @@
 /* Begin PBXFileReference section */
 		23DD8ACFE16F7FE408C81719 /* Pods-Beacon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Beacon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Beacon/Pods-Beacon.release.xcconfig"; sourceTree = "<group>"; };
 		601E153EE575C3F1509235A4 /* Pods-Beacon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Beacon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Beacon/Pods-Beacon.debug.xcconfig"; sourceTree = "<group>"; };
-		6BDA0362867E6312BE77FAA7 /* libPods-Beacon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Beacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C4B19DA7C8100ABD203 /* Beacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2081C6519DA7C8100ABD203 /* BeaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		D2081CC919E2930500ABD203 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2081CCB19E2930500ABD203 /* Beacon.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Beacon.xcdatamodel; sourceTree = "<group>"; };
 		D2081CCD19E2930500ABD203 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -297,7 +262,6 @@
 		D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Argo.xcodeproj; path = Argo/Argo.xcodeproj; sourceTree = "<group>"; };
 		D2AA9AB219E9E7C200255FC2 /* Beacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Beacon-Bridging-Header.h"; sourceTree = "<group>"; };
 		D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCViewController.swift; sourceTree = "<group>"; };
 		D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEmailViewController.swift; sourceTree = "<group>"; };
@@ -309,10 +273,9 @@
 		D2BD011019F2E50C0093E280 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D2BD011419F64B2C0093E280 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		D2BD011619F64D320093E280 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		D2BFA27F1A058FAB00D962C3 /* SSocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSocialManager.h; sourceTree = "<group>"; };
-		D2BFA2801A058FAB00D962C3 /* SSocialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSocialManager.m; sourceTree = "<group>"; };
 		D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenProLight-300.otf"; sourceTree = "<group>"; };
-		D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCInvisibleArea.swift; sourceTree = "<group>"; };
+		D2E47B4019E5E1BA00665BC3 /* SCZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCZone.swift; sourceTree = "<group>"; };
+		E0ABF239CFA92EB5193B5C6D /* Pods_Beacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Beacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,15 +283,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2A0A00F1A0EE3410031F2B3 /* Argo.framework in Frameworks */,
 				D2BD011719F64D320093E280 /* Accounts.framework in Frameworks */,
 				D2BD011519F64B2C0093E280 /* Social.framework in Frameworks */,
 				D2BD011119F2E50C0093E280 /* MapKit.framework in Frameworks */,
 				D2684BEB19F1EDED0021C6D5 /* MobileCoreServices.framework in Frameworks */,
 				D2684BE719F1EDE70021C6D5 /* SystemConfiguration.framework in Frameworks */,
 				D2BB154219E7ADFC0052D117 /* CoreGraphics.framework in Frameworks */,
-				D2081C8719DA8B0300ABD203 /* Alamofire.framework in Frameworks */,
-				063EF16730DB7B69C000D31B /* libPods-Beacon.a in Frameworks */,
+				0B67ECA6BF34F57CA086C4ED /* Pods_Beacon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,11 +307,8 @@
 			isa = PBXGroup;
 			children = (
 				D2081CC819E2930500ABD203 /* Beacon */,
-				D2BB154319E7AE030052D117 /* Vendor */,
 				D2081CDE19E2930D00ABD203 /* BeaconTests */,
 				D2081C4C19DA7C8100ABD203 /* Products */,
-				D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */,
-				D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */,
 				D31DF787417A46C88F1508F2 /* Frameworks */,
 				E5CD05A153FA8E21E97F79EA /* Pods */,
 			);
@@ -365,20 +323,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D2081C7F19DA8AD800ABD203 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D2081C8419DA8AD800ABD203 /* Alamofire.framework */,
-				D2081C8619DA8AD800ABD203 /* AlamofireTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D2081CC819E2930500ABD203 /* Beacon */ = {
 			isa = PBXGroup;
 			children = (
 				D2081CE319E2935700ABD203 /* Supporting Files */,
-				D2BFA28A1A05921900D962C3 /* ObjC */,
 				D2BFA28B1A05922D00D962C3 /* Swift */,
 			);
 			path = Beacon;
@@ -508,15 +456,6 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
-		D29FDCC91A0EDD2600CA785C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D29FDCD01A0EDD2600CA785C /* Argo.framework */,
-				D29FDCD21A0EDD2600CA785C /* ArgoTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D2AA9AC919EF5B6A00255FC2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,7 +477,7 @@
 				D2081CCE19E2930500ABD203 /* SCConstants.swift */,
 				D2081CD119E2930500ABD203 /* SCNetworking.swift */,
 				D2081CD319E2930500ABD203 /* SCUser.swift */,
-				D2E47B4019E5E1BA00665BC3 /* SCInvisibleArea.swift */,
+				D2E47B4019E5E1BA00665BC3 /* SCZone.swift */,
 				D2081CEC19E5414300ABD203 /* SCBeacon.swift */,
 			);
 			name = Model;
@@ -554,25 +493,6 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		D2BB154319E7AE030052D117 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				D2BB154119E7ADFC0052D117 /* CoreGraphics.framework */,
-			);
-			name = Vendor;
-			sourceTree = "<group>";
-		};
-		D2BFA28A1A05921900D962C3 /* ObjC */ = {
-			isa = PBXGroup;
-			children = (
-				D2BFA28F1A05925000D962C3 /* Model */,
-				D2BFA28C1A05923400D962C3 /* View */,
-				D2BFA28E1A05924400D962C3 /* ViewModel */,
-				D2BFA28D1A05923700D962C3 /* Controller */,
-			);
-			name = ObjC;
-			sourceTree = "<group>";
-		};
 		D2BFA28B1A05922D00D962C3 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,36 +503,6 @@
 				D2081CCF19E2930500ABD203 /* SCHandOffActivityManager.swift */,
 			);
 			name = Swift;
-			sourceTree = "<group>";
-		};
-		D2BFA28C1A05923400D962C3 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		D2BFA28D1A05923700D962C3 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		D2BFA28E1A05924400D962C3 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D2BFA27F1A058FAB00D962C3 /* SSocialManager.h */,
-				D2BFA2801A058FAB00D962C3 /* SSocialManager.m */,
-			);
-			name = ViewModel;
-			sourceTree = "<group>";
-		};
-		D2BFA28F1A05925000D962C3 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		D2E47A1619E5BFD200665BC3 /* Assets */ = {
@@ -636,12 +526,13 @@
 		D31DF787417A46C88F1508F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D2BB154119E7ADFC0052D117 /* CoreGraphics.framework */,
 				D2BD011619F64D320093E280 /* Accounts.framework */,
 				D2BD011419F64B2C0093E280 /* Social.framework */,
 				D2BD011019F2E50C0093E280 /* MapKit.framework */,
 				D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */,
 				D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */,
-				6BDA0362867E6312BE77FAA7 /* libPods-Beacon.a */,
+				E0ABF239CFA92EB5193B5C6D /* Pods_Beacon.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -668,6 +559,7 @@
 				D2081C4919DA7C8100ABD203 /* Resources */,
 				D2081C8819DA8B0D00ABD203 /* Copy Frameworks */,
 				0EFE9A836EA9AB5DE880B58B /* Copy Pods Resources */,
+				764982A367AF7B8BE92A4F3B /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -726,16 +618,6 @@
 			mainGroup = D2081C4219DA7C8100ABD203;
 			productRefGroup = D2081C4C19DA7C8100ABD203 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D2081C7F19DA8AD800ABD203 /* Products */;
-					ProjectRef = D2081C7E19DA8AD800ABD203 /* Alamofire.xcodeproj */;
-				},
-				{
-					ProductGroup = D29FDCC91A0EDD2600CA785C /* Products */;
-					ProjectRef = D29FDCC81A0EDD2600CA785C /* Argo.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D2081C4A19DA7C8100ABD203 /* Beacon */,
@@ -743,37 +625,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D2081C8419DA8AD800ABD203 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = D2081C8319DA8AD800ABD203 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2081C8619DA8AD800ABD203 /* AlamofireTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = AlamofireTests.xctest;
-			remoteRef = D2081C8519DA8AD800ABD203 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D29FDCD01A0EDD2600CA785C /* Argo.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Argo.framework;
-			remoteRef = D29FDCCF1A0EDD2600CA785C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D29FDCD21A0EDD2600CA785C /* ArgoTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ArgoTests.xctest;
-			remoteRef = D29FDCD11A0EDD2600CA785C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D2081C4919DA7C8100ABD203 /* Resources */ = {
@@ -915,6 +766,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		764982A367AF7B8BE92A4F3B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Beacon/Pods-Beacon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -929,11 +795,10 @@
 				D2081CDA19E2930500ABD203 /* SCHomeViewController.swift in Sources */,
 				D2081CF419E66F1500ABD203 /* SCNewInvisibleAreaView.swift in Sources */,
 				D2AA9AC019EE702800255FC2 /* SCEmailViewController.swift in Sources */,
-				D2BFA2811A058FAB00D962C3 /* SSocialManager.m in Sources */,
 				D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */,
 				D2AA9AC819EF5B0200255FC2 /* SCTutorialViewController.swift in Sources */,
 				D2AA9AC419EE7DD500255FC2 /* SCLoginViewController.swift in Sources */,
-				D2E47B4119E5E1BA00665BC3 /* SCInvisibleArea.swift in Sources */,
+				D2E47B4119E5E1BA00665BC3 /* SCZone.swift in Sources */,
 				D2081CEF19E5463500ABD203 /* SCSocialIconsToolbar.swift in Sources */,
 				D2081CD919E2930500ABD203 /* SCHandOffActivityManager.swift in Sources */,
 				D2081CDB19E2930500ABD203 /* SCNetworking.swift in Sources */,
