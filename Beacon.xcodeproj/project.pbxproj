@@ -327,7 +327,24 @@
 			isa = PBXGroup;
 			children = (
 				D2081CE319E2935700ABD203 /* Supporting Files */,
-				D2BFA28B1A05922D00D962C3 /* Swift */,
+				D2081CE619E5345200ABD203 /* SCTheme.swift */,
+				D2081CCE19E2930500ABD203 /* SCConstants.swift */,
+				D2081CD119E2930500ABD203 /* SCNetworking.swift */,
+				D2081CD319E2930500ABD203 /* SCUser.swift */,
+				D2E47B4019E5E1BA00665BC3 /* SCZone.swift */,
+				D2081CEC19E5414300ABD203 /* SCBeacon.swift */,
+				D2081CD019E2930500ABD203 /* SCHomeViewController.swift */,
+				D2081CEA19E536D800ABD203 /* SCBeaconViewController.swift */,
+				D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */,
+				D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */,
+				D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */,
+				D2AA9AC519EF56C400255FC2 /* SCSignUpViewController.swift */,
+				D2AA9AC719EF5B0200255FC2 /* SCTutorialViewController.swift */,
+				D2081CEE19E5463500ABD203 /* SCSocialIconsToolbar.swift */,
+				D2081CF319E66F1500ABD203 /* SCNewInvisibleAreaView.swift */,
+				D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */,
+				D2081CC919E2930500ABD203 /* AppDelegate.swift */,
+				D2081CCF19E2930500ABD203 /* SCHandOffActivityManager.swift */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -454,55 +471,6 @@
 				D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */,
 			);
 			path = Icons;
-			sourceTree = "<group>";
-		};
-		D2AA9AC919EF5B6A00255FC2 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				D2081CD019E2930500ABD203 /* SCHomeViewController.swift */,
-				D2081CEA19E536D800ABD203 /* SCBeaconViewController.swift */,
-				D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */,
-				D2AA9ABF19EE702800255FC2 /* SCEmailViewController.swift */,
-				D2AA9AC319EE7DD500255FC2 /* SCLoginViewController.swift */,
-				D2AA9AC519EF56C400255FC2 /* SCSignUpViewController.swift */,
-				D2AA9AC719EF5B0200255FC2 /* SCTutorialViewController.swift */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		D2AA9ACA19EF5B8800255FC2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D2081CE619E5345200ABD203 /* SCTheme.swift */,
-				D2081CCE19E2930500ABD203 /* SCConstants.swift */,
-				D2081CD119E2930500ABD203 /* SCNetworking.swift */,
-				D2081CD319E2930500ABD203 /* SCUser.swift */,
-				D2E47B4019E5E1BA00665BC3 /* SCZone.swift */,
-				D2081CEC19E5414300ABD203 /* SCBeacon.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		D2AA9ACB19EF5BA100255FC2 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D2081CEE19E5463500ABD203 /* SCSocialIconsToolbar.swift */,
-				D2081CF319E66F1500ABD203 /* SCNewInvisibleAreaView.swift */,
-				D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		D2BFA28B1A05922D00D962C3 /* Swift */ = {
-			isa = PBXGroup;
-			children = (
-				D2AA9ACA19EF5B8800255FC2 /* Model */,
-				D2AA9AC919EF5B6A00255FC2 /* Controller */,
-				D2AA9ACB19EF5BA100255FC2 /* View */,
-				D2081CC919E2930500ABD203 /* AppDelegate.swift */,
-				D2081CCF19E2930500ABD203 /* SCHandOffActivityManager.swift */,
-			);
-			name = Swift;
 			sourceTree = "<group>";
 		};
 		D2E47A1619E5BFD200665BC3 /* Assets */ = {
