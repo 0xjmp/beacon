@@ -1,24 +1,31 @@
-////
-////  SCNewInvisibleAreaView.swift
-////  Beacon
-////
-////  Created by Jake Peterson on 10/9/14.
-////  Copyright (c) 2014 Jake Peterson. All rights reserved.
-////
 //
-//import UIKit
-//import MapKit
+//  SCNewInvisibleAreaView.swift
+//  Beacon
 //
-class SCInvisibleAreaButton:UIButton {
+//  Created by Jake Peterson on 10/9/14.
+//  Copyright (c) 2014 Jake Peterson. All rights reserved.
+//
+
+import UIKit
+import MapKit
+
+class SCNewZoneButton:UIButton {
     var plusImageView:UIImageView!
     var plusImageContainerView:UIView!
     var myTitleLabel:UILabel!
     var closeLabel:UILabel!
-    var defaultTitleText = "New Invisible Area"
+    var zoneType:SCZoneType!
+    var defaultTitleText:String {
+        get {
+            return "New \(zoneType.rawValue) Zone"
+        }
+    }
     var active:Bool!
     
-    override init(frame:CGRect) {
+    required init(frame:CGRect, zoneType:SCZoneType!) {
         super.init(frame: frame)
+        
+        self.zoneType = zoneType
         
         let image = UIImage(named: "pluswhite")!
         self.plusImageView = UIImageView(image: image)
@@ -31,16 +38,18 @@ class SCInvisibleAreaButton:UIButton {
         self.plusImageContainerView.addSubview(self.plusImageView)
         self.addSubview(self.plusImageContainerView)
         
+        let fontSize:CGFloat = 22.0
+        
         self.myTitleLabel = UILabel()
-//        self.myTitleLabel.font = SCTheme.primaryFont(27)
-//        self.myTitleLabel.textColor = SCTheme.primaryTextColor
-        self.myTitleLabel.text = self.defaultTitleText
+        self.myTitleLabel.font = SCTheme.primaryFont(fontSize)
+        self.myTitleLabel.textColor = SCTheme.primaryTextColor
+        self.myTitleLabel.text = defaultTitleText
         self.myTitleLabel.userInteractionEnabled = false
         self.addSubview(self.myTitleLabel)
         
         self.closeLabel = UILabel()
-//        self.closeLabel.font = SCTheme.primaryFont(27)
-//        self.closeLabel.textColor = SCTheme.primaryTextColor
+        self.closeLabel.font = SCTheme.primaryFont(fontSize)
+        self.closeLabel.textColor = SCTheme.primaryTextColor
         self.closeLabel.text = "Cancel"
         self.closeLabel.userInteractionEnabled = false
         self.closeLabel.layer.opacity = 0.0
@@ -76,8 +85,8 @@ class SCInvisibleAreaButton:UIButton {
     }
 }
 
-protocol SCNewInvisibleAreaDelegate {
-    func didFinishCreatingInvisibleArea()
+protocol SCNewZoneDelegate {
+    func didFinishCreatingZone()
 }
 
 
@@ -169,14 +178,16 @@ class SPinControl: UIControl {
     }
 }
 
-class SCNewInvisibleAreaView: UIToolbar {
+class SCNewZoneView: UIToolbar {
 
     var nameField:UITextField!
     var mapView:MKMapView!
     var addButton:UIButton!
-    var actionDelegate:SCNewInvisibleAreaDelegate?
+    var zoneDelegate:SCNewZoneDelegate?
     var locationManager:CLLocationManager!
-    var userLocationAnnotation:MKPointAnnotation?
+    lazy var userLocationAnnotation:MKPointAnnotation = { [unowned self] in
+        return MKPointAnnotation()
+    }()
     var pinControl:SPinControl!
     var circle:MKCircle?
     var radiusLabel:UILabel!
@@ -191,8 +202,8 @@ class SCNewInvisibleAreaView: UIToolbar {
         var gray:CGFloat = 200.0/255.0
         self.nameField.backgroundColor = UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
         self.nameField.layer.cornerRadius = 5.0
-        self.nameField.attributedPlaceholder = NSAttributedString(string: "Name goes here...", attributes: [ NSForegroundColorAttributeName : UIColor.blackColor() ])
-//        self.nameField.font = SCTheme.primaryFont(25)
+        self.nameField.attributedPlaceholder = NSAttributedString(string: "Name your zone...", attributes: [ NSForegroundColorAttributeName : UIColor.grayColor() ])
+        self.nameField.font = SCTheme.primaryFont(25)
         self.nameField.layer.borderColor = UIColor.whiteColor().CGColor
         self.nameField.layer.borderWidth = 1.0
         self.nameField.leftViewMode = UITextFieldViewMode.Always
@@ -221,7 +232,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         
         self.radiusLabel = UILabel(frame: CGRectZero)
         self.radiusLabel.textColor = UIColor.whiteColor()
-//        self.radiusLabel.font = SCTheme.primaryFont(13)
+        self.radiusLabel.font = SCTheme.primaryFont(13)
         self.radiusLabel.textAlignment = NSTextAlignment.Center
         self.mapView.addSubview(self.radiusLabel)
         
@@ -230,7 +241,7 @@ class SCNewInvisibleAreaView: UIToolbar {
         self.addButton.setBackgroundImage(image, forState: UIControlState.Normal)
         self.addButton.frame = CGRectMake(0, 0, image.size.width, image.size.height)
         self.addButton.setTitle("Add Invisible Area", forState: UIControlState.Normal)
-//        self.addButton.titleLabel?.font = SCTheme.primaryFont(25)
+        self.addButton.titleLabel?.font = SCTheme.primaryFont(25)
         self.addButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.addButton.addTarget(self, action: "createNewArea", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(self.addButton)
@@ -257,9 +268,9 @@ class SCNewInvisibleAreaView: UIToolbar {
     // MARK: - Actions
     
     func createNewArea() {
-        if let actionDelegate = self.actionDelegate {
+        if let delegate = self.zoneDelegate {
             if self.nameField.text.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-                actionDelegate.didFinishCreatingInvisibleArea()
+                delegate.didFinishCreatingZone()
             } else {
                 var alertView = UIAlertView(title: "Please fill in the required fields", message: nil, delegate: nil, cancelButtonTitle: "OK")
                 alertView.show()
@@ -278,14 +289,14 @@ class SCNewInvisibleAreaView: UIToolbar {
     func clearMapView(mapView:MKMapView!) {
         if mapView.overlays != nil {
             for overlay in mapView.overlays {
-                mapView.removeOverlay(overlay as MKOverlay)
+                mapView.removeOverlay(overlay as! MKOverlay)
             }
         }
         
         if mapView.annotations != nil {
             for annotation in mapView.annotations {
-                if annotation as? MKPointAnnotation != self.userLocationAnnotation {
-                    mapView.removeAnnotation(annotation as MKAnnotation)
+                if annotation as? MKPointAnnotation != userLocationAnnotation {
+                    mapView.removeAnnotation(annotation as! MKAnnotation)
                 }
             }
         }
@@ -313,18 +324,15 @@ class SCNewInvisibleAreaView: UIToolbar {
     }
     
     func resetUserLocationAnnotation(coord:CLLocationCoordinate2D) {
-        if self.userLocationAnnotation != nil {
-            self.mapView.removeAnnotation(self.userLocationAnnotation)
-        }
+        self.mapView.removeAnnotation(userLocationAnnotation)
         
-        self.userLocationAnnotation = MKPointAnnotation()
-        self.userLocationAnnotation!.setCoordinate(coord)
-        self.mapView.addAnnotation(self.userLocationAnnotation!)
+        userLocationAnnotation.coordinate = coord
+        mapView.addAnnotation(userLocationAnnotation)
     }
 
 }
 
-extension SCNewInvisibleAreaView: MKMapViewDelegate {
+extension SCNewZoneView: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if annotation.isKindOfClass(MKPointAnnotation) {
@@ -389,9 +397,7 @@ extension SCNewInvisibleAreaView: MKMapViewDelegate {
                 mapView.setRegion(region, animated: false)
             }
             
-            if self.userLocationAnnotation == nil {
-                self.resetUserLocationAnnotation(location.coordinate)
-            }
+            self.resetUserLocationAnnotation(location.coordinate)
             
             let userPoint = self.mapView.convertCoordinate(location.coordinate, toPointToView: self.mapView)
             self.pinControl.frame = CGRectMake(userPoint.x, userPoint.y - (self.pinControl.bounds.size.height / 2), self.pinControl.bounds.size.width, self.pinControl.bounds.size.height)
@@ -402,7 +408,7 @@ extension SCNewInvisibleAreaView: MKMapViewDelegate {
     
 }
 
-extension SCNewInvisibleAreaView : CLLocationManagerDelegate {
+extension SCNewZoneView : CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         println("Location updates failed: \(error)")

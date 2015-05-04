@@ -15,7 +15,7 @@ class SCEmailViewController: UIViewController {
     var emailField:UITextField
     var continueButton:UIButton
     
-    override init() {
+    init() {
         let logo = UIImage(named: "loadinglogo")
         self.logoImageView = UIImageView(image: logo)
         self.logoImageView.frame = CGRectMake(0, 0, logo!.size.width, logo!.size.height)

@@ -10,7 +10,7 @@ import UIKit
 
 struct SCBeacon {
     
-    let beaconKey:NSString = "com.beacon.beacon_key"
+    let beaconKey:String = "com.beacon.beacon_key"
     
     func beaconIsOn() -> Bool {
         let beaconState: NSNumber? = NSUserDefaults.standardUserDefaults().objectForKey(self.beaconKey) as? NSNumber

@@ -8,8 +8,6 @@
 
 import UIKit
 
-class SCTutorialViewController: UIViewController {
-
-    
+class SCWelcomeViewController: UIViewController {
 
 }

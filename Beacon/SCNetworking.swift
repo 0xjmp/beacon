@@ -9,47 +9,32 @@
 import UIKit
 import Alamofire
 
-typealias SCRequestResultsBlock = (responseObject:AnyObject?, error:NSError?)->Void
+typealias SCRequestResultsBlock = (response:Any?, error:NSError?)->Void
 
 public class SCNetworking: NSObject {
     
-    var apiVersion:NSString! {
+    private class var apiVersion:NSString {
         get {
             return "v1"
         }
     }
     
-    var OAuthEnabled:Bool?
-    public var baseUrl:NSString! {
+    class var baseUrl:NSString {
         get {
 #if DEBUG
-    if self.OAuthEnabled == true {
-        return "http://localhost:5000/user/auth/"
-    }
-    
-        return "http://localhost:5000/\(self.apiVersion)/"
+            return "http://localhost:3000/\(apiVersion)/"
 #else
-    if self.OAuthEnabled == true {
-        return "http://api.sce.ne/user/auth/"
-    }
-                return "http://api.sce.ne/\(self.apiVersion)/"
+            return "http://api.beacon.com/\(apiVersion)/"
 #endif
         }
     }
     
-    public class var shared : SCNetworking {
-    struct Static {
-        static let instance : SCNetworking = SCNetworking()
-        }
-        return Static.instance
-    }
-    
-    func request(method:Alamofire.Method, path:NSString!, params:[String: AnyObject], completionHandler:SCRequestResultsBlock) {
+    class func request(method:Alamofire.Method, path:NSString, params:[String: AnyObject]?, completion:SCRequestResultsBlock?) {
         let url = "\(self.baseUrl)\(path)"
         let encoding = method.rawValue == "GET" ? ParameterEncoding.URL : ParameterEncoding.JSON
-        Alamofire.request(method, url, parameters: params, encoding:encoding)
-            .response { (request, response, data, error) in
-                let url:NSString! = request.URL.absoluteString
+        Alamofire.request(method, url, parameters: params, encoding: encoding)
+            .responseJSON { (request, response, json, error) in
+                var url:NSString? = request.URL?.absoluteString
                 
                 if let code:Int = response?.statusCode {
                     println("(\(code)) \(url)")
@@ -86,48 +71,32 @@ public class SCNetworking: NSObject {
                             }
                         }
                     }
-                    completionHandler(responseObject: nil, error: error!)
+                    
+                    if let block = completion {
+                        block(response: json, error: error)
+                    }
                 } else {
-                    var jsonError: NSError?
-                    var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data as NSData, options: NSJSONReadingOptions(0), error: &jsonError)
-                    if jsonError != nil {
-                        println("Error parsing response to JSON: \(jsonError)")
-//                        SCNetworking.presentUserError(SCLocale.ServerFailure)
+                    if response?.statusCode < 300 && response?.statusCode >= 200 {
+                        if let block = completion {
+                            block(response: json, error: nil)
+                        }
                     } else {
-                        if response?.statusCode == 200 || response?.statusCode == 204 {
-                            completionHandler(responseObject: jsonObject, error: nil)
-                        } else {
-                            var serverErrorString = jsonObject?.objectForKey("error") as? NSString
-                            if serverErrorString != nil {
-                                UIAlertView(title: serverErrorString, message: nil, delegate: nil, cancelButtonTitle: "Ok").show()
-                            }
-                            
-                            var code = response!.statusCode as Int
-                            completionHandler(responseObject: nil, error: NSError(domain: "General Error", code: code, userInfo: nil))
+                        var serverErrorString = json?.objectForKey("error") as? String
+                        if let message = json?.objectForKey("error") as? String {
+                            UIAlertView(title: message, message: nil, delegate: nil, cancelButtonTitle: "Ok").show()
+                        }
+                        
+                        // Build the error
+                        var error:NSError?
+                        if let code = response?.statusCode {
+                            error = NSError(domain: "General Error", code: code, userInfo: nil)
+                        }
+                        
+                        if let block = completion {
+                            block(response: nil, error: error)
                         }
                     }
                 }
             }
     }
-   
-
-}
-
-extension SCNetworking {
-    
-//    class func presentUserError(locale:SCLocale) {
-//        let (title, message) = locale.description()
-//        UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK").show()
-//    }
-    
-}
-
-extension SCNetworking {
-    
-    func OAuthRequest(method:Alamofire.Method, authPath:NSString!, params:[String: AnyObject], completionHandler:SCRequestResultsBlock) {
-        self.OAuthEnabled = true
-        self.request(method, path: authPath, params: params, completionHandler: completionHandler)
-        self.OAuthEnabled = false
-    }
-    
 }

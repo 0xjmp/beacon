@@ -11,16 +11,17 @@ import UIKit
 class SCHandOffActivityManager: NSObject {
     
     class func receive(userActivity:NSUserActivity) {
-        SCUser.getProfile({ (responseObject, error) -> Void in
-            if let user:AnyObject = responseObject {
-                if (error == nil) {
-                    if let path = user.profileUrl {
-                        let url = NSURL(string: path)!
-                        UIApplication.sharedApplication().openURL(url)
+        if let userInfo = userActivity.userInfo {
+            if let userId:Int = userInfo["user_id"] as? Int {
+                SCUsersManager.show(userId, completionHandler: { (user, error) -> Void in
+                    if error == nil {
+                        if let url:String = userInfo["url"] as? String {
+                            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                        }
                     }
-                }
+                })
             }
-        })
+        }
     }
     
 }
