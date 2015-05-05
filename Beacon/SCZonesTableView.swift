@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SCHomeTableView: UITableView {
+class SCZonesTableView: UITableView {
     
     lazy var lineSeperator:CALayer = { [unowned self] in
         var layer = CALayer()
@@ -28,7 +28,6 @@ class SCHomeTableView: UITableView {
     var servicesCollectionView:SCServicesCollectionView!
 
     override init(frame: CGRect, style: UITableViewStyle) {
-        
         super.init(frame: frame, style: style)
         
         servicesCollectionView = SCServicesCollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)

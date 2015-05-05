@@ -35,6 +35,7 @@ class SCServicesCollectionView: UICollectionView {
         
         dataSource = self
         backgroundColor = UIColor.clearColor()
+        alwaysBounceHorizontal = true
         
         self.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: className)
     }
@@ -63,6 +64,15 @@ extension SCServicesCollectionView: UICollectionViewDataSource {
         if button == nil {
             button = services.reverse()[indexPath.row]
             cell.contentView.addSubview(button!)
+            
+            button!.setTranslatesAutoresizingMaskIntoConstraints(false)
+            cell.contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            
+            let metrics:[NSObject : AnyObject] = ["margin" : NSNumber(float: 15.0)]
+            let views:[NSObject : AnyObject] = ["button" : button!]
+            let hConstraints:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-margin-[button]-margin-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: metrics, views: views)
+            let vConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-margin-[button]-margin-|", options: NSLayoutFormatOptions.AlignAllLeading, metrics: metrics, views: views)
+            cell.contentView.addConstraints(hConstraints.arrayByAddingObjectsFromArray(vConstraints))
         }
         
         button!.tag = tag
