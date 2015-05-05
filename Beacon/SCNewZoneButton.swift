@@ -178,7 +178,7 @@ class SPinControl: UIControl {
     }
 }
 
-class SCNewZoneView: UIToolbar {
+class SCNewZoneView: UIView {
 
     var nameField:UITextField!
     var mapView:MKMapView!
@@ -194,8 +194,6 @@ class SCNewZoneView: UIToolbar {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.barTintColor = UIColor.blackColor()
         
         self.nameField = UITextField()
         self.nameField.textColor = UIColor.blackColor()

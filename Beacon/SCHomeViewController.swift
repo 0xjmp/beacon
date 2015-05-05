@@ -10,14 +10,28 @@ import UIKit
 
 class SCHomeViewController: SCViewController {
     
-    var tableView:SCHomeTableView
-    var newZoneButton:SCNewZoneButton
     var zoneType:SCZoneType = SCZoneType.Invisible
+    var newZoneButton:SCNewZoneButton
+    
     lazy var newZoneView:SCNewZoneView = { [unowned self] in
         var zoneView = SCNewZoneView(frame: CGRectZero)
         zoneView.layer.opacity = 0.0
         return zoneView
     }()
+    
+    lazy var defaultLayout:UICollectionViewLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        layout.minimumInteritemSpacing = 15
+        layout.minimumLineSpacing = 0
+        return layout
+    }()
+    
+    lazy var servicesCollectionView:SCServicesCollectionView = {
+        return SCServicesCollectionView(frame: CGRectZero, collectionViewLayout: self.defaultLayout)
+    }()
+    
+    var tableView:SCZonesTableView
     
     var tableViewTag:Int = 10
     var zones:[SCZone] = []
@@ -26,7 +40,7 @@ class SCHomeViewController: SCViewController {
         newZoneButton = SCNewZoneButton(frame: CGRectZero, zoneType:zoneType)
         newZoneButton.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         
-        tableView = SCHomeTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
+        tableView = SCZonesTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -50,19 +64,97 @@ class SCHomeViewController: SCViewController {
         let className = NSStringFromClass(SCTransitioningTableCell)
         tableView.registerClass(SCTransitioningTableCell.self, forCellReuseIdentifier: className)
     
+        tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        servicesCollectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        newZoneButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
         view.addSubview(tableView)
-        view.addSubview(newZoneView)
+        view.addSubview(servicesCollectionView)
+        view.addSubview(newZoneButton)
+        
+        let servicesWidthConstraint = NSLayoutConstraint(
+            item: servicesCollectionView,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: 1,
+            constant: 0
+        )
+        let newZoneWidthConstant = NSLayoutConstraint(
+            item: newZoneButton,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: 1,
+            constant: 0
+        )
+        let tableViewWidthConstraint = NSLayoutConstraint(
+            item: tableView,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: 1,
+            constant: 0
+        )
+        let views = ["servicesView" : servicesCollectionView, "newZoneView" : newZoneButton, "tableView" : tableView]
+        let vConstraints:NSArray = NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:|-85-[servicesView(==70)][newZoneView(==50)][tableView]|",
+            options: NSLayoutFormatOptions.AlignAllLeading,
+            metrics: nil,
+            views: views
+        )
+        
+        view.addConstraints(vConstraints.arrayByAddingObjectsFromArray([servicesWidthConstraint, newZoneWidthConstant, tableViewWidthConstraint]))
     }
     
     override func viewWillAppear(animated: Bool) {
         if let navigationBar = navigationController?.navigationBar {
             SCTheme.clearNavigation(navigationBar)
         }
-        
-        tableView.frame = view.bounds
     }
     
     // MARK: - Actions  
+    
+    func openZone() {
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.newZoneButton.plusImageView.transform = CGAffineTransformMakeRotation(-0.8)
+            self.newZoneButton.myTitleLabel.layer.opacity = 0.0
+            self.newZoneView.layer.opacity = 1.0
+            self.newZoneButton.closeLabel.layer.opacity = 1.0
+            }, completion: { (finished) in
+                if finished && !self.newZoneView.nameField.isFirstResponder() {
+                    self.newZoneView.nameField.becomeFirstResponder()
+                }
+        })
+    }
+    
+    func closeZone() {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.newZoneButton.plusImageView.transform = CGAffineTransformMakeRotation(0)
+            
+            self.newZoneView.layer.opacity = 0.0
+            self.newZoneButton.closeLabel.layer.opacity = 0.0
+            
+            self.newZoneButton.myTitleLabel.layer.opacity = 1.0
+            }, completion: { (finished) in
+                if finished && self.newZoneView.nameField.isFirstResponder() {
+                    self.newZoneView.nameField.resignFirstResponder()
+                }
+        })
+    }
+    
+    func toggleZone() {
+        if newZoneButton.active == true {
+            closeZone()
+        } else {
+            openZone()
+        }
+        
+        newZoneButton.active = !newZoneButton.active
+    }
     
     func deleteZone(indexPath:NSIndexPath!) {
         tableView.beginUpdates()
@@ -86,44 +178,6 @@ class SCHomeViewController: SCViewController {
             }
         })
     }
-    
-    func openZone() {
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.newZoneButton.plusImageView.transform = CGAffineTransformMakeRotation(-0.8)
-            self.newZoneButton.myTitleLabel.layer.opacity = 0.0
-            self.newZoneView.layer.opacity = 1.0
-            self.newZoneButton.closeLabel.layer.opacity = 1.0
-        }, completion: { (finished) in
-            if finished && !self.newZoneView.nameField.isFirstResponder() {
-                self.newZoneView.nameField.becomeFirstResponder()
-            }
-        })
-    }
-    
-    func closeZone() {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.newZoneButton.plusImageView.transform = CGAffineTransformMakeRotation(0)
-            
-            self.newZoneView.layer.opacity = 0.0
-            self.newZoneButton.closeLabel.layer.opacity = 0.0
-            
-            self.newZoneButton.myTitleLabel.layer.opacity = 1.0
-        }, completion: { (finished) in
-            if finished && self.newZoneView.nameField.isFirstResponder() {
-                self.newZoneView.nameField.resignFirstResponder()
-            }
-        })
-    }
-    
-    func toggleZone() {
-        if newZoneButton.active == true {
-            closeZone()
-        } else {
-            openZone()
-        }
-        
-        newZoneButton.active = !newZoneButton.active
-    }
 }
 
 extension SCHomeViewController: UITableViewDataSource {
@@ -134,43 +188,21 @@ extension SCHomeViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let className = NSStringFromClass(SCTransitioningTableCell)
-        var cell:SCTransitioningTableCell? = tableView.dequeueReusableCellWithIdentifier(className, forIndexPath: indexPath) as? SCTransitioningTableCell
-        if (cell == nil) {
-            cell = SCTransitioningTableCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: className)
-        }
+        let cell:SCTransitioningTableCell = tableView.dequeueReusableCellWithIdentifier(className, forIndexPath: indexPath) as! SCTransitioningTableCell
         
-        cell?.homeViewController = self
-        cell?.indexPath = indexPath
+        cell.homeViewController = self
+        cell.indexPath = indexPath
         
         let zone = zones[indexPath.row]
-        cell?.zone = zone
+        cell.zone = zone
         
-        cell?.myContentView!.tag = tableViewTag
+        cell.myContentView!.tag = tableViewTag
         
-        return cell!
+        return cell
     }
 }
 
 extension SCHomeViewController: UITableViewDelegate {
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 70.0
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var view = UIView()
-        view.addSubview(newZoneButton)
-
-        newZoneButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        let views = ["zoneBtn" : newZoneButton]
-        var vConstraints:[AnyObject] = NSLayoutConstraint.constraintsWithVisualFormat("V:|[zoneBtn]|", options: NSLayoutFormatOptions.AlignAllLeft, metrics: nil, views: views)
-        let zoneConstraint = NSLayoutConstraint(item: newZoneButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
-        vConstraints.append(zoneConstraint)
-        view.addConstraints(vConstraints)
-        
-        return view
-    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return SCTransitioningTableCell.cellHeight

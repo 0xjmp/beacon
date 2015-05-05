@@ -109,6 +109,12 @@
 		D2108ED819E7291C0012E664 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC619E7291C0012E664 /* Icon.png */; };
 		D2108ED919E7291C0012E664 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC719E7291C0012E664 /* Icon@2x.png */; };
 		D2108EDA19E7291C0012E664 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */; };
+		D254F92A1AF84C190058DD9D /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = D254F9241AF84C190058DD9D /* addbutton.png */; };
+		D254F92B1AF84C190058DD9D /* addbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D254F9251AF84C190058DD9D /* addbutton@2x.png */; };
+		D254F92C1AF84C190058DD9D /* addbutton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D254F9261AF84C190058DD9D /* addbutton@3x.png */; };
+		D254F92D1AF84C190058DD9D /* addbuttonclicked.png in Resources */ = {isa = PBXBuildFile; fileRef = D254F9271AF84C190058DD9D /* addbuttonclicked.png */; };
+		D254F92E1AF84C190058DD9D /* addbuttonclicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D254F9281AF84C190058DD9D /* addbuttonclicked@2x.png */; };
+		D254F92F1AF84C190058DD9D /* addbuttonclicked@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D254F9291AF84C190058DD9D /* addbuttonclicked@3x.png */; };
 		D2684BE719F1EDE70021C6D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */; };
 		D2684BEB19F1EDED0021C6D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */; };
 		D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA9ABA19EAF8D000255FC2 /* SCViewController.swift */; };
@@ -126,7 +132,7 @@
 		D2F197041AE06600006CC63F /* SCUsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197031AE06600006CC63F /* SCUsersManager.swift */; };
 		D2F197061AE07CF0006CC63F /* SCOAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197051AE07CF0006CC63F /* SCOAuthViewController.swift */; };
 		D2F197081AE08647006CC63F /* SCZonesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197071AE08647006CC63F /* SCZonesManager.swift */; };
-		D2F1970A1AE09736006CC63F /* SCHomeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197091AE09736006CC63F /* SCHomeTableView.swift */; };
+		D2F1970A1AE09736006CC63F /* SCZonesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197091AE09736006CC63F /* SCZonesTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +266,12 @@
 		D2108EC619E7291C0012E664 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D2108EC719E7291C0012E664 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		D2108EC819E7291C0012E664 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		D254F9241AF84C190058DD9D /* addbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addbutton.png; sourceTree = "<group>"; };
+		D254F9251AF84C190058DD9D /* addbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addbutton@2x.png"; sourceTree = "<group>"; };
+		D254F9261AF84C190058DD9D /* addbutton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addbutton@3x.png"; sourceTree = "<group>"; };
+		D254F9271AF84C190058DD9D /* addbuttonclicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addbuttonclicked.png; sourceTree = "<group>"; };
+		D254F9281AF84C190058DD9D /* addbuttonclicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addbuttonclicked@2x.png"; sourceTree = "<group>"; };
+		D254F9291AF84C190058DD9D /* addbuttonclicked@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addbuttonclicked@3x.png"; sourceTree = "<group>"; };
 		D2684BE619F1EDE70021C6D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D2684BEA19F1EDED0021C6D5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D2AA9AB219E9E7C200255FC2 /* Beacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Beacon-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -278,7 +290,7 @@
 		D2F197031AE06600006CC63F /* SCUsersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCUsersManager.swift; sourceTree = "<group>"; };
 		D2F197051AE07CF0006CC63F /* SCOAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOAuthViewController.swift; sourceTree = "<group>"; };
 		D2F197071AE08647006CC63F /* SCZonesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCZonesManager.swift; sourceTree = "<group>"; };
-		D2F197091AE09736006CC63F /* SCHomeTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCHomeTableView.swift; sourceTree = "<group>"; };
+		D2F197091AE09736006CC63F /* SCZonesTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCZonesTableView.swift; sourceTree = "<group>"; };
 		E0ABF239CFA92EB5193B5C6D /* Pods_Beacon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Beacon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -350,7 +362,7 @@
 				D2F197031AE06600006CC63F /* SCUsersManager.swift */,
 				D2F197051AE07CF0006CC63F /* SCOAuthViewController.swift */,
 				D2F197071AE08647006CC63F /* SCZonesManager.swift */,
-				D2F197091AE09736006CC63F /* SCHomeTableView.swift */,
+				D2F197091AE09736006CC63F /* SCZonesTableView.swift */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -378,6 +390,12 @@
 		D2108E1719E71A3D0012E664 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D254F9241AF84C190058DD9D /* addbutton.png */,
+				D254F9251AF84C190058DD9D /* addbutton@2x.png */,
+				D254F9261AF84C190058DD9D /* addbutton@3x.png */,
+				D254F9271AF84C190058DD9D /* addbuttonclicked.png */,
+				D254F9281AF84C190058DD9D /* addbuttonclicked@2x.png */,
+				D254F9291AF84C190058DD9D /* addbuttonclicked@3x.png */,
 				D2108E1819E71A3D0012E664 /* background.jpg */,
 				D2108E1919E71A3D0012E664 /* background@2x.jpg */,
 				D2108E1A19E71A3D0012E664 /* background@3x.jpg */,
@@ -621,12 +639,14 @@
 				D2108E9419E71A3D0012E664 /* toggleon@2x.png in Resources */,
 				D2108E7519E71A3D0012E664 /* loadinglogo.png in Resources */,
 				D2108E8A19E71A3D0012E664 /* sliderball.png in Resources */,
+				D254F92E1AF84C190058DD9D /* addbuttonclicked@2x.png in Resources */,
 				D2108E7719E71A3D0012E664 /* loadinglogo@3x.png in Resources */,
 				D2108E6C19E71A3D0012E664 /* instagramon.png in Resources */,
 				D2108E7D19E71A3D0012E664 /* locationon@3x.png in Resources */,
 				D2108ECE19E7291C0012E664 /* Icon-76.png in Resources */,
 				D2108E6E19E71A3D0012E664 /* instagramon@3x.png in Resources */,
 				D2108ED619E7291C0012E664 /* Icon-Small@2x.png in Resources */,
+				D254F92F1AF84C190058DD9D /* addbuttonclicked@3x.png in Resources */,
 				D2108E8719E71A3D0012E664 /* pluswhite.png in Resources */,
 				D2108E9319E71A3D0012E664 /* toggleon.png in Resources */,
 				D2108E9F19E71A3D0012E664 /* twitteron.png in Resources */,
@@ -634,6 +654,7 @@
 				D2108ED019E7291C0012E664 /* Icon-Small-40.png in Resources */,
 				D2108E6D19E71A3D0012E664 /* instagramon@2x.png in Resources */,
 				D2108E7C19E71A3D0012E664 /* locationon@2x.png in Resources */,
+				D254F92A1AF84C190058DD9D /* addbutton.png in Resources */,
 				D2108EA619E71A3D0012E664 /* xwhite@2x.png in Resources */,
 				D2108E7A19E71A3D0012E664 /* locationoff@3x.png in Resources */,
 				D2108E7F19E71A3D0012E664 /* mainlogo@2x.png in Resources */,
@@ -676,7 +697,9 @@
 				D2108E7419E71A3D0012E664 /* linkedinon@3x.png in Resources */,
 				D2108E9E19E71A3D0012E664 /* twitteroff@3x.png in Resources */,
 				D2108E8C19E71A3D0012E664 /* sliderball@3x.png in Resources */,
+				D254F92B1AF84C190058DD9D /* addbutton@2x.png in Resources */,
 				D2108E8D19E71A3D0012E664 /* slidertrack.png in Resources */,
+				D254F92C1AF84C190058DD9D /* addbutton@3x.png in Resources */,
 				D2108ED819E7291C0012E664 /* Icon.png in Resources */,
 				D2108E9B19E71A3D0012E664 /* tumblron@3x.png in Resources */,
 				D2108E8919E71A3D0012E664 /* pluswhite@3x.png in Resources */,
@@ -693,6 +716,7 @@
 				D2108ED719E7291C0012E664 /* Icon-Small@3x.png in Resources */,
 				D2108E8619E71A3D0012E664 /* plusblack@3x.png in Resources */,
 				D2108EAE19E721110012E664 /* facebookoff@2x.png in Resources */,
+				D254F92D1AF84C190058DD9D /* addbuttonclicked.png in Resources */,
 				D2108EA719E71A3D0012E664 /* xwhite@3x.png in Resources */,
 				D2108EA419E71A3D0012E664 /* xblack@3x.png in Resources */,
 				D2108E7919E71A3D0012E664 /* locationoff@2x.png in Resources */,
@@ -768,7 +792,7 @@
 				D2081CE719E5345200ABD203 /* SCTheme.swift in Sources */,
 				D2BB153E19E7ADA60052D117 /* SCBackgroundView.swift in Sources */,
 				D2081CD819E2930500ABD203 /* SCConstants.swift in Sources */,
-				D2F1970A1AE09736006CC63F /* SCHomeTableView.swift in Sources */,
+				D2F1970A1AE09736006CC63F /* SCZonesTableView.swift in Sources */,
 				D2081CDA19E2930500ABD203 /* SCHomeViewController.swift in Sources */,
 				D2081CF419E66F1500ABD203 /* SCNewZoneButton.swift in Sources */,
 				D2F197021AE030A6006CC63F /* SCServicesCollectionView.swift in Sources */,

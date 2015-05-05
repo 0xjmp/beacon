@@ -10,8 +10,8 @@ import UIKit
 
 class SCServiceButton:UIButton {
     
-    var defaultImage:UIImage!
-    var clickedImage:UIImage!
+    var defaultImage:UIImage
+    var clickedImage:UIImage
     var on:Bool {
         didSet {
             let image = self.on ? self.clickedImage : self.defaultImage
@@ -19,12 +19,12 @@ class SCServiceButton:UIButton {
         }
     }
     
-    required init(on: Bool, defaultImage:UIImage!, clickedImage:UIImage!) {
+    required init(on: Bool, defaultImage:UIImage, clickedImage:UIImage) {
         self.on = on
         self.defaultImage = defaultImage
         self.clickedImage = clickedImage
         
-        var image = self.defaultImage
+        var image = defaultImage
         super.init(frame: CGRectMake(0, 0, image.size.width, image.size.height))
         
         image = self.on ? self.clickedImage : self.defaultImage

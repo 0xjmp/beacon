@@ -25,11 +25,11 @@ class SCServicesCollectionView: UICollectionView {
     lazy var addButton:SCServiceButton = { [unowned self] in
         let image = UIImage(named: "addbutton")
         let clickedImage = UIImage(named: "addbuttonclicked")
-        return SCServiceButton(on: false, defaultImage: image, clickedImage: clickedImage)
+        return SCServiceButton(on: false, defaultImage: image!, clickedImage: clickedImage!)
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    
+    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
         
         services.append(addButton)
         
@@ -37,6 +37,10 @@ class SCServicesCollectionView: UICollectionView {
         backgroundColor = UIColor.clearColor()
         
         self.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: className)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func intrinsicContentSize() -> CGSize {
@@ -54,13 +58,14 @@ extension SCServicesCollectionView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(className, forIndexPath: indexPath) as! UICollectionViewCell
         
         let tag = 73649
-        if var button = cell.contentView.viewWithTag(tag) {
-            button.removeFromSuperview()
-            
+        var button = cell.contentView.viewWithTag(tag)
+        
+        if button == nil {
             button = services.reverse()[indexPath.row]
-            button.tag = tag
-            cell.contentView.addSubview(button)
+            cell.contentView.addSubview(button!)
         }
+        
+        button!.tag = tag
         
         return cell
     }
