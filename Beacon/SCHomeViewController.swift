@@ -22,13 +22,15 @@ class SCHomeViewController: SCViewController {
     lazy var defaultLayout:UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        layout.minimumInteritemSpacing = 15
-        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsetsMake(0, 15, 0, 0)
         return layout
     }()
     
-    lazy var servicesCollectionView:SCServicesCollectionView = {
-        return SCServicesCollectionView(frame: CGRectZero, collectionViewLayout: self.defaultLayout)
+    lazy var servicesCollectionView:SCIdentitiesCollectionView = {
+        let collectionView = SCIdentitiesCollectionView(frame: CGRectZero, collectionViewLayout: self.defaultLayout)
+        return collectionView
     }()
     
     var tableView:SCZonesTableView
@@ -43,6 +45,8 @@ class SCHomeViewController: SCViewController {
         tableView = SCZonesTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        servicesCollectionView.viewControllerDelegate = self
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -67,10 +71,12 @@ class SCHomeViewController: SCViewController {
         tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
         servicesCollectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         newZoneButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        newZoneView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         view.addSubview(tableView)
         view.addSubview(servicesCollectionView)
         view.addSubview(newZoneButton)
+        view.addSubview(newZoneView)
         
         let servicesWidthConstraint = NSLayoutConstraint(
             item: servicesCollectionView,
@@ -87,6 +93,24 @@ class SCHomeViewController: SCViewController {
             relatedBy: NSLayoutRelation.Equal,
             toItem: view,
             attribute: NSLayoutAttribute.Width,
+            multiplier: 1,
+            constant: 0
+        )
+        let newZoneViewWidthConstraint = NSLayoutConstraint(
+            item: newZoneView,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: 1,
+            constant: 0
+        )
+        let newZoneViewYConstraint = NSLayoutConstraint(
+            item: newZoneView,
+            attribute: NSLayoutAttribute.Top,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: tableView,
+            attribute: NSLayoutAttribute.Top,
             multiplier: 1,
             constant: 0
         )
@@ -107,7 +131,9 @@ class SCHomeViewController: SCViewController {
             views: views
         )
         
-        view.addConstraints(vConstraints.arrayByAddingObjectsFromArray([servicesWidthConstraint, newZoneWidthConstant, tableViewWidthConstraint]))
+        view.addConstraints(vConstraints.arrayByAddingObjectsFromArray(
+            [servicesWidthConstraint, newZoneWidthConstant, newZoneViewWidthConstraint, newZoneViewYConstraint, tableViewWidthConstraint]
+        ))
     }
     
     override func viewWillAppear(animated: Bool) {

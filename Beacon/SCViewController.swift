@@ -8,6 +8,11 @@
 
 import UIKit
 
+@objc protocol SCViewControllerProtocol {
+    func present(sender:AnyObject, viewController:UIViewController)
+    func push(sender:AnyObject, viewController:UIViewController)
+}
+
 class SCViewController: UIViewController {
     
     lazy var beaconSwitch:UISwitch = { [unowned self] in
@@ -107,6 +112,22 @@ extension SCViewController {
         let navigationController = UINavigationController(rootViewController: viewController)
         self.navigationController?.popToRootViewControllerAnimated(false)
         self.presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
+}
+
+extension SCViewController: SCViewControllerProtocol {
+    
+    func present(sender: AnyObject, viewController: UIViewController) {
+        self.presentViewController(viewController, animated: true, completion: nil)
+    }
+    
+    func push(sender: AnyObject, viewController: UIViewController) {
+        if let navController = self.navigationController {
+            navController.pushViewController(viewController, animated: true)
+        } else {
+            println("WARNING: trying to push onto navigation controller stack when none exists!")
+        }
     }
     
 }

@@ -125,11 +125,12 @@
 		D2BD011119F2E50C0093E280 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BD011019F2E50C0093E280 /* MapKit.framework */; };
 		D2BD011519F64B2C0093E280 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BD011419F64B2C0093E280 /* Social.framework */; };
 		D2BD011719F64D320093E280 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BD011619F64D320093E280 /* Accounts.framework */; };
+		D2D57EF41AFA8AF400E79226 /* SCNewZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D57EF31AFA8AF400E79226 /* SCNewZoneView.swift */; };
+		D2D57EFA1AFAC5E700E79226 /* SCIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D57EF91AFAC5E700E79226 /* SCIdentity.swift */; };
 		D2E47A6219E5BFD200665BC3 /* MavenProLight-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */; };
 		D2E47B4119E5E1BA00665BC3 /* SCZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E47B4019E5E1BA00665BC3 /* SCZone.swift */; };
-		D2F196FE1ADF41DF006CC63F /* SCServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F196FD1ADF41DF006CC63F /* SCServiceButton.swift */; };
-		D2F197021AE030A6006CC63F /* SCServicesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197011AE030A6006CC63F /* SCServicesCollectionView.swift */; };
-		D2F197041AE06600006CC63F /* SCUsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197031AE06600006CC63F /* SCUsersManager.swift */; };
+		D2F196FE1ADF41DF006CC63F /* SCIdentityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F196FD1ADF41DF006CC63F /* SCIdentityButton.swift */; };
+		D2F197021AE030A6006CC63F /* SCIdentitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197011AE030A6006CC63F /* SCIdentitiesCollectionView.swift */; };
 		D2F197061AE07CF0006CC63F /* SCOAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197051AE07CF0006CC63F /* SCOAuthViewController.swift */; };
 		D2F197081AE08647006CC63F /* SCZonesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197071AE08647006CC63F /* SCZonesManager.swift */; };
 		D2F1970A1AE09736006CC63F /* SCZonesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F197091AE09736006CC63F /* SCZonesTableView.swift */; };
@@ -283,11 +284,12 @@
 		D2BD011019F2E50C0093E280 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D2BD011419F64B2C0093E280 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		D2BD011619F64D320093E280 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		D2D57EF31AFA8AF400E79226 /* SCNewZoneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNewZoneView.swift; sourceTree = "<group>"; };
+		D2D57EF91AFAC5E700E79226 /* SCIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCIdentity.swift; sourceTree = "<group>"; };
 		D2E47A1819E5BFD200665BC3 /* MavenProLight-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenProLight-300.otf"; sourceTree = "<group>"; };
 		D2E47B4019E5E1BA00665BC3 /* SCZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCZone.swift; sourceTree = "<group>"; };
-		D2F196FD1ADF41DF006CC63F /* SCServiceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServiceButton.swift; sourceTree = "<group>"; };
-		D2F197011AE030A6006CC63F /* SCServicesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServicesCollectionView.swift; sourceTree = "<group>"; };
-		D2F197031AE06600006CC63F /* SCUsersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCUsersManager.swift; sourceTree = "<group>"; };
+		D2F196FD1ADF41DF006CC63F /* SCIdentityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCIdentityButton.swift; sourceTree = "<group>"; };
+		D2F197011AE030A6006CC63F /* SCIdentitiesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCIdentitiesCollectionView.swift; sourceTree = "<group>"; };
 		D2F197051AE07CF0006CC63F /* SCOAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOAuthViewController.swift; sourceTree = "<group>"; };
 		D2F197071AE08647006CC63F /* SCZonesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCZonesManager.swift; sourceTree = "<group>"; };
 		D2F197091AE09736006CC63F /* SCZonesTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCZonesTableView.swift; sourceTree = "<group>"; };
@@ -357,12 +359,13 @@
 				D2BB153D19E7ADA60052D117 /* SCBackgroundView.swift */,
 				D2081CCF19E2930500ABD203 /* SCHandOffActivityManager.swift */,
 				D2081CC919E2930500ABD203 /* AppDelegate.swift */,
-				D2F196FD1ADF41DF006CC63F /* SCServiceButton.swift */,
-				D2F197011AE030A6006CC63F /* SCServicesCollectionView.swift */,
-				D2F197031AE06600006CC63F /* SCUsersManager.swift */,
+				D2F196FD1ADF41DF006CC63F /* SCIdentityButton.swift */,
+				D2F197011AE030A6006CC63F /* SCIdentitiesCollectionView.swift */,
 				D2F197051AE07CF0006CC63F /* SCOAuthViewController.swift */,
 				D2F197071AE08647006CC63F /* SCZonesManager.swift */,
 				D2F197091AE09736006CC63F /* SCZonesTableView.swift */,
+				D2D57EF31AFA8AF400E79226 /* SCNewZoneView.swift */,
+				D2D57EF91AFAC5E700E79226 /* SCIdentity.swift */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -795,16 +798,17 @@
 				D2F1970A1AE09736006CC63F /* SCZonesTableView.swift in Sources */,
 				D2081CDA19E2930500ABD203 /* SCHomeViewController.swift in Sources */,
 				D2081CF419E66F1500ABD203 /* SCNewZoneButton.swift in Sources */,
-				D2F197021AE030A6006CC63F /* SCServicesCollectionView.swift in Sources */,
+				D2F197021AE030A6006CC63F /* SCIdentitiesCollectionView.swift in Sources */,
 				D2AA9AC019EE702800255FC2 /* SCEmailViewController.swift in Sources */,
-				D2F196FE1ADF41DF006CC63F /* SCServiceButton.swift in Sources */,
+				D2F196FE1ADF41DF006CC63F /* SCIdentityButton.swift in Sources */,
 				D2AA9ABB19EAF8D000255FC2 /* SCViewController.swift in Sources */,
 				D2AA9AC819EF5B0200255FC2 /* SCWelcomeViewController.swift in Sources */,
-				D2F197041AE06600006CC63F /* SCUsersManager.swift in Sources */,
+				D2D57EF41AFA8AF400E79226 /* SCNewZoneView.swift in Sources */,
 				D2E47B4119E5E1BA00665BC3 /* SCZone.swift in Sources */,
 				D2081CD919E2930500ABD203 /* SCHandOffActivityManager.swift in Sources */,
 				D2081CDB19E2930500ABD203 /* SCNetworking.swift in Sources */,
 				D2081CDD19E2930500ABD203 /* SCUser.swift in Sources */,
+				D2D57EFA1AFAC5E700E79226 /* SCIdentity.swift in Sources */,
 				D2081CD419E2930500ABD203 /* AppDelegate.swift in Sources */,
 				D2081CD519E2930500ABD203 /* Beacon.xcdatamodeld in Sources */,
 			);

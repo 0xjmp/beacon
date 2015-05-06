@@ -14,14 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        if (NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) != nil) {
-            if let prop = NSUserDefaults.standardUserDefaults().objectForKey(SCCookieName) as? [NSObject : AnyObject] {
-                if let cookie:NSHTTPCookie = NSHTTPCookie(properties: prop) {
-                    NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
-                }
-            }
-        }
+        SCUsersManager.sharedManager.startWatchingForCookieUpdates()
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 

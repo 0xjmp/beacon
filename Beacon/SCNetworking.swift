@@ -21,16 +21,12 @@ public class SCNetworking: NSObject {
     
     class var baseUrl:NSString {
         get {
-#if DEBUG
-            return "http://localhost:3000/\(apiVersion)/"
-#else
-            return "http://api.beacon.com/\(apiVersion)/"
-#endif
+            return "http://localhost:3000/"
         }
     }
     
     class func request(method:Alamofire.Method, path:NSString, params:[String: AnyObject]?, completion:SCRequestResultsBlock?) {
-        let url = "\(self.baseUrl)\(path)"
+        let url = "\(self.baseUrl)\(apiVersion)/\(path)"
         let encoding = method.rawValue == "GET" ? ParameterEncoding.URL : ParameterEncoding.JSON
         Alamofire.request(method, url, parameters: params, encoding: encoding)
             .responseJSON { (request, response, json, error) in

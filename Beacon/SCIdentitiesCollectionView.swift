@@ -1,5 +1,5 @@
 //
-//  SCServicesCollectionView.swift
+//  SCIdentitiesCollectionView.swift
 //  Beacon
 //
 //  Created by Jake Peterson on 4/16/15.
@@ -8,9 +8,17 @@
 
 import UIKit
 
-class SCServicesCollectionView: UICollectionView {
+class SCIdentitiesCollectionView: UICollectionView {
     
-    var services:[SCServiceButton] = [] {
+    var viewControllerDelegate:SCViewControllerProtocol? {
+        didSet {
+            for identityButton in identities {
+                identityButton.viewControllerDelegate = viewControllerDelegate
+            }
+        }
+    }
+    
+    var identities:[SCIdentityButton] = [] {
         didSet {
             reloadData()
         }
@@ -22,20 +30,16 @@ class SCServicesCollectionView: UICollectionView {
         }
     }
     
-    lazy var addButton:SCServiceButton = { [unowned self] in
-        let image = UIImage(named: "addbutton")
-        let clickedImage = UIImage(named: "addbuttonclicked")
-        return SCServiceButton(on: false, defaultImage: image!, clickedImage: clickedImage!)
-    }()
-    
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         
-        services.append(addButton)
+        for type in SCIdentityType.allValues {
+            let button = SCIdentityButton(on: false, identityType: type)
+            identities.append(button)
+        }
         
         dataSource = self
         backgroundColor = UIColor.clearColor()
-        alwaysBounceHorizontal = true
         
         self.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: className)
     }
@@ -49,10 +53,10 @@ class SCServicesCollectionView: UICollectionView {
     }
 }
 
-extension SCServicesCollectionView: UICollectionViewDataSource {
+extension SCIdentitiesCollectionView: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return services.count
+        return identities.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -62,20 +66,19 @@ extension SCServicesCollectionView: UICollectionViewDataSource {
         var button = cell.contentView.viewWithTag(tag)
         
         if button == nil {
-            button = services.reverse()[indexPath.row]
+            button = identities.reverse()[indexPath.row]
             cell.contentView.addSubview(button!)
             
             button!.setTranslatesAutoresizingMaskIntoConstraints(false)
             cell.contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
             
-            let metrics:[NSObject : AnyObject] = ["margin" : NSNumber(float: 15.0)]
             let views:[NSObject : AnyObject] = ["button" : button!]
-            let hConstraints:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-margin-[button]-margin-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: metrics, views: views)
-            let vConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-margin-[button]-margin-|", options: NSLayoutFormatOptions.AlignAllLeading, metrics: metrics, views: views)
+            let hConstraints:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|[button]|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: views)
+            let vConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[button]|", options: NSLayoutFormatOptions.AlignAllLeading, metrics: nil, views: views)
             cell.contentView.addConstraints(hConstraints.arrayByAddingObjectsFromArray(vConstraints))
         }
         
-        button!.tag = tag
+        button?.tag = tag
         
         return cell
     }

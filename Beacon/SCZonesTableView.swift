@@ -25,12 +25,12 @@ class SCZonesTableView: UITableView {
         return layout
     }()
     
-    var servicesCollectionView:SCServicesCollectionView!
+    var servicesCollectionView:SCIdentitiesCollectionView!
 
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
         
-        servicesCollectionView = SCServicesCollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
+        servicesCollectionView = SCIdentitiesCollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
         
         separatorInset = UIEdgeInsetsZero
         separatorColor = UIColor.blackColor()
