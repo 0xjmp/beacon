@@ -21,11 +21,7 @@ struct SCTheme {
         }
     }
     
-//    static var beaconPurple:UIColor {
-//        get {
-//            return UIColor(red: CGFloat(53.0/255.0), green: CGFloat(25.0/255.0), blue: CGFloat(59.0/255.0), alpha: CGFloat(1.0))
-//        }
-//    }
+    static var beaconPurple = UIColor(red: CGFloat(53.0/255.0), green: CGFloat(25.0/255.0), blue: CGFloat(59.0/255.0), alpha: CGFloat(1.0))
 
     // MARK: - Getters
     
@@ -56,11 +52,7 @@ struct SCTheme {
         bar.setBackgroundImage(imageView.image, forBarMetrics: UIBarMetrics.Default)
     }
 
-    static var primaryTextColor:UIColor {
-        get {
-            return UIColor.whiteColor()
-        }
-    }
+    static var primaryTextColor = UIColor.whiteColor()
 
     static func primaryFont(size:CGFloat!) -> UIFont {
         return UIFont(name: "MavenProLight300-Regular", size: size)!
