@@ -59,19 +59,19 @@ class SCNewZoneView: UIView {
         self.pinControl = SPinControl(frame: CGRectMake(0, 0, 100, 45))
         self.pinControl.addTarget(self, action: "pinDragged:", forControlEvents: UIControlEvents.ValueChanged)
         self.pinControl.addTarget(self, action: "resetPin:", forControlEvents: UIControlEvents.TouchDragExit)
-        self.mapView.addSubview(self.pinControl)
+        mapView.addSubview(self.pinControl)
         
-        self.radiusLabel = UILabel(frame: CGRectZero)
-        self.radiusLabel.textColor = UIColor.whiteColor()
-        self.radiusLabel.font = SCTheme.primaryFont(13)
-        self.radiusLabel.textAlignment = NSTextAlignment.Center
-        self.mapView.addSubview(self.radiusLabel)
+        radiusLabel = UILabel(frame: CGRectZero)
+        radiusLabel.textColor = UIColor.whiteColor()
+        radiusLabel.font = SCTheme.primaryFont(14)
+        radiusLabel.textAlignment = NSTextAlignment.Center
+        mapView.addSubview(radiusLabel)
         
         let image = UIImage(named: "overlaybutton")!
         self.addButton = UIButton()
         self.addButton.setBackgroundImage(image, forState: UIControlState.Normal)
         self.addButton.frame = CGRectMake(0, 0, image.size.width, image.size.height)
-        self.addButton.setTitle("Add Invisible Area", forState: UIControlState.Normal)
+        self.addButton.setTitle("SAVE", forState: UIControlState.Normal)
         self.addButton.titleLabel?.font = SCTheme.primaryFont(25)
         self.addButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.addButton.addTarget(self, action: "createNewArea", forControlEvents: UIControlEvents.TouchUpInside)
@@ -206,9 +206,9 @@ extension SCNewZoneView: MKMapViewDelegate {
     func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
         if overlay.isKindOfClass(MKCircle) {
             var circleView = MKCircleRenderer(overlay: overlay)
-            //            let color:UIColor = SCTheme.beaconPurple
-            //            circleView.strokeColor = color
-            //            circleView.fillColor = color.colorWithAlphaComponent(0.4)
+            let color:UIColor = SCTheme.beaconPurple
+            circleView.strokeColor = color
+            circleView.fillColor = color.colorWithAlphaComponent(0.6)
             circleView.lineWidth = 3.0
             return circleView
         }
