@@ -142,44 +142,23 @@ class SCHomeViewController: SCViewController {
         }
     }
     
-    // MARK: - Actions  
-    
-    func openZone() {
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.newZoneButton.plusImageView.transform = CGAffineTransformMakeRotation(-0.8)
-            self.newZoneButton.myTitleLabel.layer.opacity = 0.0
-            self.newZoneView.layer.opacity = 1.0
-            self.newZoneButton.closeLabel.layer.opacity = 1.0
-            }, completion: { (finished) in
-                if finished && !self.newZoneView.nameField.isFirstResponder() {
-                    self.newZoneView.nameField.becomeFirstResponder()
-                }
-        })
-    }
-    
-    func closeZone() {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.newZoneButton.plusImageView.transform = CGAffineTransformMakeRotation(0)
-            
-            self.newZoneView.layer.opacity = 0.0
-            self.newZoneButton.closeLabel.layer.opacity = 0.0
-            
-            self.newZoneButton.myTitleLabel.layer.opacity = 1.0
-            }, completion: { (finished) in
-                if finished && self.newZoneView.nameField.isFirstResponder() {
-                    self.newZoneView.nameField.resignFirstResponder()
-                }
-        })
-    }
+    // MARK: - Actions
     
     func toggleZone() {
-        if newZoneButton.active == true {
-            closeZone()
-        } else {
-            openZone()
+        if newZoneButton.active == false {
+            let viewController = SCNewZoneViewController(nibName: nil, bundle: nil)
+            presentViewController(viewController, animated: true, completion: nil)
         }
         
-        newZoneButton.active = !newZoneButton.active
+        newZoneButton.toggleZone { (finished) -> Void in
+            if finished {
+                if self.newZoneView.nameField.isFirstResponder() == false {
+                    self.newZoneView.nameField.becomeFirstResponder()
+                } else {
+                    self.newZoneView.nameField.resignFirstResponder()
+                }
+            }
+        }
     }
     
     func deleteZone(indexPath:NSIndexPath!) {

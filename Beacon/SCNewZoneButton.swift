@@ -9,6 +9,12 @@
 import UIKit
 import MapKit
 
+protocol SCNewZoneDelegate {
+    
+    func didFinishCreatingZone()
+    
+}
+
 class SCNewZoneButton:UIButton {
     var plusImageView:UIImageView!
     var plusImageContainerView:UIView!
@@ -83,97 +89,34 @@ class SCNewZoneButton:UIButton {
         
         self.closeLabel.frame = self.myTitleLabel.frame
     }
-}
-
-protocol SCNewZoneDelegate {
-    func didFinishCreatingZone()
-}
-
-
-class SPinControl: UIControl {
     
-    var dottedLine:CAShapeLayer!
-    var track:CAShapeLayer!
-    var currentRadius:CGFloat
-    var minimumRadius:CGFloat
-    var maximumRadius:CGFloat
-    
-    override init(frame:CGRect) {
-        self.minimumRadius = 100.0
-        self.maximumRadius = 5000.0
-        self.currentRadius = 500.0
-        
-        super.init(frame: frame)
-        
-        self.hidden = true
-    
-        self.dottedLine = CAShapeLayer()
-        self.dottedLine.position = self.center
-        self.dottedLine.fillColor = UIColor.clearColor().CGColor
-        self.dottedLine.strokeColor = UIColor.blackColor().CGColor
-        self.dottedLine.lineWidth = 2.0
-        self.dottedLine.lineJoin = kCALineJoinRound
-        self.dottedLine.lineDashPattern = [NSNumber(int: 5)]
-        self.layer.addSublayer(self.dottedLine)
-        
-        self.track = CAShapeLayer()
-        self.track.position = self.center
-        self.track.fillColor = UIColor.blackColor().CGColor
-        self.track.strokeColor = UIColor.blackColor().CGColor
-        self.track.lineWidth = 1.0
-        self.track.lineJoin = kCALineJoinRound
-        self.layer.addSublayer(self.track)
+    func openZone(completion:((Bool) -> Void)?) {
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.plusImageView.transform = CGAffineTransformMakeRotation(-0.8)
+            self.myTitleLabel.layer.opacity = 0.0
+            self.layer.opacity = 1.0
+            self.closeLabel.layer.opacity = 1.0
+        }, completion: completion)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let trackSize = CGFloat(20.0)
-        self.track.frame = CGRectMake(self.bounds.size.width - trackSize * 1.5, (self.bounds.size.height - trackSize) / 2, trackSize, trackSize)
-        self.track.path = UIBezierPath(roundedRect: self.track.bounds, cornerRadius: self.track.bounds.size.width / 2).CGPath
-        
-        self.dottedLine.frame = CGRectMake(0, self.bounds.size.height / 2, CGRectGetMinX(self.track.frame), self.dottedLine.lineWidth)
-        var path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, 0, 0)
-        CGPathAddLineToPoint(path, nil, self.dottedLine.bounds.size.width, 0)
-        self.dottedLine.path = path
+    func closeZone(completion:((Bool) -> Void)?) {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.plusImageView.transform = CGAffineTransformMakeRotation(0)
+            
+            self.layer.opacity = 0.0
+            self.closeLabel.layer.opacity = 0.0
+            
+            self.myTitleLabel.layer.opacity = 1.0
+        }, completion:completion)
     }
     
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
-        super.endTrackingWithTouch(touch, withEvent: event)
-        
-        self.sendActionsForControlEvents(UIControlEvents.TouchDragExit)
-    }
-    
-    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        let prevLocation = touch.previousLocationInView(touch.view)
-        let location = touch.locationInView(touch.view)
-        let xChange = location.x - prevLocation.x
-        self.currentRadius += xChange * 4
-        
-        // Guard rails for min/max values of scale
-        if self.currentRadius < self.minimumRadius {
-            self.currentRadius = self.minimumRadius
-        } else if self.currentRadius > self.maximumRadius {
-            self.currentRadius = self.maximumRadius
+    func toggleZone(completion:((Bool) -> Void)?) {
+        if active == true {
+            closeZone(completion)
+        } else {
+            openZone(completion)
         }
         
-        self.sendActionsForControlEvents(.ValueChanged)
-        
-        return super.continueTrackingWithTouch(touch, withEvent: event)
-    }
-    
-    // MARK: - Actions
-    
-    func resetAnimation() {
-        self.hidden = true
-    }
-    
-    func animate() {
-        self.hidden = false
+        active = !active
     }
 }
